@@ -1,0 +1,106 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>   
+             <li><a href="javascript:$.module.load('Impianti/Operators/Device8Cron');"><span id="CronDescr"></span></a></li>             
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="availableprobes">probes</span>   
+                <div class="clearfix"></div> 
+            </header>
+            <div class="panel-body">
+                 <ul id="availableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="assignedprobes">probes</span>   
+                <div class="clearfix"></div> 
+            </header>
+            <div class="panel-body">
+                 <ul id="assignedList" class="nav nav-pills nav-stacked" style="height:200px;"  />
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="availablecymt200s">availablecymt200s</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="cymt200availableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="assignedcymt200s">assignedcymt200s</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="cymt200assignedList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- /Template -->
+<script type="text/x-jquery-tmpl" id="tmplavailableList">
+    <li>
+        <a href="javascript:seleAvailProbe('${ProbeCod}')" >
+            <div class="pull-left">${ProbeCod}&nbsp;${ProbeDesc}&nbsp;</div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplassignedList">
+    <li>
+        <a href="javascript:selassignedProbe('${id}')" >
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">&nbsp;${ProbeCod}&nbsp;${ProbeDesc}</div>            
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplcymt200availableList">
+    <li>
+        <a href="javascript:$.fn.seleAvailcymt200('${Cod}')">
+            <div class="pull-left">${Cod}&nbsp;${Descr}&nbsp;</div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplcymt200assignedList">
+    <li>
+        <a href="javascript:$.fn.selassignedcymt200('${id}')">
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">&nbsp;${ZTHLCod}&nbsp;${ZTHLDesc}</div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!-- /Template -->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Cron_Config.js" type="text/javascript"></script>

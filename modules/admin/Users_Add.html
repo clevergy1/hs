@@ -1,0 +1,112 @@
+﻿
+<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div id="rowadduser" class="row" >
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="adduser">Add user</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:$.module.load('admin/Users_List');" ><i class="fa fa-times"></i></a>               
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span name="lbl" caption="username">User name</span>:</label>
+						<div class="col-md-8">
+							<input type="text" id="UserName_Add" class="form-control mandatory" placeholder="User name"/>
+						</div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Password:</label>
+                        <div class="col-md-8">
+                            <input type="password" id="Password_Add" class="form-control mandatory" placeholder="Password"/>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span name="lbl" caption="retype">Retype</span>&nbsp;password</label>
+                        <div class="col-md-8">
+                            <input type="password" id="Password1_Add" class="form-control mandatory" placeholder="Retype password"/>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Email:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="UserEmail_Add" class="form-control mandatory" placeholder="E mail"/>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span name="lbl" caption="usercomment">Comment</span>:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="UserComment_Add" class="form-control"  placeholder="Comment"/>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="SelRoleAdd"><span name="lbl" caption="role">Role</span>:</label>
+                        <div class="col-md-8">                            
+                            <input type="text" id="SelRoleAdd" class="form-control mandatory"  placeholder="Comment"/>
+                        </div>
+                    </div>
+                </form> 
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <button id="bntAddUser" class="btn btn-default pull-left">
+                        <i><img src="images/user_save.png" alt="" class="imgbtn" /></i>
+                        <span name="lbl" caption="save">Save</span>
+                    </button>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+<div id="SelectRoleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+			    <h4 class="modal-title"> <span name="lbl" caption="select_a_role">Select a role</span></h4>
+			</div>
+			<div class="modal-body">
+		        <table class="table tableRoles" data-page-size="2">
+			        <tbody id="RolesList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Templates-->
+<script type="text/x-jquery-tmpl" id="tmplRolesList">
+    <tr>
+        <td>
+            <a href="javascript:selRole('${RoleName}');">
+                <span class="pull-leftt">${RoleName}</span>
+                <span class="pull-right"><i class="fa fa-chevron-right"></i></span>
+            </a>
+        </td>
+    </tr>
+</script>
+<!--/Templates-->
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/cryptoJS/rollups/aes.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/app/admin/Users_Add.js"></script>

@@ -1,0 +1,56 @@
+﻿<div class="row">
+
+    <!--available devices-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="availabedevices">Available devices</span>        
+                <span class="tools pull-right">                    
+                    <a id="btnCloseEdit" href="javascript:;" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <ul id="availabledevicesList" class="nav nav-pills nav-stacked"></ul>
+            </div>
+        </section>
+    </div>
+    <!--/available devices-->
+
+    <!--assigned devices-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="assigneddevices">Assigned devices</span>   
+            </header>
+            <div class="panel-body">
+                <ul id="assigneddevicesList" class="nav nav-pills nav-stacked"></ul>
+            </div>
+        </section>
+    </div>
+    <!--/assigned devices-->
+
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplavailabledevicesList">
+    <li>
+        <div class="pull-left">&nbsp; ${devDes}&nbsp;ver.:&nbsp; ${Version}</div>
+        <div class="pull-right">
+            <a href="javascript:selectDev('${DevId}');" class="btn btn-info btn-sm"><span name="lbl" caption="select">Select</span></a>
+        </div>
+        <div class="clearfix"></div>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplassigneddevicesList">
+<li>
+    <div class="pull-left">&nbsp; ${devDes}&nbsp;ver.:&nbsp; ${Version}</div>
+    <div class="pull-right">
+        <a href="javascript:deselectDev('${DevId}');" class="btn btn-info btn-sm"><span name="lbl" caption="delete">Delete</span></a>
+    </div>
+    <div class="clearfix"></div>
+</li>
+</script>
+<!--/templates-->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/ManageFieldDevices.js" type="text/javascript"></script>

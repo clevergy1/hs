@@ -1,0 +1,371 @@
+﻿
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><span id="DesImpianto"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<!--List-->
+<div class="row" id="rowList">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="heatingsystems">heatingsystems</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">   
+                <div class="panel-body" style="position: relative;height:500px; overflow-y:auto;overflow-x:auto;">
+                    <table class="table  table-striped  table-hover cf">
+                        <thead>
+                            <tr>
+                                <th><div>ID</div></th>
+                                <th><span name="lbl" caption="description">description</span> </th>
+                                <th><span name="lbl" caption="status">status</span></th>
+                                <th><span name="lbl" caption="standby">standby</span></th>
+                                <th><span name="lbl" caption="connected">connected</span></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="ListHeatingSystem"></tbody>
+                    </table>
+                </div>           
+               
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="javascript:selSynoptic('${hsId}');" class="btn btn-info btn-sm" style="width:70px;"><span name="lbl" caption="synoptic">synoptic</span></a>
+                    
+                    <a href="#" id="btnCallAdd" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/List-->
+
+<!--Add-->
+<div class="row" id="rowAdd" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="add">Add</span>&nbsp;
+                <span name="lbl" caption="heatingsystem">heatingsystem</span> 
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                    <a id="btnCloseAdd" href="javascript:;" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="position-center">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Descr_Add"><span name="lbl" caption="description">Description</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Descr_Add" class="form-control" placeholder="Description"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Indirizzo_Add"><span name="lbl" caption="installationaddress">Address</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Indirizzo_Add" class="form-control" placeholder="Address"/>                                        
+                            </div>
+                            <div class="col-md-2">
+                                <a href="#" id="btnSearchOnMap_Add"><i class="fa fa-search"></i>&nbsp;<span name="lbl" caption="search">Search</span></a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Latitude_Add"><span name="lbl" caption="Latitude">Latitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Latitude_Add" class="form-control" placeholder="sea level altitude (meters)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Longitude_Add"><span name="lbl" caption="Longitude">Longitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Longitude_Add" class="form-control" placeholder="sea level altitude (meters)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="AltSLM_Add"><span name="lbl" caption="installationAltitude">Altitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="AltSLM_Add" class="form-control" placeholder="sea level altitude (meters)"/>
+                            </div>
+                        </div>     
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnAdd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Add-->
+
+<!--Edit-->
+<div class="row" id="rowEdit" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="edit">edit</span>&nbsp;
+                <span name="lbl" caption="heatingsystem">heatingsystem</span> 
+                <span class="tools pull-right">   
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                 
+                    <a id="btnCloseUpd" href="javascript:;" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div>
+                    <form class="form-horizontal" role="form">
+                        <input type="hidden" id="hsId_Upd" />
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Descr_Upd"><span name="lbl" caption="description">Description</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Descr_Upd" class="form-control" placeholder="Description"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Indirizzo_Upd"><span name="lbl" caption="installationaddress">Address</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Indirizzo_Upd" class="form-control" placeholder="Address"/>                                        
+                            </div>
+                            <div class="col-xs-2">
+                                <a href="#" id="btnSearchOnMap_Upd"><i class="fa fa-search"></i>&nbsp;<span name="lbl" caption="search">Search</span></a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Latitude_Upd"><span name="lbl" caption="Latitude">Latitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Latitude_Upd" class="form-control" placeholder="sea level altitude (meters)" />
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="Longitude_Upd"><span name="lbl" caption="Longitude">Longitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="Longitude_Upd" class="form-control" placeholder="sea level altitude (meters)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="AltSLM_Upd"><span name="lbl" caption="installationAltitude">Altitude</span></label>
+                            <div class="col-xs-6">
+                                <input type="text" id="AltSLM_Upd" class="form-control" placeholder="sea level altitude (meters)"/>
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <input type="hidden" id="connectionType_Upd" />
+                            <label class="col-xs-3 control-label" for="DesconnectionType_Upd"><span name="lbl" caption="remoteconnection">Remote connection</span></label>
+                            <div class="col-xs-6">
+                                 <input type="text" id="DesconnectionType_Upd" class="form-control" placeholder=""/>
+                            </div>
+                        </div>   
+                        <div class="form-group">
+                            <input type="hidden" id="MapId_Upd" />
+                            <label class="col-xs-3 control-label" for="MapDesc_Upd"><span name="lbl" caption="synoptic">synoptic</span></label>
+                            <div class="col-xs-6">
+                                 <input type="text" id="MapDesc_Upd" class="form-control" placeholder=""/>
+                            </div>
+                        </div>  
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="IwMonitoringId_Upd">Monitoring Id</label>
+                            <div class="col-xs-1">
+                                 <input type="text" id="IwMonitoringId_Upd" class="form-control" placeholder=""/>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="IwMonitoringDes_Upd">Monitoring descr.</label>
+                            <div class="col-xs-3">
+                                 <input type="text" id="IwMonitoringDes_Upd" class="form-control" placeholder=""/>
+                            </div>
+                            <div class="col-xs-2">(opc server)</div>
+                        </div> 
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="isEnabled_Upd"><span name="lbl" caption="isenabled">isenabled</span></label>
+                            <div class="col-md-2">
+                                <div class="make-switch">
+                                    <input type="checkbox" id="isEnabled_Upd" data-on="primary" data-off="primary" data-on-label="online" data-off-label="offline" />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div id="isEnabled_UpdResult"></div>
+                            </div>
+                        </div> 
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label" for="MaintenanceMode_Upd">standby</label>
+                            <div class="col-md-2">
+                                <div class="make-switch">
+                                    <input type="checkbox" id="MaintenanceMode_Upd" data-on="primary" data-off="primary" data-on-label="online" data-off-label="offline"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div id="MaintenanceMode_UpdResult"></div>
+                            </div>
+                        </div>                                          
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpdate" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--Modal-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="ModalRemoteConnections" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title"><span name="lbl" caption="remoteconnection">remoteconnection</span></h4>
+            </div>
+            <div class="modal-body">
+                <ul id="RemoteConnectionsList" class="nav nav-pills nav-stacked" style="height:200px;"></ul> 
+            </div>
+        </div>
+    </div>
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="ModalhsMaps" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title"><span name="lbl" caption="synoptics">synoptics</span></h4>
+            </div>
+            <div class="modal-body">
+                <ul id="hsMapsList" class="nav nav-pills nav-stacked" style="height:200px;"></ul> 
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Modal-->
+<!--/Edit-->
+
+<!--google map-->
+<div class="row" id="rowMap" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <span class="pull-left"><span name="lbl" caption="map">Map</span></span>
+                <span class="tools pull-right"> 
+                    <a href="#"  id="btnSetAddress"><i class="fa fa-map-marker"></i><span name="lbl" caption="setaddress">Set address</span></a>
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>  
+                <div class="clearfix"></div>              
+            </header>
+            <div class="panel-body" style="padding:0 !important;">
+                <div id="googlemap" style="position: relative;top: 0px;bottom: 0;left: 0;right: 0;"></div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--/google map-->
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplHeatingSystemList">
+    <tr>
+        <td><span class="label label-primary">${hsId}</span></td>
+        <td>
+            <b>${Descr}</b><br />
+            ${Indirizzo}
+        </td>
+        <td>
+            <!--<span name="lbl" caption="status">status</span><br />-->
+            {{if stato==0}}
+            <img src="images/action_success.png" style="height:24px;width:24px" />
+            {{else}}
+            {{if stato==1}}
+            <img src="images/status1.png" style="height:24px;width:24px" />
+            {{else}}
+            <img src="images/status2.png" style="height:24px;width:24px" />
+            {{/if}}
+            {{/if}}
+        </td>
+        <td>
+            <!--<span name="lbl" caption="maintenance">maintenance</span><br />-->
+            {{if MaintenanceMode}}
+            <i class="fa fa-wrench fa-2x"></i>
+            {{else}}
+            <i class="fa fa-thumbs-o-up fa-2x"></i>
+            {{/if}}
+        </td>
+        <td>
+            <!--<span name="lbl" caption="connected">connected</span><br />-->
+            {{if isOnline}}
+            <i class="fa fa-thumbs-o-up fa-2x"></i>
+            {{else}}
+            <i class="fa fa-thumbs-o-down fa-2x"></i>
+            {{/if}}
+        </td>
+     
+        <td>
+            <span class="btn-group pull-right">               
+                <a href="javascript:sel('${hsId}');" class="btn btn-info btn-sm" style="width:70px;"><span name="lbl" caption="select">Select</span></a>
+                <a href="javascript:callUpdate('${hsId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <textarea id="Note" rows="1" cols="80" class="form-control">${Note}</textarea>
+        </td>
+       
+        <td>            
+            <a href="javascript:CalhsDoc(${hsId})" class="btn btn-default btn-sm btn-primary"><span id="totDoc_${hsId}" class="badge label-info pull-left r-activity">0</span></a>
+            <br /><span name="lbl" caption="documents">documents</span>
+        </td>
+        <td>           
+            <a href="javascript:CalhsTickets( ${hsId} )" class="btn btn-default btn-sm btn-primary"> <span id="totTickets_${hsId}" class="badge label-danger pull-left r-activity">0</span></a>
+            <br />Tickets
+        </td>
+    </tr>
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="tmplRemoteConnectionsList">
+<li>
+    <div class="pull-left">&nbsp;${Descr}</div>
+    <div class="pull-right">
+        <a href="javascript:selRemoteConnection(${IdAddress},'${Descr}');" class="btn btn-info btn-sm"><span name="lbl" caption="select">Select</span></a>&nbsp;&nbsp;
+    </div>
+    <div class="clearfix"></div>
+</li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplhsMapsList">
+<li>
+    <div class="pull-left">&nbsp;${MapDesc}</div>
+    <div class="pull-right">
+        <a href="javascript:selhsMap(${MapId},'${MapDesc}');" class="btn btn-info btn-sm"><span name="lbl" caption="select">Select</span></a>&nbsp;&nbsp;
+    </div>
+    <div class="clearfix"></div>
+</li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplpageOperation">
+    <div class="pull-left breadcrumb_system">
+        <a href="javascript:selSynoptic();" class="btn btn-round btn-info"> <i class="fa fa-image fa-2x"></i></a><span name="lbl" caption="synoptic">synoptic</span>
+    </div>
+</script>
+<!--/templates-->
+
+<!--foo-table-->
+<!--<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>-->
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/ManageDevice8.js" type="text/javascript"></script>

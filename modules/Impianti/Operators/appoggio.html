@@ -1,0 +1,946 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+     <!--Impianto-->
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="Installation">Installation</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tablePlants" data-page-size="5">
+                    <thead>
+                        <tr>                                                        
+                            <th data-toggle="true"><span name="lbl" caption="status">status</span> </th>
+                            <th ><span name="lbl" caption="description">description</span></th>
+                            <th data-hide="all">Note</th>
+                            <th data-hide="all"><span name="lbl" caption="temperatureprobes">probes</span> </th>                            
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="ListPlants"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="4" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    &nbsp;<br />
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+     <!--/Impianto-->
+
+    <!--Controller-->
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left">Controller</span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableContollers" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="description">description</span> </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="ListControllers"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="2" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddController" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/Controller-->
+</div>
+
+<div class="row">
+    <!--porte di accesso-->   
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="doors">doors</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableDoors" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span> </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="ListDoors"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="2" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddDoors" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/porte di accesso-->
+
+    <!--gruppi termici-->
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="hs_grus">hs_grus</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+             <div class="panel-body">
+                 <table class="table tableGrus" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>                            
+                            <th data-hide="all">Set point</th>                            
+                            <th data-hide="all">Run</th>      
+                            <th data-hide="all"><span name="lbl" caption="detail">detail</span></th>                      
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="hsGrusList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="7" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                 </table>
+             </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnAddhsGru" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/gruppi termici-->
+</div>
+
+<div class="row">
+    <!--caldaie-->
+    <div class="col-md-6" id="Cal_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="boilers">boilers</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableboilers" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>                            
+                            <th data-hide="all">Set point</th>
+                            <th data-hide="all"><span name="lbl" caption="temperatureprobes">temperatureprobes</span></th>
+                            <th data-hide="all">Run</th>                            
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="boilersList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="7" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddBoiler" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--caldaie-->
+
+    <!--circolatori-->
+    <div class="col-md-6"  id="Cir_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="circulators">circulators</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableCirculators" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th data-hide="all">Run</th>
+                            <th data-hide="all"><span name="lbl" caption="temperatureprobes">temperatureprobes</span></th>                            
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="CirculatorsList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="6" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddCir" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--circolatori-->
+</div>
+
+<div class="row">
+    <!--servomotori-->
+    <div class="col-md-6" id="Vrd_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="servomotors">servomotors</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableServomotors" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>                                                                          
+                            <th data-hide="phone,tablet">Set point</th>
+                            <th data-hide="all"><span name="lbl" caption="probes">probes</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="ServomotorsList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="7" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddVrd" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/servomotori-->
+
+    <!--cronotermostati-->
+    <div class="col-md-6" id="Cron_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="chronothermostats">chronothermostats</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableCron" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th data-hide="all">Set point</th>
+                            <th data-hide="all"><span name="lbl" caption="temperatureprobes">temperatureprobes</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="CronList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="6" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddCron" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/cronotermostati-->
+</div>
+
+<div class="row">
+    <!--contalitri-->
+    <div class="col-md-6"  id="Ctl_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="flowmeters">flowmeters</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableCtl" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="CtlList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="5" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddCtl" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/contalitri-->
+
+    <!--contabilizzatori-->
+    <div class="col-md-6"  id="Ctb_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="meters">meters</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableCtb" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="CtbList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="4" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddCtb" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/contabilizzatori-->
+</div>
+
+<div class="row">
+    <!--sonde-->
+    <div class="col-md-6"  id="temperatureprobes_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="temperatureprobes">probes</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tableProbes" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="ProbesList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="3" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddProbe" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/sonde-->
+
+    <!--termostati di blocco-->
+    <div class="col-md-6" id="tbs_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="hs_tbs">hs_tbs</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tabletbs" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="tbsList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="3" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddtbs" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/termostati di blocco-->
+</div>
+
+<div class="row">
+    <!--pressostati di minima-->
+    <div class="col-md-6"  id="pm_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="hs_pms">hs_pms</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tablepms" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="pmsList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="3" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddpms" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/pressostati di minima-->
+
+    <!--pressostati di blocco-->
+    <div class="col-md-6" id="pb_section">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="hs_pbs">hs_pbs</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table tablepbs" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="code">code</span> </th>
+                            <th>Val.</th>
+                            <th data-hide="all"><span name="lbl" caption="description">description</span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="pbsList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="3" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddpbs" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <!--/pressostati di blocco-->
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplListPlants">
+<tr>    
+    <td>
+        <span id="hs_stato_${hsId}">
+        {{if stato==0}}
+                <i class="fa fa-thumbs-o-up"></i>
+        {{else}}
+            {{if stato==1}}
+                <img src="images/status1.png" style="height:24px;width:24px" />
+            {{else}}
+                <img src="images/status2.png" style="height:24px;width:24px" />
+            {{/if}}
+        {{/if}}
+        </span>
+    </td>
+    <td>${Descr}</td>
+    <td>
+        <textarea id="Note" rows="2" cols="80" class="form-control">${Note}</textarea>        
+    </td>
+    <td>
+        <table class="table tableProbeElem" data-page-size="5">
+            <tbody id="sList_${hsId}"></tbody>
+        </table>        
+    </td>
+    <td>
+        <span class="pull-right">
+            <a href="javascript:callconfighs('${hsId}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;                                
+        </span>
+    </td>
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListDoors">
+    <tr>
+        <td>${DoorCod}</td>
+        
+        <td>
+            <span id="DoorStatus_${DoorCod}">
+                {{if currentValue==false}}
+                    <img src="images/closed_door.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/open_door.png" style="height:24px;width:24px" />
+                {{/if}}
+            </span>
+        </td>
+        <td>${DoorDesc}</td>
+        <td>
+            <span class="pull-right">  
+                <a href="javascript:logDoor('${DoorCod}');" class="btn btn-default btn-sm">Log</a>               
+                <a href="javascript:callUpdateDoor('${DoorId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>        
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListControllers">
+<tr>
+    <td>${ControllerDescr}</td>
+    <td>
+        <span class="pull-right">
+            <a href="javascript:callUpdateController(${ControllerId});" class="btn btn-default btn-sm"><span name="lbl" caption="edit">edit</span></a>
+            <a href="javascript:sel(${ControllerId});" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>
+        </span>
+    </td>
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplboilersList">
+    <tr>
+        <td>${CalCod}</td>
+        <td>
+            <span id="Calstato_${CalCod}">
+            {{if stato==0}}
+                 <i class="fa fa-thumbs-o-up"></i>
+            {{else}}
+                {{if errorCode==1}}
+                    <img src="images/status1.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/status2.png" style="height:24px;width:24px" />
+                {{/if}}
+            {{/if}}
+            </span>
+        </td>
+        <td>${CalDescr}</td>
+        <td id="SetPoint_${CalCod}">${SetPoint}</td>
+        <td>
+            <table class="table tableProbeElem" data-page-size="5">
+                <tbody id="sList_${CalCod}"></tbody>
+            </table>
+        </td>
+        <td id="isRunning_${CalCod}">${isRunning}</td>
+        <td>
+            <span class="pull-right">
+                <a href="javascript:logCal('${CalCod}');" class="btn btn-default btn-sm">Log</a>&nbsp;
+                <a href="javascript:callconfigCal('${CalId}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;                
+                <a href="javascript:callUpdateCal('${CalId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplhs_grusList">
+    <tr>
+        <td>${GruCod}</td>
+        <td>
+            <span id="hs_grustato_${GruCod}">
+            {{if stato==0}}
+                 <i class="fa fa-thumbs-o-up"></i>
+            {{else}}
+                {{if errorCode==1}}
+                    <img src="images/status1.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/status2.png" style="height:24px;width:24px" />
+                {{/if}}
+            {{/if}}
+            </span>
+        </td>
+        <td>${GruDescr}</td>
+        <td id="SetPoint_${GruCode}">${SetPoint}</td>
+        <td id="isRunning_${GruCode}">${isRunning}</td>
+        <td>
+            <table class="table tableGruElem" data-page-size="5">
+                <tbody id="sList_${GruCod}"></tbody>
+            </table>
+        </td>
+        <td>
+            <span class="pull-right">
+                <a href="javascript:logGru('${GruCode}');" class="btn btn-default btn-sm">Log</a>&nbsp;
+                <a href="javascript:callconfigGru('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;                
+                <a href="javascript:callUpdateGru('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplCirculatorsList">
+<tr>
+    <td>${CirCod}</td>
+    <td>
+        <span id="Cirstato_${CirCod}">
+        {{if stato==0}}
+            <i class="fa fa-thumbs-o-up"></i>
+        {{else}}
+            {{if stato==1}}
+                <img src="images/status1.png" style="height:24px;width:24px" />
+            {{else}}
+                <img src="images/status2.png" style="height:24px;width:24px" />
+            {{/if}}
+        {{/if}}
+        </span>
+    </td> 
+    <td>${CirDescr}</td>
+    <td id="isRunning_${CirCod}">${isRunning}</td>
+    <td>
+        <table class="table tableProbeElem" data-page-size="5">
+            <tbody id="sList_${CirCod}"></tbody>
+        </table>
+    </td>
+    <td>
+        <span class="pull-right"> 
+            <a href="#" class="btn btn-default btn-sm">Log</a>&nbsp;
+            <a href="javascript:callconfigCir('${CirId}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;                    
+            <a href="javascript:callUpdateCir('${CirId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+        </span>
+    </td>       
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplServomotors">
+    <tr>
+        <td>${VrdCod}</td>
+        <td>
+            <span id="Vrdstato_${VrdCod}">
+            {{if stato==0}}
+                 <i class="fa fa-thumbs-o-up"></i>
+            {{else}}
+                {{if errorCode==1}}
+                    <img src="images/status1.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/status2.png" style="height:24px;width:24px" />
+                {{/if}}
+            {{/if}}
+            </span>
+        </td>
+        <td>${VrdDesc}</td>
+        <td id="SetPoint_${VrdCod}">${SetPoint}</td>
+        <td>
+            <table class="table tableProbeElem" data-page-size="5">
+                <tbody id="sList_${VrdCod}"></tbody>
+            </table>
+        </td>
+        <td>
+            <span class="pull-right">    
+                <a href="javascript:callconfigVrd('${VrdId}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;                
+                <a href="javascript:callUpdateVrd('${VrdId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplCron">
+    <tr>
+        <td>${CronCod}</td>
+        <td>
+            <span id="Cronstato_${CronCod}">
+            {{if stato==0}}
+                 <i class="fa fa-thumbs-o-up"></i>
+            {{else}}
+                {{if errorCode==1}}
+                    <img src="images/status1.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/status2.png" style="height:24px;width:24px" />
+                {{/if}}
+            {{/if}}
+            </span>
+        </td>
+        <td>${CronDescr}</td>
+        <td id="SetPoint_${CronCod}">${SetPoint}</td>
+        <td>
+            <table class="table tableProbeElem" data-page-size="5">
+                <tbody id="sList_${CronCod}"></tbody>
+            </table>
+        </td>
+        <td>
+            <span class="pull-right">   
+                <a href="#" class="btn btn-default btn-sm">Log</a>&nbsp;
+                <a href="javascript:callconfigCron('${CronId}');" class="btn btn-default btn-sm"><span name="lbl" caption="config">config.</span></a>&nbsp;               
+                <a href="javascript:callUpdateCron('${CronId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplCtl">
+    <tr>
+        <td>${CtlCod}</td>
+        <td>
+            <span id="Ctlstato_${CtlCod}">
+            {{if stato==0}}
+                 <i class="fa fa-thumbs-o-up"></i>
+            {{else}}
+                {{if errorCode==1}}
+                    <img src="images/status1.png" style="height:24px;width:24px" />
+                {{else}}
+                    <img src="images/status2.png" style="height:24px;width:24px" />
+                {{/if}}
+            {{/if}}
+            </span>
+        </td>
+        <td id="currentValue_${CtlCod}">${currentValue}</td>
+        <td>${CtlDesc}</td>
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdateCtl('${CtlId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplCtb">
+    <tr>
+        <td>${CtbCod}</td>
+        <td id="currentValue_${CtbCod}">${currentValue}</td>
+        <td>${CtbDesc}</td>
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdateCtb('${CtbId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+        
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbes">
+    <tr>
+        <td>${ProbeCod}</td>
+        <td id="Probe_${ProbeCod}">${currentValue}</td>
+        <td>${ProbeDesc}</td>
+        <td>
+            <span class="pull-right">   
+                <a href="javascript:logProbe('${ProbeCod}');" class="btn btn-default btn-sm">Log</a>&nbsp;             
+                <a href="javascript:callUpdateProbe('${ProbeId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>        
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+    <tr>
+        <td>${ProbeDesc}</td>     
+        <td id="ProbeElem_${ProbeCod}">${currentValue}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmpltbs">
+    <tr>
+        <td>${Cod}</td>
+        <td>
+            <span id="tbVal_${id}">                
+                {{if currentValue==false}}
+                     <i class="fa fa-thumbs-o-up"></i>
+                {{else}}
+                    <i class="fa fa-thumbs-o-down"></i>
+                {{/if}}
+            </span>
+        </td>
+        <td>${Descr}</td>
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdatetbs('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplpbs">
+    <tr>
+        <td>${Cod}</td>
+        <td>
+            <span id="pbVal_${id}">                
+                {{if currentValue==false}}
+                     <i class="fa fa-thumbs-o-up"></i>
+                {{else}}
+                    <i class="fa fa-thumbs-o-down"></i>
+                {{/if}}
+            </span>
+        </td>
+        <td>${Descr}</td>
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdatepbs('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplpms">
+    <tr>
+        <td>${Cod}</td>
+        <td>
+            <span id="pmVal_${id}">                
+                {{if currentValue==false}}
+                     <i class="fa fa-thumbs-o-up"></i>
+                {{else}}
+                    <i class="fa fa-thumbs-o-down"></i>
+                {{/if}}
+            </span>
+        </td>
+        <td>${Descr}</td>
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdatepms('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplGruElem">
+    <tr>
+        <td>${elementCod}</td>     
+        <td>${elementDes}</td>
+    </tr>
+</script>

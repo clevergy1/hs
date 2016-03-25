@@ -1,0 +1,805 @@
+﻿<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+<div class="row" id="errorOffline" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading panel-error">
+                <div class="pull-left">
+                    <span name="lbl" caption="conn_error">Errore di Connessione</span>
+                </div>
+                <span class="tools pull-right">
+                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                </span>
+            </header>
+            <div class="panel-body">
+                <span name="lbl" caption="conn_error_message">Connessione Caduta o Persa: Attendere che l'interfaccia ritorni online.</span>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row" id="MaintenanceMode" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading panel-stanbdby">
+                <div class="pull-left">
+                    <span name="lbl" caption="StandBy">StandBy</span>
+                </div>
+                <span class="tools pull-right">
+                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                </span>
+            </header>
+            <div class="panel-body">
+                <span name="lbl" caption="Maintenance_Mode_message">Manutenzione Attiva, non arriveranno piu mail e messaggi di errore finche non si ripoterà l'impianto in stato operativo.</span>
+
+            </div>
+        </section>
+    </div>
+</div> 
+
+<!--<div style="position:relative; top:-15px;" class="row ">-->
+   <div id="googlemap" ></div>
+
+       <div id="Scontainter" class="col-sm-4 draggable" style="display:none;position: absolute;top: 0px;right: -1000px;">
+        <!--list-->
+        <section class="panel" id="SectionList">
+            <header class="panel-heading  panel-operator">
+                <span class="pull-left"><span name="lbl" caption="heatingsystem">heatingsystem</span></span>
+                <span class="tools pull-right"> 
+                  <!--  <a href="javascript:$.module.load('Impianti/supervisors/ManageParking');" ><i class="fa fa-times"></i></a>&nbsp;-->
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>  
+                    <a id="close_list" href="javascript:;" class="fa fa-times"></a>                    
+                </span> 
+                <div class="clearfix"></div>       
+            </header>                   
+            <div class="panel-body" >  
+                <ul id="PlantList" class="nav nav-stacked mail-nav" style="height:400px;"></ul>            
+                                         
+            </div>  
+        </section>
+        <!--/list-->
+        </div>
+
+   
+
+     <!--ErrorLog-->
+    <div id="DivErrorLog" class="col-sm-4 draggable" style="display:none;position: absolute;top: 300px;right: -1000px;">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading  panel-operator">
+                    <span class="pull-left"><span name="lbl" caption="errorcodes">errorcodes</span></span>
+                    <span class="tools pull-right">
+                        <a id="btnCloseDivErrorLog" href="javascript:;" class="fa fa-times"></a>
+                    </span>
+                    <div class="clearfix"></div>
+                </header>
+                <div class="panel-body-ListLog" style="height:400px;overflow-y:auto;overflow-x:auto;">
+                    <table  class="table table-striped table-bordered table-hover cf " >
+                        <thead>
+                            <tr>                                                        
+                                <th ><span name="lbl" caption="day">day</span> </th>
+                                <th ><span name="lbl" caption="level">level</span></th>
+                                <th ><span name="lbl" caption="description">description</span></th>
+                                <th >Val.</th>
+                            </tr>
+                        </thead>
+			            <tbody id="ListErrorLog"></tbody>
+			            <tfoot>
+				            <tr>
+					            <td colspan="4" style="text-align:center;">
+						            <div class="pagination pagination-centered hide-if-no-paging"></div>
+					            </td>
+				            </tr>
+			            </tfoot>
+                    </table>
+                </div>
+                <footer class="panel-footer">
+                    <span class="tools pull-right">
+                        <br />
+                    </span>
+                    <div class="clearfix"></div>
+                    </footer>
+            </section>
+        </div>
+    </div>
+    <!--/ErrorLog-->
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplPlantList">
+    <li id="hs_elem_${Name}">
+        <a href="javascript:${page};">
+            <i class="fa fa-chevron-right"></i>
+            <span name="lbl" caption="${Name}">${Name}</span> 
+            <span class="tot_hs_Elem pull-right badge {{if stato==0}} label-info{{else}}{{if stato==1}}label-warning{{else}}label-danger{{/if}}{{/if}} r-activity" style="margin-right:15px;">${tot}</span>&nbsp;&nbsp;
+        </a>
+    </li>
+</script>
+
+<!--templates contabilizzatori-->
+<script type="text/x-jquery-tmpl" id="tmplCtb">
+    <li id="li_${CtbId}">
+        <a href="javascript:selPlant( '${CtbId}' , 'Ctb') ;">
+            <table>
+                <tbody>
+                    <tr>                       
+                        <td style="height:18px; color:#337ab7;">${CtbCod} -  ${CtbDesc}&nbsp;&nbsp;&nbsp;</td>   
+                                             
+                    </tr>
+                    <tr>  
+                        
+                         <td><span name="lbl" caption="pol">Stato</span></td>  
+                         <td>
+                                <span id="stato_${CtbCod}">
+                                    {{if stato==0}}
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                    {{else}}
+                                    {{if stato==1}}
+                                      <i style="color:yellow;" class="fa fa-times-circle-o"></i>
+                                    {{else}}
+                                    <i style="color:red;" class="fa fa-times-circle-o"></i>
+                                    {{/if}}
+                                    {{/if}}
+                                </span>
+                        </td>                
+                    </tr>
+                    <tr>  
+                                 <td><span name="lbl" caption="pol">Potenza</span></td>             
+                                <td id="Td1">${Power}&nbsp;W</td>                 
+                    </tr>
+                    <tr>
+                            <td><span name="lbl" caption="pol">Energia</span></td>
+                            <td id="Td2">${EnergyCounter}&nbsp;MWh</td> 
+                           
+                        
+                    </tr>
+                   <!-- <tr>
+                              <td><span name="lbl" caption="pol">T°mandata</span></td>
+                              <td id="Tsend_${CtbCod}">${Tsend}°&nbsp;C</td>   
+                              <td><span name="lbl" caption="pol">T°ritorno</span></td> 
+                              <td id="Tret_${CtbCod}">${Tret}°&nbsp;C</td>   
+                    
+                    </tr> -->
+                    <!--<tr>
+                            <td id="Flowrate_${CtbCod}">${Flowrate}&nbsp;m3/h</td>
+                           
+                            <td id="EnergyCounter_${CtbCod}">${EnergyCounter}&nbsp;MWh</td>
+                    
+                    </tr>-->                  
+                </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+<!--templates fine-->
+<!--templates analizzatori di rete-->
+<script type="text/x-jquery-tmpl" id="tmplAnz">
+    <li id="li_${Id}">
+        <a href="javascript:selPlant( '${Id}' , 'Anz') ;">
+            <table>
+                <tbody>
+                     <tr>
+                            <td style=" width:35%;">
+                                ${Descr.trim()}
+                            </td>
+                            <td style="width:10%">
+                                <span id="Anzstato_${Cod}">
+                                    {{if stato==0}}
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                    {{else}}
+                                    {{if stato==1}}
+                                    <img src="images/status1.png" style="height:24px;width:24px" />
+                                    {{else}}
+                                    <img src="images/status2.png" style="height:24px;width:24px" />
+                                    {{/if}}
+                                    {{/if}}
+                                </span>
+                            </td>
+                    </tr>
+                    <tr>
+                            <td>${Cod}</td>
+                          
+                    </tr>  
+                </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+<!--templates analizzatori di rete fine-->
+<!--templates gas-->
+<script type="text/x-jquery-tmpl" id="tmplGas">
+    <li id="li_${Id}">
+        <a href="javascript:selPlant( '${Id}' , 'Gas') ;">
+            <table>
+                  <tbody>
+                         <tr>        
+                            <td style="width:100%; color:#337ab7;">${Cod} - ${Descr}</td>
+                        </tr>
+                        <tr>
+                            <td><span name="lbl" caption="pol">Stato</span></td>  
+                            <td style="width:5%;">
+                                <span id="Span15">
+                                {{if stato==0}}
+                                     <i class="fa fa-thumbs-o-up"></i>
+                                {{else}}
+                                    {{if stato==1}}
+                                        <img src="images/status1.png" style="height:24px;width:24px" />
+                                    {{else}}
+                                        <img src="images/status2.png" style="height:24px;width:24px" />
+                                    {{/if}}
+                                {{/if}}
+                                </span>
+                            </td>
+                        </tr>
+                      <tr>
+                            <td><span name="lbl" caption="pol">Consumo</span></td>  
+                            {{if GasType==0}}
+                                <td><span id="Span16">${Number(currentValue).toLocaleString()}</span>&nbsp;m3</td>
+                            {{/if}}
+                            {{if GasType==1}}
+                                <td><span id="Span17">${Number(MeasuredGasCounter).toLocaleString()}</span>&nbsp;m3</td>
+                            {{/if}}                                                                   
+                        </tr>
+                    </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+<!--templates gas fine-->
+<!--templates sonde temperatura-->
+<script type="text/x-jquery-tmpl" id="tmplProbes">
+ <li id="li1">
+        <a href="javascript:selPlant( '${ProbeId}' , 'Tprobe') ;">
+            <table>
+                  <tbody>
+                        <tr>
+                            <td style="width:100%; color:#337ab7;">${ProbeCod} - ${ProbeDesc} </td>
+                        </tr>
+                        <tr>
+                            <td><span name="lbl" caption="pol">Stato</span></td>  
+                            <td>
+                               
+                                <span id="stato_${ProbeCod}">
+                                    {{if stato==0}}
+                                    <i class="fa fa-thumbs-o-up"></i>
+                                    {{else}}
+                                    {{if stato==1}}
+                                    <img src="images/status1.png" style="height:24px;width:24px" />
+                                    {{else}}
+                                    <img src="images/status2.png" style="height:24px;width:24px" />
+                                    {{/if}}
+                                    {{/if}}
+                                </span>
+                            </td> 
+                       </tr>
+                      <tr>  
+                            <td><span name="lbl" caption="pol">Temperatura</span></td>  
+                            <td id="Probe_${ProbeCod}" style="text-align:right;">${currentValue}°&nbsp;C</td>
+       
+                            <!--<td>
+                                <span class="btn-group pull-right">
+                                    <a href="javascript:logProbe('${ProbeCod}');" class="btn btn-default btn-sm">Log</a>&nbsp;
+                                    <a href="javascript:callUpdateProbe('${ProbeId}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+                                    <a href="javascript:callErrorLog('${ProbeCod}');" class="btn btn-default btn-sm"><span name="lbl" caption="errorcodes">Errors</span></a>
+                                    <a href="javascript:$.fn.callReplacements('${ProbeId}');" class="btn btn-default btn-sm"><span name="lbl" caption="replacements">replacements</span></a>
+                                </span>
+                            </td>-->        
+                        </tr>
+                    </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+<!--templates fine sonde temperatura-->
+<!--templates allarmi -->
+<script type="text/x-jquery-tmpl" id="tmplAllarmi">
+ <li id="li2">
+        <a href="javascript:selPlant( '${Id}' , 'sca') ;">
+            <table>
+                  <tbody>
+                        <tr>        
+                            <td style="width:100%; color:#337ab7;">${Cod} - ${Descr}&nbsp;&nbsp;&nbsp;</td>
+                           
+                          <!--  <td>
+                                <span class="btn-group  pull-right">
+                                    <a href="javascript:callShowDetail('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>
+                                    <a href="javascript:callEditHeader('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">detail</span></a>
+                                    <a href="javascript:callErrorLog('${Cod}');" class="btn btn-default btn-sm"><span name="lbl" caption="errorcodes">Errors</span></a>
+                                    <a href="javascript:$.fn.callReplacements('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="replacements">replacements</span></a>
+                                </span>
+                            </td> -->       
+                        </tr>
+                    </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+<!--templates fine allarmi-->
+
+<script type="text/x-jquery-tmpl" id="tmplCtp">
+<li id="li3">
+        <a href="javascript:selPlant( '${Id}' , 'Ctp') ;">
+            <table>
+                  <tbody>
+                        <tr>
+                            <td style="width:100%; color:#337ab7;" >${Cod} - ${Descr}</td>
+                        </tr>
+                        <tr> 
+                            <td><span name="lbl" caption="pol">Stato</span></td>    
+                            <td>
+                                <span id="Ctpstato_${Cod}">
+                                {{if stato==0}}
+                                     <i class="fa fa-thumbs-o-up"></i>
+                                {{else}}
+                                    {{if errorCode==1}}
+                                        <img src="images/status1.png" style="height:24px;width:24px" />
+                                    {{else}}
+                                        <img src="images/status2.png" style="height:24px;width:24px" />
+                                    {{/if}}
+                                {{/if}}
+                                </span>
+                            </td>
+                            <!--<td id="VolumeCounter_${Cod}">${VolumeCounter}&nbsp;m3</td>
+                            <td id="FlowRate_${Cod}">${FlowRate}&nbsp;m3/h</td>-->
+                                                    
+                        </tr>
+                </tbody>
+            </table>          
+        </a>
+    </li>
+</script>
+
+
+
+<!-- TEMPLATE DEI DETTAGLI DEGLI ELEMENTI -->
+<!--templates CTB-->  
+<script type="text/x-jquery-tmpl" id="tmplCtbDetail">
+<section class="panel allineamento">
+    <header class="panel-heading  panel-operator">
+        <span name="lbl" caption="meter">meter</span>
+        <span class=" pull-right">
+            <a href="javascript:Close_det();" class=" close_detail fa fa-times"></a>
+        </span>
+    </header>
+    <div class="panel-body">
+        <hr>
+        <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CtbCod}</b></div></div>
+        <div class="row m-bot20"><div class="col-md-12 col-xs-12">${CtbDesc}</div></div>
+        <hr>
+        <div class="row m-bot20">
+            <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Ctbstato_${CtbCod}">
+                {{if stato==0}}
+                     <i class="fa fa-thumbs-o-up"></i>
+                {{else}}
+                    {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                    {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                    {{/if}}
+                {{/if}}
+                </span>
+            </div>
+        </div>
+        <div class="row m-bot20">
+            <div  class="col-md-7 col-xs-7">T° Mandata</div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Span1">${Tsend}</span>°C
+            </div>
+        </div>
+         <div class="row m-bot20">
+            <div  class="col-md-7 col-xs-7">T° Ritorno</div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Span2">${Tret}</span>°C
+            </div>
+        </div>
+         <div class="row m-bot20">
+            <div  class="col-md-7 col-xs-7">Portata</div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Flowrate_${CtbCod}">${Flowrate}</span>m3/h
+            </div>
+        </div>
+        <div class="row m-bot20">
+            <div  class="col-md-7 col-xs-7">Pot Instantanea</div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Power_${CtbCod}">${Power}</span>W
+            </div>
+        </div>
+        <div class="row m-bot20">
+            <div  class="col-md-7 col-xs-7">Energia</div>
+            <div class="col-md-5 col-xs-5">
+                <span id="EnergyCounter_${CtbCod}">${EnergyCounter}</span>MWh
+            </div>
+        </div>
+         <div style="margin-top:2%;" class="form-group">
+             <span name="lbl" caption="marcamodello">marcamodello</span>
+                                    <input type="text" class="form-control" id="Text1" placeholder="${marcamodello}" readonly="readonly">
+         </div>
+         <div class="form-group">
+             <span name="lbl" caption="installationDate">installationDate</span>
+                                     {{if installationDate != "01/01/1900"}}
+                                         <input type="text" class="form-control dpd1" id="Text27" placeholder="${installationDate}" readonly="readonly">
+                                    {{else}}
+                                          <input type="text" class="form-control dpd1" id="Text28" placeholder="" readonly="readonly">
+                                    {{/if}} 
+         </div>
+        <hr>
+        <div id="ProbeElem_${CtbCod}"></div>
+        <div class="row m-bot20">
+            <a href="javascript:CallShowErrorLog('${CtbCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+        </div>
+    </div>
+</section>
+</script>
+<!--templates GAS-->  
+<script type="text/x-jquery-tmpl" id="tmplGasDetail">
+<section class="panel allineamento">
+    <header class="panel-heading  panel-operator">
+        <span name="lbl" caption="hs_ctGas">Gas Meter</span>
+        <span class=" pull-right">
+            <a href="javascript:Close_det();" class=" close_detail fa fa-times"></a>
+        </span>
+    </header>
+    <div class="panel-body">
+        <!--<hr>-->
+        <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+        <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+        <hr>
+        <div class="row m-bot20">
+            <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+            <div class="col-md-5 col-xs-5">
+                <span id="Gasstato_${Cod}">
+                {{if stato==0}}
+                     <i class="fa fa-thumbs-o-up"></i>
+                {{else}}
+                    {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                    {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                    {{/if}}
+                {{/if}}
+                </span>
+            </div>
+        </div>
+        {{if GasType==0}}
+            <div class="row m-bot20">
+                <div  class="col-md-7 col-xs-7">Consumo</div>
+                <div class="col-md-5 col-xs-5">
+                   <span id="Span3">${Number(currentValue).toLocaleString()}</span>&nbsp;m3
+                </div>
+            </div>
+        {{/if}}
+        {{if GasType==1}}
+         <div style="height:400px;overflow-y:auto; border: 1px solid #ddd;">
+             <table class="table  table-condensed" >
+                        <tbody>
+                            
+                                <tr>
+                                    <td>Val:</td> 
+                                    <td> <span  id="Span4">${Number(MeasuredGasCounter).toLocaleString()}</span>&nbsp;m3</td>
+                           
+                                </tr>
+                                <tr>
+                                    <td>Pressure:</td>
+                                    <td><span id="Span5">${Number(Pressure).toLocaleString()}</span>&nbsp;bar</td>
+                                </tr>
+                                <tr>
+                                    <td>Temperature:</td>
+                                    <td><span id="Span6">${Number(Temperature).toLocaleString()}</span>&nbsp;°C</td>
+                                </tr>
+                                <tr>
+                                    <td>Conversion Costant:</td>
+                                    <td><span id="Span7">${Number(ConversionCostant).toLocaleString()}</span>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>Corrected Vol. in Err.Cond.:</td>
+                                    <td><span  id="Span8">${Number(CorrectedVolInErrCond).toLocaleString()}</span>&nbsp;m3</td>
+                                </tr>
+                                <tr>
+                                    <td>Corrected Vol. Day:</td>
+                                    <td><span id="Span9">${Number(CorrectedVolDay).toLocaleString()}</span>&nbsp;m3</td>
+                                </tr>
+                                <tr>
+                                    <td>Corrected Vol. Month:</td>
+                                    <td><span  id="Span10">${Number(CorrectedVolMonth).toLocaleString()}</span>&nbsp;m3</td>
+                                </tr>
+                                <tr>
+                                    <td>Measured Vo. lDay:</td>
+                                    <td><span  id="Span11">${Number(MeasuredVolDay).toLocaleString()}</span>&nbsp;m3</td>
+                                </tr>
+                                <tr>
+                                    <td>Measured Flow:</td>
+                                    <td><span  id="Span12">${Number(MeasuredFlow).toLocaleString()}</span>&nbsp;m3/h</td>
+                                </tr>
+                                <tr>
+                                    <td>Corrected Flow:</td>
+                                    <td><span  id="Span13">${Number(CorrectedFlow).toLocaleString()}</span>&nbsp;m3/h</td>
+                                </tr>
+                                <tr>
+                                    <td>Battery Capacity:</td>
+                                    <td><span  id="Span14">${Number(BatteryCapacity).toLocaleString()}</span>&nbsp;%</td>
+                                </tr>
+                           
+                        </tbody>
+                   </table>
+             </div>
+         {{/if}}
+              <div style="margin-top:2%;" class="form-group">
+                  <span name="lbl" caption="marcamodello">marcamodello</span>
+                                    <input type="text" class="form-control" id="Text5" placeholder="${marcamodello}" readonly="readonly">
+              </div>
+              <div class="form-group">
+                  <span name="lbl" caption="installationDate">installationDate</span>
+                                     {{if installationDate != "01/01/1900"}}
+                                         <input type="text" class="form-control dpd1" id="Text6" placeholder="${installationDate}" readonly="readonly">
+                                    {{else}}
+                                          <input type="text" class="form-control dpd1" id="Text7" placeholder="" readonly="readonly">
+                                    {{/if}} 
+              </div>
+      
+        <div class="row m-bot20">
+            <a href="javascript:CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+        </div>
+    </div>
+</section>
+</script>
+<!-- dettagli sca -->
+
+<script type="text/x-jquery-tmpl" id="tmplScaDetail">
+<section class="panel allineamento">
+    <header class="panel-heading  panel-operator">
+        <span>${title}</span>
+        <span class=" pull-right">
+            <a href="javascript:Close_det();" class=" close_detail fa fa-times"></a>
+        </span>
+    </header>
+    <div class="panel-body">
+       <div style="height:400px;overflow-y:auto; border: 1px solid #ddd;">
+             <table class="table  table-condensed" >
+                 {{each data}}
+                 <tr>
+                    <td>${Id}</td>
+                    <td>${descr}</td>
+                    <td id="currentValue_${scaId}_${Id}">
+                        {{if currentValue}}ON{{else}}OFF{{/if}}        
+                    </td>
+                    <!--<td>
+                        <span class="tools pull-right">
+                            <a href="javascript:updateDetail(${Id});"  class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="edit">Edit</span></a>
+                        </span>        
+                    </td>-->
+                 </tr> 
+                 {{/each}}                     
+             </table>
+             
+        </div>         
+    </div>
+</section>
+</script>
+
+    <!--templates Probe--> 
+<script type="text/x-jquery-tmpl" id="tmplProbeDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading  panel-operator">
+            <span name="lbl" caption="temperatureprobe">temperatureprobe</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail fa fa-times"></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${ProbeCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${ProbeDesc}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span18">${currentValue}</span>°C
+                </div>
+            </div>
+              <div style="margin-top:2%;" class="form-group">
+                  <span name="lbl" caption="marcamodello">marcamodello</span>
+                                    <input type="text" class="form-control" id="Text8" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                                     {{if installationDate != "01/01/1900"}}
+                                         <input type="text" class="form-control dpd1" id="Text9" placeholder="${installationDate}" readonly="readonly">
+                                    {{else}}
+                                          <input type="text" class="form-control dpd1" id="Text10" placeholder="" readonly="readonly">
+                                    {{/if}} 
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${ProbeCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>            
+            </div>
+        </div>
+    </section>
+</script>
+    <!--templates ProbeElem--> 
+
+    
+    <!--templates CTP DETAIL--> 
+<script type="text/x-jquery-tmpl" id="tmplCtpDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading  panel-operator">
+            <span name="lbl" caption="temperatureprobe">temperatureprobe</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail fa fa-times"></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Volume</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span19">${VolumeCounter}</span>&nbsp;m3
+                </div>
+            </div>
+              <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Flowrate</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span20">${FlowRate}&nbsp;m3/h</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                                    <input type="text" class="form-control" id="Text11" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                                     {{if installationDate != "01/01/1900"}}
+                                         <input type="text" class="form-control dpd1" id="Text12" placeholder="${installationDate}" readonly="readonly">
+                                    {{else}}
+                                          <input type="text" class="form-control dpd1" id="Text13" placeholder="" readonly="readonly">
+                                    {{/if}} 
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${ProbeCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>            
+            </div>
+        </div>
+    </section>
+</script>
+    <!--templates CTP DETAIL--> 
+
+    <!--templates erroe log-->  
+<script type="text/x-jquery-tmpl" id="tmplListErrorLog">
+    <tr>
+        <td>${moment(LogDate).format("DD/MM/YYYY HH:mm")}</td>
+        <td>
+            {{if errorLevel==0}}
+                Log
+            {{else}}
+                {{if errorLevel==1}}
+                    Warning
+                {{else}}
+                    Alarm
+                {{/if}}
+            {{/if}}
+        </td>
+        <td>
+            {{if localStorage.getItem("CurrentLanguage")=='it' }}
+                ${DescIT}
+            {{else}}
+                ${DescEN}
+            {{/if}}
+        </td>
+        <td>${errorValue}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListLogLastItem">
+    <tr id="loadMore">
+        <td colspan="4">load more</td>
+    </tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplSystemDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading  panel-operator">
+            <span name="lbl" caption="heatingsystem">heatingsystem</span>
+            <span class=" pull-right">
+                <a href="javascript:$.fn.Close_SystemDetail();" class=" close_detail fa fa-map-marker"></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><b><span name="lbl" caption="heatingsystem">Plant</span></b></div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">${Descr}</div>
+            </div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="hs_stato_${hsId}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+                <div class="col-md-2 col-xs-2"><a id="btnResetSystemStatus_${hsId}" href="javascript:$.fn.ResetSystemStatus();" class="btn btn-warning btn-sm" style="display:none;">Reset</a></div>
+                
+                </div>
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="Online">Online</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="isOnline_${hsId}">
+                        {{if isOnline}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        <i class="fa fa-thumbs-o-down"></i>
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="Online">Note</span></div>
+                <div class="col-md-12 col-xs-12">
+                    <span id="Span1">
+                        <textarea id="Textarea1" rows="2" cols="80" class="form-control">${Note}</textarea>
+                    </span>
+                </div>
+            </div>
+
+            <div class="make-switch">
+                <label>
+                    <span name="lbl" caption="Standby">Standby</span>  &nbsp; &nbsp;<input type="checkbox" id="BSswitch" data-on="primary" data-off="info" />
+                </label>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="documents">documents</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <a href="javascript:$.fn.CalhsDoc();" class="btn btn-default btn-sm btn-primary"><span id="totDoc_${hsId}" class="badge label-info pull-left r-activity">0</span></a>
+                </div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="tickets">tickets</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <a href="javascript:$.fn.CalhsTickets();" class="btn btn-default btn-sm btn-primary"> <span id="totTickets_${hsId}" class="badge label-danger pull-left r-activity">0</span></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplpageOperation">
+    <div class="pull-left">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb breadcrumb_words">
+            <li><span id="hsDescr"></span></li>
+            <li><span id="MapDesc"></span></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+    <div class="pull-left breadcrumb_system">
+        <a href="javascript:$.module.load('Impianti/Operators/manageDevice8');" class="btn btn-round btn-info"> <i class="fa fa-cubes fa-2x"></i></a><span name="lbl" caption="heatingsystems">plants</span>&nbsp;
+    </div>
+
+
+
+    <div class="pull-right breadcrumb_system">
+        <a href="javascript:;" id="open_system_detail" class="btn btn-round btn-info"><i class="fa fa-tachometer fa-2x"></i></a><span name="lbl" caption="detail">detail</span>&nbsp;
+    </div>
+</script>
+
+<script src="js/jq/jquery.slimscroll.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+    <script src="js/app/synoptic/Operators/hs_UsageMap_1.js" type="text/javascript"></script>
+      
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

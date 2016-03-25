@@ -1,0 +1,141 @@
+﻿
+
+
+            <!--header start-->
+            <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
+<!--                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>-->
+            </div>
+            <!--logo end-->
+
+
+            <div class="top-nav clearfix">
+                <!--user login-->
+                <ul class="nav pull-right top-menu">
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-user"></i>Login <b class="caret"></b>  
+                            
+                        </a>
+                        <ul class="dropdown-menu  ">
+						    <li><a id="btnAdmin" href="#"><i class="fa fa-user"></i><span name="lbl" caption="logasadministrator">Log as administrator</span></a></li>
+						    <li><a id="btnOperator" href="#"><i class="fa fa-dashboard"></i><span name="lbl" caption="logasoperator">Log as operator</span></a></li>
+                            <li><a id="btnSupervisor" href="#"><i class="fa fa-shield"></i><span name="lbl" caption="logassupervisor">Log as supervisor</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--/user login-->
+
+                <!--language-->
+                <ul class="nav pull-right top-menu">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="fa fa-globe"></i><span name="lbl" caption="language">Language</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a id="langEn">English</a></li>
+                            <li><a id="langIt">Italiano</a></li>                        
+                        </ul>
+                    </li>
+                </ul>
+                <!--/language-->
+
+            </div>
+            </header>
+            <!--header end-->
+
+
+
+          
+
+        
+       
+
+
+    <div class="intro">
+       <div class="overlay">
+                <div id="Admin-login" style="display:none;margin-top:150px;">
+                    <form class="form-signin">
+                        <h2 class="form-signin-heading-admin">
+                            <i class="fa fa-lock"></i>&nbsp;<span name="lbl" caption="administratorlogin">Administrator Login</span> 
+                        </h2>
+                        <div class="login-wrap">
+                            <div class="user-login-info">
+                                <label for="admin-login-username"><span name="lbl" caption="user">User</span></label>
+                                <input type="text" id="admin-login-username" class="form-control" placeholder="User" autofocus>
+                                <label  for="admin-login-password"><span name="lbl" caption="password">Password</span></label>
+                                <input type="password" id="admin-login-password" class="form-control" placeholder="Password">
+                            </div>
+	                        <div class="make-switch">
+                                <label>
+					                <span name="lbl" caption="rememberme">Remember me</span> &nbsp &nbsp<input type="checkbox" id="admin-index-remember" data-on="primary" data-off="info"/> 
+                                </label>
+			                </div>
+                            <button id="adminlogin" class="btn btn-lg btn-login btn-block"><span name="lbl" caption="signin">Sign in</span></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="Operator-login" style="display:none;margin-top:150px;">
+                    <form class="form-signin">
+                        <h2 class="form-signin-heading-operator">
+                            <i class="fa fa-lock"></i>&nbsp;<span name="lbl" caption="operatorlogin">Operator Login</span> 
+                        </h2>
+                        <div class="login-wrap">
+                            <div class="user-login-info">
+                                <label for="operator-login-username"><span name="lbl" caption="user">User</span></label>
+                                <input type="text" id="operator-login-username" class="form-control" placeholder="User" autofocus>
+                                <label  for="operator-login-password"><span name="lbl" caption="password">Password</span></label>
+                                <input type="password" id="operator-login-password" class="form-control" placeholder="Password">
+                            </div>
+	                        <div class="make-switch">
+                                <label>                                
+					                <span name="lbl" caption="rememberme">Remember me</span> &nbsp &nbsp<input type="checkbox" id="operator-index-remember" data-on="primary" data-off="info"/> 
+                                </label>
+			                </div>
+                            <button id="operatorlogin" class="btn btn-lg btn-login btn-block"><span name="lbl" caption="signin">Sign in</span></button>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div id="Supervisor-login" style="display:none;margin-top:150px;">
+                    <form class="form-signin">
+                        <h2 class="form-signin-heading-supervisor">
+                            <i class="fa fa-lock"></i>&nbsp;<span name="lbl" caption="supervisorlogin">Spervisro Login</span> 
+                        </h2>
+                        <div class="login-wrap">
+                            <div class="user-login-info">
+                                <label for="supervisor-login-username"><span name="lbl" caption="user">User</span></label>
+                                <input type="text" id="supervisor-login-username"" class="form-control" placeholder="User" autofocus>
+                                <label  for="supervisor-login-password"><span name="lbl" caption="password">Password</span></label>
+                                <input type="password" id="supervisor-login-password" class="form-control" placeholder="Password">
+                            </div>
+	                        <div class="make-switch">
+                                <label>                                
+					                <span name="lbl" caption="rememberme">Remember me</span> &nbsp &nbsp<input type="checkbox" id="Checkbox1" data-on="primary" data-off="info"/> 
+                                </label>
+			                </div>
+                            <button id="supervisorlogin" class="btn btn-lg btn-login btn-block"><span name="lbl" caption="signin">Sign in</span></button>
+                        </div>
+                    </form>
+                </div>
+
+        </div>
+    </div>
+
+
+<script src="js/cryptoJS/rollups/aes.js" type="text/javascript"></script>	
+<script src="js/app/Index/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+ 

@@ -1,0 +1,204 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div class="row">
+    <!--Roles-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="roles">Roles</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="roleList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>
+            </div>
+        </section>
+    </div>
+    <!--/Roles-->
+
+    <!--Users-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="users">Users</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="usersstatList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>
+            </div>
+        </section>
+    </div>
+    <!--/Users-->
+</div>
+
+<div class="row">
+    <!--%cpu chart-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="cpuusage">cpu usage</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div id="cpu-perc-chart" style="height:250px;max-width:100%;"></div>
+            </div>
+        </section>
+    </div>
+    <!--/%cpu chart-->
+
+    <!--avg io-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left">I/O database</span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div id="avg-io-chart" style="height:250px;max-width:100%;"></div>
+            </div>
+        </section>
+    </div>
+    <!--/avg io-->
+
+    <!--batch request-->
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="batchrequest">batch request</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div id="batch-request-chart" style="height:250px;max-width:100%;"></div>
+            </div>
+        </section>
+    </div>
+    <!--/batch request-->
+</div>
+
+ <div class="row">
+     <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="currentjobs">current jobs</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                
+
+		        <table class="table tableJobs" data-page-size="2">
+			        <thead>
+				        <tr>
+					        <th data-toggle="true">ID</th>                            				                    
+					        <th>app</th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="waittime">wait time</span></th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="hostname">hostname</span></th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="networkaddress">address</span></th>
+				        </tr>
+			        </thead>
+			        <tbody id="dbjobslist"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="5" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+
+            </div>
+        </section>
+     </div>
+ </div>
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="tmplroleList">
+<li>
+    <div class="pull-left">&nbsp; ${RoleName}</div>
+    <div class="pull-right"> ${countUser} &nbsp;<span name="lbl" caption="users">Users</span>&nbsp;</div>
+    <div class="clearfix"></div>
+</li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplusersstatList">
+<li>
+    <div class="pull-left"><span name="lbl" caption="users">Users</span>:</div>
+    <div class="pull-right"> ${totUser}</div>
+    <div class="clearfix"></div>
+</li>
+<li>
+    <div class="pull-left"><span name="lbl" caption="approved">approved</span>:</div>
+    <div class="pull-right">${Approved}</div>
+    <div class="clearfix"></div>
+</li>
+<li>
+    <div class="pull-left"><span name="lbl" caption="notapproved">not approved</span>:</div>
+    <div class="pull-right">${notApproved}</div>
+    <div class="clearfix"></div>
+</li>
+<li>
+    <div class="pull-left"><span name="lbl" caption="locked">locked</span>:</div>
+    <div class="pull-right">${Locked}</div>
+    <div class="clearfix"></div>
+</li>
+<li>
+    <div class="pull-left"><span name="lbl" caption="enabled">enabled</span>:</div>
+    <div class="pull-right">${notLocked}</div>
+    <div class="clearfix"></div>
+</li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmpldbjobslist">
+    <tr>
+        <td>${SessionId}</td>
+        <td>${App}</td>
+        <td>${WaitTime_ms}ms</td>
+        <td>${HostName}</td>
+        <td>${NetworkAddr}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplNavigationbar">
+<li>
+    <a href="javascript:$.module.load('admin/home');"><i class="fa fa-desktop"></i>Dashboard</a>
+</li>
+<li>
+    <a href="javascript:$.module.load('admin/Users_List');"><i class="fa fa-group"></i><span name="lbl" caption="users">Users</span></a>
+</li>
+<li>
+    <a href="javascript:$.module.load('admin/ManageRoles');"><i class="fa fa-sitemap"></i><span name="lbl" caption="roles">Roles</span></a>
+</li>
+</script>
+<!-- /Template -->
+
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<!-- jQuery Flot -->
+<script type="text/javascript" src="js/jq/excanvas.min.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.stack.js"></script>
+<script type="text/javascript" src="js/jq/sparklines.js"></script>
+
+<script type="text/javascript" src="js/app/admin/home.js"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>

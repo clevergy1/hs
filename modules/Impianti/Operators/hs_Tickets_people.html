@@ -1,0 +1,167 @@
+﻿
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+
+<div class="row" >
+     <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="Mittenti dei Ticke">Mittenti dei Ticket</span> 
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                       <a href="javascript:$.module.load('Impianti/Operators/hs_Tickets_Manage');" class="fa fa-times"></a>                        
+                </span>   
+                <div class="clearfix"></div> 
+            </header>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading panel-operator">
+                            <span name="lbl" caption="availables">availables</span>
+                            <div class="clearfix"></div>
+                        </header>
+                        <div class="panel-body"  style="background-color:#f1f2f7;" >
+                             <ul id="availableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading panel-operator">
+                            <span name="lbl" caption="Requester">Requester</span>
+                            <div class="clearfix"></div>
+                        </header>
+                        <div class="panel-body" style="background-color:#f1f2f7;"  >
+                             <ul id="ListRequester" class="nav nav-pills nav-stacked" style="height:200px;"  />
+                        </div>
+                    </section>
+                </div> 
+            </div>
+        </section>
+    </div>
+</div>
+<div class="row" >
+     <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="Mittenti dei Ticke">Destinatari dei Ticket</span> 
+                 <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                       <a href="javascript:$.module.load('Impianti/Operators/hs_Tickets_Manage');" class="fa fa-times"></a>                        
+                </span>  
+                <div class="clearfix"></div> 
+            </header>
+            <div  class="panel-body">
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading panel-operator">
+                            <span name="lbl" caption="availables">availables</span>   
+                            <div class="clearfix"></div> 
+                        </header>
+                        <div class="panel-body"  style="background-color:#f1f2f7;" >
+                             <ul id="availableList2" class="nav nav-pills nav-stacked" style="height:200px;" />
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-6">
+                    <section class="panel">
+                        <header class="panel-heading panel-operator">
+                            <span name="lbl" caption="Requester">Executor</span>   
+                            <div class="clearfix"></div> 
+                        </header>
+                        <div class="panel-body"  style="background-color:#f1f2f7;" >
+                             <ul id="ListExecutor" class="nav nav-pills nav-stacked" style="height:200px;"  />
+                        </div>
+                    </section>
+                </div> 
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="tmplavailableList">
+    <li>
+        <a href="javascript:seleAvail('${IdContatto}')" >
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                ${emailaddress}
+                {{else}}
+                ${Descrizione}
+                {{/if}}
+                &nbsp;
+            </div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListRequester">
+    <li>
+        <a href="javascript:selrequester('${Id}')" >
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                    ${emailaddress}
+                {{else}}
+                    ${Descrizione}
+                {{/if}}
+            &nbsp;
+            </div>            
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!-- /Template -->
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="tmplavailableList2">
+    <li>
+        <a href="javascript:seleAvail2('${IdContatto}')" >
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                ${emailaddress}
+                {{else}}
+                ${Descrizione}
+                {{/if}}
+                &nbsp;
+            </div> 
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListExecutor">
+    <li>
+        <a href="javascript:selexecutor('${Id}')" >
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                ${emailaddress}
+                {{else}}
+                ${Descrizione}
+                {{/if}}
+                &nbsp;
+            </div>          
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!-- /Template -->
+
+
+
+
+
+
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Tickets_people.js" type="text/javascript"></script>

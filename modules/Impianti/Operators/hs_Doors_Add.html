@@ -1,0 +1,75 @@
+﻿<link rel="stylesheet" href="css/bs3/datepicker3.css" />
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<!--Add-->
+<div class="row" >
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="add">Add</span>&nbsp;<span name="lbl" caption="door">door</span>                
+                <span class="tools pull-right">                    
+                    <a href="javascript:$.module.load('Impianti/Operators/Device8Door');" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="position-center">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 control-label" for="DoorCod_Add"><span name="lbl" caption="code">code</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="DoorCod_Add" class="form-control" style="text-transform:uppercase" placeholder=""/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4 control-label" for="Descr_Add"><span name="lbl" caption="description">Description</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Descr_Add" class="form-control" placeholder="Description"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4  control-label" for="marcamodello_Add"><span name="lbl" caption="marcamodello">marcamodello</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="marcamodello_Add" class="form-control" placeholder="Description" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 col-sm-4  control-label" for="installationDate_Add"><span name="lbl" caption="installationDate">installationDate</span></label>
+                            <div class="col-md-3  ">
+                                <input type="text" id="installationDate_Add" class="form-control dpd1" placeholder="" />
+                                <span class="input-group-btn add-on">
+                                    <button class="btn" type="button" style="height:34px;"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            </div>
+                        </div> 
+  
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnAdd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Add-->
+<script type="text/javascript" src="js/bs3/bootstrap-datepickerV2.js"></script>
+<script type="text/javascript" src="js/bs3/locales/bootstrap-datepicker.en-GB.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/bs3/locales/bootstrap-datepicker.it.js" charset="UTF-8"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Doors_Add.js" type="text/javascript"></script>

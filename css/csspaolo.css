@@ -1,0 +1,12 @@
+﻿.tipo               { text-align: center;}
+.titolo             { text-align: center; margin-bottom: 8%; font-size:18px;}
+.mittente           { text-align: center; margin-bottom: 3%; margin-top: 11%; font-size:12px;}
+.destinatario       { margin-top: 8px; font-size:12px; text-transform:uppercase; color:#2e8b57;}
+.sx                 { border-right: 1px solid #ddd; padding:5px;}
+.descrizione        { font-size: 16px; margin-top: 1%;}
+.centro             { text-align:left;}
+.destra             { text-align:right;}
+.info_riga.row      { margin-top:7%; color:#2e8b57;}
+.pull-right         { margin-right:13px;}
+.box_ticket         { border-bottom: 1px solid #ddd;  margin-bottom:2%; margin-top: 1%;  }
+.verde              { color:#2e8b57;}

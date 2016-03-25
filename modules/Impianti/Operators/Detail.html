@@ -1,0 +1,268 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="Installation">Installation</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="DesImpianto"><span name="lbl" caption="description">Description</span></label>
+                        <div class="col-md-8">
+                            <span id="DesImpianto" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Indirizzo"><span name="lbl" caption="installationaddress">Address</span></label>
+                        <div class="col-md-8">
+                            <span id="Indirizzo" class="form-control"/>                                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="AltSLM"><span name="lbl" caption="installationAltitude">Altitude</span></label>
+                        <div class="col-md-8">
+                            <span id="AltSLM" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Controllato"><span name="lbl" caption="status">Status</span></label>
+                        <div class="col-md-2">
+                            <div class="make-switch">
+                                <input type="checkbox" id="Controllato"  data-on="primary" data-off="primary" data-on-label="online" data-off-label="offline"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div id="setControllatoResult"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="Innowatio">Innowatio</label>
+                        <div class="col-md-2">
+                            <div class="make-switch">
+                                <input type="checkbox" id="Innowatio"  data-on="primary" data-off="primary" data-on-label="yes" data-off-label="no"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div id="SetInnowatioResult"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpd" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="edit">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+<!--Contatti-->
+<div class="row" >
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="addressbook">addressbook</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+		        <table class="table tableContatti" data-page-size="2">
+			        <thead>
+				        <tr>
+					        <th data-toggle="true"><span name="lbl" caption="description">description</span> </th>
+                            <th data-hide="phone">tel</th>
+                            <th data-hide="phone">mobile</th>
+                            <th data-hide="phone,tablet">email</th>		
+                            <th data-hide="phone,tablet"><span name="lbl" caption="name">name</span></th>	
+                            <th data-hide="phone,tablet"><span name="lbl" caption="installationaddress">address</span></th>					        
+                            <th></th>
+				        </tr>
+			        </thead>
+			        <tbody id="ListContatti"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="7">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAddContatto" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Contatti-->
+
+<div class="row">
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading">
+                <span class="pull-left"><span name="lbl" caption="devices">devices</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body" >                
+                <ul id="FieldDevicesList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>                          
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallFieldDevicesEdit" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="edit">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading">  
+                <div class="pull-left"><span name="lbl" caption="users">users</span></div>              
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="activeUsersList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>
+            </div>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading"> 
+                <div class="pull-left"><span name="lbl" caption="remoteconnections">Connections</span></div>               
+                <span class="tools pull-right">                     
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="RemoteConnectionsList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>  
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallRemoteConnectionEdit" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="edit">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <section class="panel">
+            <header class="panel-heading">
+                <span class="pull-left"><span name="lbl" caption="synoptics">synoptics</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body" >                
+                <ul id="MapList" class="nav nav-pills nav-stacked" style="height:200px;"></ul>                          
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="javascript:$.module.load('Impianti/Operators/hs_ManageMap');" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="edit">Edit</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="tmplNavigationbar">
+<li class="current">
+    <a href="javascript:$.module.load('Impianti/Operators/List');"><i class="fa fa-tasks"></i><span name="lbl" caption="Installations">Installations</span></a>
+</li>
+<li>
+    <a href="javascript:$.module.load('Impianti/Operators/MasterDevices');"><i class="fa fa-sitemap"></i><span name="lbl" caption="devices">Devices</span></a>
+</li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplFieldDevicesList">
+<li>
+    <div class="pull-left">&nbsp; ${devDes}</div>
+    <div class="pull-right"> &nbsp;ver.:&nbsp; ${Version}&nbsp;</div>
+    <div class="clearfix"></div>
+</li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplactiveUsersList">
+    <li>
+    <div class="pull-left">&nbsp; ${RoleName}</div>
+    <div class="pull-right"> &nbsp; ${countUser}&nbsp;</div>
+    <div class="clearfix"></div>
+    </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplRemoteConnectionsList">
+<li>
+    <div class="pull-left">${Descr}</div>
+    <div class="pull-right">
+        {{if connectionType==1}}
+            {{if browserInfo.os=="Windows"}}
+                <a href="${$.appParms.rdp()}?IdImpianto=${IdImpianto}&IdAddress=${IdAddress}" class="btn btn-info btn-sm"><span name="lbl" caption="signin">Sign in</span></a>
+            {{/if}}
+        {{else}}
+            {{if connectionType==0}}
+                <a href="http://${remoteAddress}" target="_blank" class="btn btn-info btn-sm"><span name="lbl" caption="signin">Sign in</span></a>
+            {{/if}}
+        {{/if}}
+    </div>
+    <div class="clearfix"></div>
+</li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplListContatti">
+<tr>
+    <td><b>${Descrizione}</b></td>
+    <td>${telFisso}</td>
+    <td>${telMobile}</td>
+    <td>${emailaddress}</td>
+    <td>${Nome}</td>
+    <td>${Indirizzo}</td>
+    <td>
+        <span class="pull-right">
+            <a href="javascript:selContatto('${IdContatto}');" class="btn btn-info btn-sm"><span name="lbl" caption="edit">detail</span></a>&nbsp;            
+        </span>        
+    </td>
+</tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplMapList">
+<li>
+    <div class="pull-left">${MapDesc}</div>
+    <div class="clearfix"></div>
+</li>
+</script>
+<!-- /Template -->
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/Detail.js" type="text/javascript"></script>

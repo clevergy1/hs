@@ -1,0 +1,253 @@
+﻿
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+                       
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<!--List-->
+<div class="row" id="List">
+    <div class="col-md-12">
+        <div class="position-center">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-md-2 col-sm-2 control-label" for="Cod_Add"><span name="lbl" caption="element">element</span></label>
+                        <div class="col-md-2 col.sm-2">
+                            <input type="text" id="selElement" class="form-control"/>
+                        </div>
+                    <div class="col-md-4 col.sm-4">
+                        <input type="text" id="DescrSelectedElement" class="form-control"  readonly="readonly"/>
+                    </div>
+                </div>
+			</form>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="errorcodes">errorcodes</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table table-striped  table-hover cf ">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="code">code</span></th>
+                            <th><span name="lbl" caption="level">level</span></th>
+                            <th>Decr. IT</th>
+                            <th>Decr. EN</th>
+                            <!--<th></th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="ListErrors"></tbody>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="btn-group  pull-right">
+                    <a href="#" id="btnCallAdd" class="btn btn-default" style="display:none;"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">add</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+</div>
+<div id="selElementModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <div class="clearfix"></div>
+			</div>
+			<div class="modal-body">
+                <div style="height:200px;">
+                    <div style="overflow-y:auto;height:100%">
+			            <ul id="elements2Select" class="nav nav-pills nav-stacked" ></ul> 
+                    </div>
+                </div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--/List-->
+
+<!--Add-->
+<div class="row" id="Add" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="add">Add</span>&nbsp;<span name="lbl" caption="errorcode">errorcode</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" id="btnCloseAdd" class="fa fa-times"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div class="position-center">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="elementCode_Add"><span name="lbl" caption="element">element</span></label>
+                            <div class="col-md-2">
+                                <input type="text" id="elementCode_Add" class="form-control" style="text-transform:uppercase" placeholder="" readonly="readonly"/>
+                            </div>
+                            <div class="col-md-4 col.sm-4">
+                                <input type="text" id="DescrSelectedElement_Add" class="form-control"  readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="errorCode_Add"><span name="lbl" caption="code">code</span></label>
+                            <div class="col-md-4">
+                                <input type="text" id="errorCode_Add" class="form-control required" style="text-transform:uppercase" placeholder=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="errorLevel_Add">Level</label>
+                            <div class="col-md-4">
+                                <select id="errorLevel_Add" class="form-control input-lg m-bot15 required">
+                                    <option value="0">Log</option>
+                                    <option value="1">Warning</option>  
+                                    <option value="2">Alarm</option>                                     
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label " for="DescrIT_Add">Descr. IT</label>
+                            <div class="col-md-8">
+                                <input type="text" id="DescrIT_Add"  class="form-control required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label" for="DescrEN_Add">Descr. EN</label>
+                            <div class="col-md-8">
+                               <input type="text" id="DescrEN_Add" class="form-control required"/>
+                            </div>
+                        </div>   
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnAdd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Add-->
+
+<!--Update-->
+<div class="row" id="DivUpdate" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="edit">edit</span>&nbsp;<span name="lbl" caption="errorcode">errorcode</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" id="btnCloseUpd" class="fa fa-times"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div class="position-center">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="elementCode_Upd"><span name="lbl" caption="element">element</span></label>
+                            <div class="col-md-2">
+                                <input type="text" id="elementCode_Upd" class="form-control" style="text-transform:uppercase" placeholder="" readonly="readonly"/>
+                            </div>
+                            <div class="col-md-4 col.sm-4">
+                                <input type="text" id="DescrSelectedElement_Upd" class="form-control"  readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="errorCode_Upd"><span name="lbl" caption="code">code</span></label>
+                            <div class="col-md-4">
+                                <input type="text" id="errorCode_Upd" class="form-control required" style="text-transform:uppercase" placeholder=""/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label" for="errorLevel_Upd">Level</label>
+                            <div class="col-md-4">
+                                <select id="errorLevel_Upd" class="form-control input-lg m-bot15 required">
+                                    <option value="0">Log</option>
+                                    <option value="1">Warning</option>  
+                                    <option value="2">Alarm</option>                                     
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label " for="DescrIT_Upd">Descr. IT</label>
+                            <div class="col-md-8">
+                                <input type="text" id="DescrIT_Upd"  class="form-control required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label" for="DescrEN_Upd">Descr. EN</label>
+                            <div class="col-md-8">
+                               <input type="text" id="DescrEN_Upd" class="form-control required"/>
+                            </div>
+                        </div>   
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpdate" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Update-->
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplList">
+    <tr>        
+        <td>${errorCode}</td>
+        <td>
+            {{if errorLevel==0}}
+               log
+            {{else}}
+                {{if errorLevel==1}}
+                    warning
+                {{else}}
+                    alarm
+                {{/if}}
+            {{/if}}
+        </td>
+        <td>${DescIT}</td>
+        <td>${DescEN}</td>
+
+        <td>
+            <span class="pull-right">                
+                <a href="javascript:callUpdate('${elementCode}',${errorCode});" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+            </span>
+        </td>        
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplElem">
+    <li id="${name}">
+        <a href="javascript:;">
+            <span class="pull-left">${name}&nbsp;-&nbsp;<span name="lbl">${descr}</span></span>
+            <span class="pull-right"><i class="fa fa-chevron-right"></i></span>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!--templates-->
+
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/ErrorCodes.js" type="text/javascript"></script>

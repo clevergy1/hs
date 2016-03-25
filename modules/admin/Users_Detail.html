@@ -1,0 +1,235 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div id="rowuserDetail" class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="userdetail">User detail</span></span>
+                <span class="tools pull-right"> 
+                   <a href="javascript:$.module.load('admin/Users_List');" ><i class="fa fa-times"></i></a>               
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><span name="lbl" caption="username">User name</span>:&nbsp;</td>
+                                <td><span id="userdetailUserName"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="Installations">Installations</span>:&nbsp;</td>
+                                <td><span id="totImpianti"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Email:&nbsp;</td>
+                                <td><span id="userdetailEmail"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Password:&nbsp;</td>
+                                <td><button id="btnCallResetUserPassword" class="btn btn-info">reset</button></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="usercomment">Comment</span>:&nbsp;</td>
+                                <td><span id="userdetailComment"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="usercreation">Creation</span>:&nbsp;</td>
+                                <td><span id="userdetailCreateDate"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="userlastlogin">Last Login</span>:&nbsp;</td>
+                                <td><span id="userdetailLastLogin"></span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="userisenabled">Is enabled</span>:&nbsp;</td>
+                                <td>
+                                    <div class="make-switch">
+                                        <input type="checkbox" id="userdetailIsApproved" data-on="primary" data-off="info"/>                                                       
+                                    </div>                                                     
+                                </td>
+                                <td><div id="userdetailIsApprovedresult"></div></td>
+                            </tr>
+                            <tr>
+                                <td><span name="lbl" caption="userislocked">Is locked</span>:&nbsp;</td>
+                                <td>
+                                    <div class="make-switch">
+                                        <input type="checkbox" id="userdetailIsLockedOut" data-on="primary" data-off="info"/>
+                                    </div>                                                     
+                                </td>                                          
+                                <td><div id="userdetailIsLockedOutresult"></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6" id="divImpiantiuser" style="display:none;">
+                     <form class="form-horizontal" role="form">
+                        <div class="form-group">   
+                            <label class="col-md-2 control-label" for="ImpiantoSelected"><span name="lbl" caption="Installation">Installation</span>:</label>   
+                            <div class="col-md-8">
+                                <div class="input-group m-bot15">                                    
+                                    <input type="text" id="ImpiantoSelected" class="form-control" placeholder=""/>
+                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                </div>
+                            </div>                  						
+                        </div>
+                    </form>
+
+		            <table class="table tableUserImpianti" data-page-size="2">
+			            <tbody id="UserImpiantiList"></tbody>
+			            <tfoot>
+				            <tr>
+					            <td colspan="3" style="text-align:center;">
+						            <div class="pagination pagination-centered hide-if-no-paging"></div>
+					            </td>
+				            </tr>
+			            </tfoot>
+		            </table>
+                </div>
+
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <button id="btnCallUpdateUser" class="btn btn-default pull-left">
+                        <i><img src="images/user_edit.png" alt="" class="imgbtn" /></i>
+                        <span name="lbl" caption="edit">Edit</span>
+                    </button>
+                </span>
+                <span class="tools pull-right">
+					<button id="btnCallDeleteUser" class="btn btn-danger pull-right" >
+                        <i><img src="images/user_remove.png" alt="" class="imgbtn" /></i>
+                        <span name="lbl" caption="delete">Delete</span>
+					</button>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<div id="DeleteUserModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    <h4 class="modal-title"><span name="lbl" caption="deleteuser">Delete user</span></h4>
+			</div>
+			<div class="modal-body">
+			    <p>                            
+                    <span name="lbl" caption="msgconfirmuserdelete">Confirm delete for user</span>:&nbsp;<span id="UserNameToDelete">?</span>
+                    <br />
+                    <span name="lbl" caption="msgoperationirreversible">This operation cannot be recovered</span>
+			    </p>
+			</div>
+			<div class="modal-footer">
+			    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><span name="lbl" caption="close">Close</span></button>
+			    <button id="btnDeleteUser" type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><span name="lbl" caption="confirmdelete">Confirm delete</span></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="SelectImpiantoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+			    <h4 class="modal-title"> <span name="lbl" caption="Installations">Installationse</span></h4>
+			</div>
+			<div class="modal-body">
+		        <table class="table tableImpianti" data-page-size="2">
+			        <tbody id="ImpiantiList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--reset password-->
+<div id="rowresetpassword" class="row" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="resetuserpassword">Reset user password</span></span>
+                <span class="tools pull-right"> 
+                    <a href="#" class="wcloserowresetpassword"><i class="fa fa-times"></i></a>                  
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"><span name="lbl" caption="newpassword">New password:</label>
+                        <div class="col-md-4">
+                            <input type="password" id="resetNewPassword" class="form-control" placeholder="New password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"><span name="lbl" caption="retype">&nbsp;password:</label>
+                        <div class="col-md-4">
+                            <input type="password" id="resetNewPassword2" class="form-control" placeholder="Retype password"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <button id="btnResetPassword" class="btn btn-default pull-left"><i><img src="images/user_save.png" alt="" class="imgbtn" /></i><span name="lbl" caption="save">Save</span></button>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>        
+<!--/reset password-->
+
+<!--Template-->
+<script type="text/x-jquery-tmpl" id="tmplImpiantiList">
+<tr>
+    <td>
+        <a href="javascript:selImpianto('${IdImpianto}','${DesImpianto}');">
+            <span class="pull-left">${DesImpianto}</span>
+            <span class="pull-right"><i class="fa fa-chevron-right"></i></span>
+        </a>
+    </td>
+</tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmpltableUserImpianti">
+<tr>
+    <td>
+        <a href="javascript:selImpianto('${IdImpianto}','${DesImpianto}');" class="btn btn-info btn-sm"><span name="lbl" caption="select">Select</span></a>
+    </td>
+    <td>${DesImpianto}</td>    
+    <td>
+        <a href="javascript:RemoveImpiantoUser('${IdImpianto}');" class="btn btn-danger btn-sm"><span name="lbl" caption="delete">delete</span></a>
+    </td>
+</tr>
+</script>
+<!--/Template-->
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+
+<script src="js/cryptoJS/rollups/aes.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/app/admin/Users_Detail.js"></script>

@@ -1,0 +1,181 @@
+﻿
+<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div id="rowuserList" class="row" >
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="userslist">Users list</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px !important;">
+                                <label class="sr-only" for="roleSelected"><span name="lbl" caption="select_a_role">Select a role</span>:</label>
+                                <div class="input-group m-bot15"  >   
+						        <input type="text" id="roleSelected" class="form-control" placeholder=""/>
+                                </div>
+                            </td>
+                            <td style="padding:5px !important;">
+                                <label class="sr-only" for="searchString"><span name="lbl" caption="search">search</span>:</label>                        
+                                <div class="input-group m-bot15"  >                                    
+                                    <input type="text" id="searchString" class="form-control" placeholder=""/>
+                                    <span id="btnClearsearchString" class="input-group-addon"><i class="fa fa-remove"></i></span>                            
+                                </div>
+                            </td>
+                            <td style="padding:5px !important;">
+                                <label class="sr-only" for="searchImpianto"><span name="lbl" caption="Installation">Installation</span>:</label>
+                                <div class="input-group m-bot15"  > 
+                                    <input type="text" id="searchImpianto" class="form-control" placeholder=""/>
+                                    <span id="btnClearsearchImpianto" class="input-group-addon"><i class="fa fa-remove"></i></span> 
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+				<hr />
+		        <table class="table tableUsers" data-page-size="2">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"><span name="lbl" caption="user">user</span></th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="usercomment">Comment</span></th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="Installations">Installations</span></th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="status">status</span></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+			        <tbody id="manageUsersList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="5" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <button id="bntCallAddUser" class="btn btn-default pull-left">
+                        <i><img src="images/user_add.png" alt="" class="imgbtn" /></i>
+                        <span name="lbl" caption="add">add</span>
+                    </button>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+<div id="SelectRoleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+			    <h4 class="modal-title"> <span name="lbl" caption="select_a_role">Select a role</span></h4>
+			</div>
+			<div class="modal-body">
+		        <table class="table tableRoles" data-page-size="2">
+			        <tbody id="RolesList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="SelectImpiantoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+			    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+			    <h4 class="modal-title"> <span name="lbl" caption="Installations">Installationse</span></h4>
+			</div>
+			<div class="modal-body">
+		        <table class="table tableImpianti" data-page-size="2">
+			        <tbody id="ImpiantiList"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Templates-->
+<script type="text/x-jquery-tmpl" id="tmplRolesList">
+    <tr>
+        <td>
+            <a href="javascript:selRole('${RoleName}');">
+                <span class="pull-left">${RoleName}</span>
+                <span class="pull-right"><i class="fa fa-chevron-right"></i></span>
+            </a>
+        </td>
+    </tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplmanageUsersList">
+    <tr>
+        <td>${UserName}</td>
+        <td>${Comment}</td>
+        <td>${totImpianti}</td>
+        <td>
+            {{if IsApproved}}
+                <img src="images/user_ok.png" class="imgbtn"><span name="lbl" caption="userisenabled">Is Enabled</span>
+            {{else}}
+                <img src="images/user_close.png" class="imgbtn"><span name="lbl" caption="userisdisabled">Disabled</span>
+            {{/if}}
+            {{if IsLockedOut}}
+                <img src="images/lock.png" class="imgbtn"><span name="lbl" caption="userislocked">Locked</span>
+            {{else}}
+                <img src="images/unlock.png" class="imgbtn"><span name="lbl" caption="userisunlocked">Unlocked</span>
+            {{/if}}
+        </td>
+        <td>                           
+            <a href="javascript:upduser('${UserName}');" class="btn btn-info callupdateuser"><span name="lbl" caption="detail">Detail</span></a>            
+        </td>
+        <td>                    
+            <a href="javascript:dev4user('${UserName}');" class="btn btn-info userDevices"><span name="lbl" caption="devices">devices</span></a>      
+            
+        </td>
+    </tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplImpiantiList">
+<tr>
+    <td>
+        <a href="javascript:selImpianto('${IdImpianto}','${DesImpianto}');">
+            <span class="pull-left">${DesImpianto}</span>
+            <span class="pull-right"><i class="fa fa-chevron-right"></i></span>
+        </a>
+    </td>
+</tr>
+</script>
+<!--/Templates-->
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/app/admin/Users_List.js"></script>

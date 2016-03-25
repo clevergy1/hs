@@ -1,0 +1,148 @@
+﻿<link rel="stylesheet" href="bstable/bootstrap-table.min.css" />
+<!--daterangepicker-->
+<link rel="stylesheet" href="css/bs3/datepicker.css" />
+<link rel="stylesheet" href="css/bs3/daterangepicker-bs3.css" />
+
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>   
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8sdinAnz');"><span id="Descr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor"> 
+                <span id="logDescription"></span>               
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form action="#" class="form-horizontal ">
+                    <div class="form-group">
+                        <label class="control-label col-md-3"><span id="daterange">daterange</span></label>
+                        <div class="col-md-4">
+                            <div class="input-group input-large" data-date="13/07/2013" data-date-format="dd/mm/yyyy">
+                                <input type="text" class="form-control dpd1" id="datefrom" name="datefrom">
+                                <span class="input-group-addon">To</span>
+                                <input type="text" class="form-control dpd2" id="dateto" name="dateto">                                
+                            </div>                             
+                        </div>
+                         <div class="col-md-4">
+                             <a href="#" id="btnLoad" class="btn btn-sm btn-default">Load</a>                           
+                         </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="sdin_Anz">sdin_Anz</span></span>
+                <span class="tools pull-right"> 
+                    <!--<a href="javascript:call_chart();" class="fa fa-beer"></a>&nbsp;-->
+                    <a href="javascript:call_export();" class="fa fa-download"></a>                   
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div id="tableContent">
+                    <table id="tableLog" class="table table-responsive table-condensed" data-toggle="table"  data-cache="false" data-height="400">
+                        <thead>
+                            <tr>  
+                                <th><span name="lbl" caption="day">day</span> </th> 
+                                <th><span name="lbl" caption="code">code</span> </th>                             
+                                <th><span name="lbl" caption="description">description</span></th>
+                                <th><span name="lbl" caption="status">status</span> </th> 
+                                <th>Total Current&nbsp;A</th>
+                                <th>Active Power 1&nbsp;W</th>
+                                <th>Active Power 2&nbsp;W</th>
+                                <th>Active Power 3&nbsp;W</th>
+                                <th>Total Active Power&nbsp;W</th>
+                                <th>Total Reactive Power&nbsp;var</th>
+                                <th>Total Apparent Power&nbsp;VA</th>
+                                <th>Total Power Factor</th>  
+                                <th>Active Energy 1 Consumed&nbsp;kWh</th>      
+                                <th>Active Energy 1 Produced&nbsp;kWh</th>            
+                                <th>Active Energy 2 Consumed&nbsp;kWh</th>              
+                                <th>ActiveEnergy 2 Produced&nbsp;kWh</th>                 
+                                <th>Active Energy 3 Consumed&nbsp;kWh</th>                     
+                                <th>Active Energy 3 Produced&nbsp;kWh</th>                        
+                                <th>Total ActiveEnergy Consumed&nbsp;kWh</th>                      
+                                <th>Total Active Energy Produced&nbsp;kWh</th>                        
+                                <th>Total Reactive Energy Produced&nbsp;kvarh</th>                       
+                                <th>Total Reactive Energy Consumed&nbsp;kvarh</th>
+                            </tr>
+                        </thead>
+			            <tbody id="logList"></tbody>
+                    </table>
+                </div>
+                <div id="graphContent" style="display:none;">
+			        <div>
+				        <canvas id="canvas" style="height:100%;" ></canvas>
+			        </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmpllogList">
+    <tr>
+        <td>${dtLog}</td>
+        <td>${Cod}</td>
+        <td>${Descr.trim()}</td>
+        <td>${stato}</td>
+        <td>${Number(TotalCurrent).toLocaleString()}</td> 
+        <td>${Number(ActivePower1).toLocaleString()}</td>                 
+        <td>${Number(ActivePower2).toLocaleString()}</td>                 
+        <td>${Number(ActivePower3).toLocaleString()}</td>  
+        <td>${Number(TotalActivePower).toLocaleString()}</td> 
+        <td>${Number(TotalReactivePower).toLocaleString()}</td>                     
+        <td>${Number(TotalApparentPower).toLocaleString()}</td>                       
+        <td>${Number(TotalPowerFactor).toLocaleString()}</td>                      
+        <td>${Number(ActiveEnergy1Consumed).toLocaleString()}</td>                      
+        <td>${Number(ActiveEnergy1Produced).toLocaleString()}</td>                       
+        <td>${Number(ActiveEnergy2Consumed).toLocaleString()}</td>                      
+        <td>${Number(ActiveEnergy2Produced).toLocaleString()}</td>                
+        <td>${Number(ActiveEnergy3Consumed).toLocaleString()}</td>                   
+        <td>${Number(ActiveEnergy3Produced).toLocaleString()}</td>                     
+        <td>${Number(TotalActiveEnergyConsumed).toLocaleString()}</td>                       
+        <td>${Number(TotalActiveEnergyProduced).toLocaleString()}</td>                      
+        <td>${Number(TotalReactiveEnergyProduced).toLocaleString()}</td>                
+        <td>${Number(TotalReactiveEnergyConsumed).toLocaleString()}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+    <tr>
+        <td>${ProbeDesc}</td>     
+        <td id="ProbeElem_${ProbeCod}">${currentValue}°&nbsp;C</td>
+    </tr>
+</script>
+<!--/templates-->
+
+<script type="text/javascript" src="bstable/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="js/jq/jquery.table2excel.js"></script>
+<!--chart-->
+<script type="text/javascript" src="js/Chart/Chart.min.js"></script>
+<!--/chart-->
+<!--daterangepicker-->
+<script type="text/javascript" src="js/bs3/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bs3/daterangepicker.js"></script>
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/supervisors/cymt100_log.js" type="text/javascript"></script>

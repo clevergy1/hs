@@ -1,0 +1,76 @@
+﻿<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+
+<div style="position:relative; top:-15px;" class="row ">
+   <div id="googlemap" ></div>
+
+    <div id="Scontainter" class="col-sm-4 draggable" style="display:none;position: absolute;top: 0px;right: -1000px;">
+        <!--list-->
+        <section class="panel" id="SectionList">
+            <header class="panel-heading  panel-operator">
+                <span class="pull-left"><span name="lbl" caption="heatingsystem">heatingsystem</span></span>
+                <span class="tools pull-right">
+                    <!--  <a href="javascript:$.module.load('Impianti/supervisors/ManageParking');" ><i class="fa fa-times"></i></a>&nbsp;-->
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>                   
+            <div class="panel-body" >  
+                <ul id="PlantList" class="nav nav-stacked mail-nav" style="height:400px;"></ul>  
+            </div>  
+        </section>
+        <!--/list-->
+    </div>
+</div>
+
+<!--templates-->
+    <!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplPlantList">
+    <li id="li_${hsId}">
+        <a href="javascript:selPlant('${hsId}')">
+            <table>
+                <tbody>
+                    <tr>                       
+                        <td style="height:18px; color:#337ab7;">${DesImpianto}  -  ${Descr}</td>                       
+                    </tr>
+                    <tr>                       
+                        <td style="height:18px;">${Indirizzo}</td>                       
+                    </tr>
+                    <tr>
+                         {{if isOnline==1}}
+                            <td><span name="lbl" caption="connected">connected</span>:&nbsp;</td>
+                            <td><i class="fa fa-thumbs-o-up"></i>&nbsp;</td>
+                        {{else}}
+                            <td><span name="lbl" caption="connected">connected</span>:&nbsp;</td>
+                             <td><i class="fa fa-times-circle-o"></i>&nbsp;</td>
+                        {{/if}}
+                        
+                    </tr>
+                    <tr>
+                         {{if MaintenanceMode==1}}
+                            <td><span name="lbl" caption="maintenance">Maintenance</span>:&nbsp;</td>
+                            <td><i class="fa fa-wrench"></i>&nbsp;</td>
+                        {{else}}
+                            <td><span name="lbl" caption="maintenance">Maintenance</span>:&nbsp;</td>
+                             <td><i class="fa fa-thumbs-o-up"></i>&nbsp;</td>
+                        {{/if}}
+                    
+                    </tr>                  
+                </tbody>
+            </table> 
+        </a>
+    </li>
+</script>
+
+    <script type="text/x-jquery-tmpl" id="tmplpageOperation">
+        <div class="pull-left breadcrumb_system">
+            <a href="javascript:$.module.load('Impianti/Operators/manageDevice8');" class="btn btn-round btn-info"> <i class="fa fa-cubes fa-2x"></i></a><span name="lbl" caption="heatingsystems">plants</span>
+        </div>
+    </script>
+
+<script src="js/jq/jquery.slimscroll.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+    <script src="js/app/synoptic/Operators/hs_UsageMaps.js" type="text/javascript"></script>
+      
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

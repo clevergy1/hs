@@ -1,0 +1,1890 @@
+﻿<link rel="stylesheet" href="css/bs3/datepicker3.css" />
+
+<div class="row" id="errorOffline" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading panel-error">
+                <div class="pull-left">
+                    <span name="lbl" caption="conn_error">Errore di Connessione</span>
+                </div>
+                <span class="tools pull-right">
+                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                </span>
+            </header>
+            <div class="panel-body">
+                <span name="lbl" caption="conn_error_message">Connessione Caduta o Persa: Attendere che l'interfaccia ritorni online.</span>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row" id="MaintenanceMode" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading panel-stanbdby">
+                <div class="pull-left">
+                    <span name="lbl" caption="StandBy">StandBy</span>
+                </div>
+                <span class="tools pull-right">
+                    <i class="fa fa-exclamation-triangle fa-2x"></i>
+                </span>
+            </header>
+            <div class="panel-body">
+                <span name="lbl" caption="Maintenance_Mode_message">Manutenzione Attiva, non arriveranno piu mail e messaggi di errore finche non si ripoterà l'impianto in stato operativo.</span>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row" id="synoptic">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading   panel-operator  panel-operator">
+                <div class="pull-left">
+                    <span name="lbl" caption="synoptic">synoptic</span>
+                </div>
+
+                <div id="tools" class="pull-right">
+                    <div id="zoomBtnContainer"></div>
+                </div>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+
+                <div id="svg-main" style="width:100%;float: left; overflow: hidden;"></div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+<div class="row" id="detail" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading   panel-operator  panel-operator">
+                Detail
+                <span class="tools pull-right">
+                    <a href="javascript:;"><i class="fa fa-times btnCloseDetail fa-2x"></i></a>
+                </span>
+            </header>
+            <div id="module_synoptic" class="panel-body"></div>
+        </section>
+    </div>
+
+</div>
+
+
+<!--ErrorLog-->
+<div class="row" id="DivErrorLog" style="display:none">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading   panel-operator  panel-operator">
+                <span class="pull-left"><span name="lbl" caption="errorcodes">errorcodes</span></span>
+                <span class="tools pull-right">
+                    <a id="btnCloseDivErrorLog" href="javascript:;"><i class="fa fa-times fa-2x"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body-ListLog" style="height:400px;overflow-y:auto;overflow-x:auto;">
+                <table class="table table-striped table-bordered table-hover cf ">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="day">day</span> </th>
+                            <th><span name="lbl" caption="level">level</span></th>
+                            <th><span name="lbl" caption="description">description</span></th>
+                            <th>Val.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListErrorLog"></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align:center;">
+                                <div class="pagination pagination-centered hide-if-no-paging"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <br />
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/ErrorLog-->
+
+<div class="plizwait"></div>     <!--frullino per le chiamate in ajax-->
+<!--templates--><!--templates--><!--templates--><!--templates--><!--templates--><!--templates--><!--templates-->
+<!--templates erroe log-->
+<script type="text/x-jquery-tmpl" id="tmplListErrorLog">
+    <tr>
+        <td>${moment(LogDate).format("DD/MM/YYYY HH:mm")}</td>
+        <td>
+            {{if errorLevel==0}}
+            Log
+            {{else}}
+            {{if errorLevel==1}}
+            Warning
+            {{else}}
+            Alarm
+            {{/if}}
+            {{/if}}
+        </td>
+        <td>
+            {{if localStorage.getItem("CurrentLanguage")=='it' }}
+            ${DescIT}
+            {{else}}
+            ${DescEN}
+            {{/if}}
+        </td>
+        <td>${errorValue}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListLogLastItem">
+    <tr id="loadMore">
+        <td colspan="4">load more</td>
+    </tr>
+</script>
+
+<!--templates System Detail-->
+
+<script type="text/x-jquery-tmpl" id="tmplSystemDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="heatingsystem">heatingsystem</span>
+            <span class="pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-map-marker fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><b><span name="lbl" caption="heatingsystem">Plant</span></b></div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">${Descr}</div>
+            </div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="hs_stato_${hsId}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+                <div class="col-md-2 col-xs-2"><a id="btnResetSystemStatus_${hsId}" href="javascript:$.fn.ResetSystemStatus();" class="btn btn-warning btn-sm" style="display:none;">Reset</a></div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="Online">Online</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="isOnline_${hsId}">
+                        {{if isOnline}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        <i class="fa fa-thumbs-o-down"></i>
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="Online">Note</span></div>
+                <div class="col-md-12 col-xs-12">
+                    <span id="Span1">
+                        <textarea id="Textarea1" rows="2" cols="80" class="form-control">${Note}</textarea>
+                    </span>
+                </div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-xs-2">
+                    <div class="make-switch">
+                        <label>
+                            <span name="lbl" caption="Standby">Standby</span>  &nbsp; &nbsp;<input type="checkbox" id="BSswitch" data-on="primary" data-off="info" />
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-2"><div id="SetMaintenanceModeResult"></div></div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="documents">documents</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <a href="javascript:$.fn.CalhsDoc();" class="btn btn-default btn-sm btn-primary"><span id="totDoc_${hsId}" class="badge label-info pull-left r-activity">0</span></a>
+                </div>
+            </div>
+
+            <div class="row m-bot20">
+                <div class="col-md-5 col-xs-5"><span name="lbl" caption="tickets">tickets</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <a href="javascript:$.fn.CalhsTickets();" class="btn btn-default btn-sm btn-primary"> <span id="totTickets_${hsId}" class="badge label-danger pull-left r-activity">0</span></a>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+</script>
+
+
+<!--templates door-->
+<script type="text/x-jquery-tmpl" id="tmplDoorsDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="door">door</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><b>${DoorCod}</b></div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">${DoorDesc}</div>
+            </div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="currentValue_${DoorCod}">
+                        {{if currentValue==false}}
+                        <img src="images/closed_door.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/open_door.png" style="height:24px;width:24px" />
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text1" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text2" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text23" placeholder="" readonly="readonly">
+                {{/if}}
+
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates Cron-->
+<script type="text/x-jquery-tmpl" id="tmplCronDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="chronothermostats">chronothermostats</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CronCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${CronDescr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Cronstato_${CronCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">setPoint</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="SetPoint_${CronCod}">${SetPoint}</span>°C
+                </div>
+            </div>
+
+            <div id="ProbeElem_${CronCod}"></div>
+
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CronCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text3" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text4" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text24" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+
+            <div class="row m-bot20">
+                <!--<a href="javascript:callEditCron('${CronId}');" class="btn btn-primary center-block"><i class="fa fa-bar-chart"></i><span name="lbl" caption="cron_current_cc">cron_current_cc</span></a>-->
+                <a href="javascript:$.module.load('Impianti/Operators/hs_Cron_Tasks');" class="btn btn-primary center-block"><span name="lbl" caption="schedule">schedule</span></a>
+
+            </div>
+            <div class="row m-bot20"><a href="javascript:$.module.load('Impianti/Operators/hs_Cron_Edit');" class="btn btn-primary center-block"><span name="lbl" caption="profiles">profiles</span></a></div>
+        </div>
+    </section>
+</script>
+<!--templates-->
+
+<script type="text/x-jquery-tmpl" id="tmplPlant">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="plant">plant</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Descr}</b></div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Calstato_${hsId}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <hr />
+            <div id="ProbeElem_${hsId}"></div>
+        </div>
+    </section>
+</script>
+
+<!--templates Gru-->
+<script type="text/x-jquery-tmpl" id="tmplGruDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_gru">Termic Group</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${GruCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${GruDescr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span2">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">setPoint</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="SetPoint_${GruCode}">{{if Number(SetPoint)<1000}}  ${SetPoint} {{else}}--{{/if}}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Run</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="isRunning_${GruCode}">${isRunning}</span>%
+                </div>
+            </div>
+            <hr>
+            <div id="ProbeElem_${GruCod}"></div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${GruCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text5" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"
+                        }}
+                <input type="text" class="form-control dpd1" id="Text6" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text25" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+
+            <div class="row m-bot20">
+                <a href="javascript:callEditGru('${Id}');" class="btn btn-primary center-block"><i class="fa fa-bar-chart"></i><span name="lbl" caption="cal_current_cc">gru_current_cc</span></a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</script>
+<!--templates Cal-->
+<script type="text/x-jquery-tmpl" id="tmplCalDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="boiler">boiler</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CalCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${CalDescr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Calstato_${CalCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">setPoint</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="SetPoint_${CalCod}">{{if Number(SetPoint)<1000}}  ${SetPoint} {{else}}--{{/if}}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Run</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="isRunning_${CalCod}">${isRunning}</span>%
+                </div>
+            </div>
+            <hr>
+            <div id="ProbeElem_${CalCod}"></div>
+
+            <div class="row m-bot20">
+                <a href="javascript:callEditCal('${CalId}');" class="btn btn-primary center-block"><i class="fa fa-bar-chart"></i><span name="lbl" caption="cal_current_cc">cal_current_cc</span></a>
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CalCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text7" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text8" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text26" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+        </div>
+    </section>
+</script>
+
+<!--templates GAS-->
+<script type="text/x-jquery-tmpl" id="tmplGasDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_ctGas">Gas Meter</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <!--<hr>-->
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Gasstato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            {{if GasType==0}}
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">&nbsp;</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="currentValue_${Cod}">${Number(currentValue).toLocaleString()}</span>&nbsp;m3
+                </div>
+            </div>
+            {{/if}}
+            {{if GasType==1}}
+            <div style="height:400px;overflow-y:auto; border: 1px solid #ddd;">
+                <table class="table  table-condensed">
+                    <tbody>
+
+                        <tr>
+                            <td>Val:</td>
+                            <td> <span id="MeasuredGasCounter_${Cod}">${Number(MeasuredGasCounter).toLocaleString()}</span>&nbsp;m3</td>
+
+                        </tr>
+                        <tr>
+                            <td>Pressure:</td>
+                            <td><span id="Span4">${Number(Pressure).toLocaleString()}</span>&nbsp;bar</td>
+                        </tr>
+                        <tr>
+                            <td>Temperature:</td>
+                            <td><span id="Span5">${Number(Temperature).toLocaleString()}</span>&nbsp;°C</td>
+                        </tr>
+                        <tr>
+                            <td>Conversion Costant:</td>
+                            <td><span id="Span6">${Number(ConversionCostant).toLocaleString()}</span>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Corrected Vol. in Err.Cond.:</td>
+                            <td><span id="CorrectedVolInErrCond_${Cod}">${Number(CorrectedVolInErrCond).toLocaleString()}</span>&nbsp;m3</td>
+                        </tr>
+                        <tr>
+                            <td>Corrected Vol. Day:</td>
+                            <td><span id="CorrectedVolDay_${Cod}">${Number(CorrectedVolDay).toLocaleString()}</span>&nbsp;m3</td>
+                        </tr>
+                        <tr>
+                            <td>Corrected Vol. Month:</td>
+                            <td><span id="CorrectedVolMonth_${Cod}">${Number(CorrectedVolMonth).toLocaleString()}</span>&nbsp;m3</td>
+                        </tr>
+                        <tr>
+                            <td>Measured Vo. lDay:</td>
+                            <td><span id="MeasuredVolDay_${Cod}">${Number(MeasuredVolDay).toLocaleString()}</span>&nbsp;m3</td>
+                        </tr>
+                        <tr>
+                            <td>Measured Flow:</td>
+                            <td><span id="MeasuredFlow_${Cod}">${Number(MeasuredFlow).toLocaleString()}</span>&nbsp;m3/h</td>
+                        </tr>
+                        <tr>
+                            <td>Corrected Flow:</td>
+                            <td><span id="CorrectedFlow_${Cod}">${Number(CorrectedFlow).toLocaleString()}</span>&nbsp;m3/h</td>
+                        </tr>
+                        <tr>
+                            <td>Battery Capacity:</td>
+                            <td><span id="BatteryCapacity_${Cod}">${Number(BatteryCapacity).toLocaleString()}</span>&nbsp;%</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            {{/if}}
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="marca" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text27" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text28" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+
+
+
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CtbCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+
+
+<!--templates CTB-->
+<script type="text/x-jquery-tmpl" id="tmplCtbDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="meter">meter</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CtbCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${CtbDesc}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Ctbstato_${CtbCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">T° Mandata</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Tsend_${CtbCod}">${Tsend}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">T° Ritorno</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Tret_${CtbCod}">${Tret}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Portata</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Flowrate_${CtbCod}">${Flowrate}</span>m3/h
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Pot Instantanea</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Power_${CtbCod}">${Power}</span>W
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Energia</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="EnergyCounter_${CtbCod}">${EnergyCounter}</span>MWh
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text9" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text10" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text29" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <hr>
+            <div id="ProbeElem_${CtbCod}"></div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CtbCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+
+<!--templates Cir-->
+<script type="text/x-jquery-tmpl" id="tmplCirDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="circulator">circulator</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CirCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${CirDescr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Cirstato_${CirCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="isRunning_${CirCod}">${isRunning}</span>%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">
+                    <div style="position: relative;height:150px; overflow-y:auto;overflow-x:auto;">
+                        <table id="CronoProfilesList" class="table table-striped table-bordered table-hover cf "></table>
+                    </div>
+                </div>
+                <!--<div class="col-md-12 col-xs-12">
+                    <a href="javascript:$.fn.CallChangeCirCurrentProfile('${CirId}');" class="btn btn-default center-block"><span name="lbl" caption="edit">edit</span></a>
+                </div>-->
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${CirCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div id="ProbeElem_${CirCod}"></div>
+        </div>
+    </section>
+</script>
+<!--cird-->
+<script type="text/x-jquery-tmpl" id="tmplCirdDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="circulatorD">circulatorD</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Cirdstato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">${langResources['cirDworkingmode']} </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="WorkingMode_${Cod}">
+                        {{if WorkingMode==0}} ${langResources['cirDworkingmode0']} {{/if}}
+                        {{if WorkingMode==1}} ${langResources['cirDworkingmode1']} {{/if}}
+                        {{if WorkingMode==2}} ${langResources['cirDworkingmode2']} {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="isRunning1_${Cod}">${isRunning1}</span>%
+                    <span id="isRunning2_${Cod}">${isRunning2}</span>%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">
+                    <div style="position: relative;height:150px; overflow-y:auto;overflow-x:auto;">
+                        <table id="CronoProfilesList" class="table table-striped table-bordered table-hover cf "></table>
+                    </div>
+                </div>
+                <!--<div class="col-md-12 col-xs-12">
+                    <a href="javascript:$.fn.CallChangeCirdCurrentProfile('${Id}');" class="btn btn-default center-block"><span name="lbl" caption="edit">edit</span></a>
+                </div>-->
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div id="ProbeElem_${Cod}"></div>
+        </div>
+    </section>
+</script>
+<!--cirm-->
+<script type="text/x-jquery-tmpl" id="tmplCirmDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="circulatorM">circulatorM</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Cirdstato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">${langResources['cirMworkingmode']} </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="WorkingMode_${Cod}">
+                        {{if WorkingMode==0}} ${langResources['cirMworkingmode0']} {{/if}}
+                        {{if WorkingMode==1}} ${langResources['cirMworkingmode1']} {{/if}}
+                        {{if WorkingMode==2}} ${langResources['cirMworkingmode2']} {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Voltage</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Voltage_${Cod}">${Number(Voltage).toLocaleString()}</span>&nbsp;V
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Current</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Curr_${Cod}">${Number(Curr).toLocaleString()}</span>&nbsp;A
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Power</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Power_${Cod}">${Number(Power).toLocaleString()}</span>&nbsp;W
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Round Minute</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RoundXMinute_${Cod}">${Number(RoundXMinute).toLocaleString()}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">PumpHead</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="PumpHead_${Cod}">${Number(PumpHead).toLocaleString()}</span>&nbsp;m
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Exitmated Flow</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="ExitmatedFlow_${Cod}">${Number(ExitmatedFlow).toLocaleString()}</span>&nbsp;mc/h
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Liquid Temp.</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="LiquidTemp_${Cod}">${Number(LiquidTemp).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">
+                    <div style="position: relative;height:150px; overflow-y:auto;overflow-x:auto;">
+                        <table id="CronoProfilesList" class="table table-striped table-bordered table-hover cf "></table>
+                    </div>
+                </div>
+                <!--<div class="col-md-12 col-xs-12">
+                    <a href="javascript:$.fn.CallChangeCirmCurrentProfile('${Id}');" class="btn btn-default center-block"><span name="lbl" caption="edit">edit</span></a>
+                </div>-->
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div id="ProbeElem_${Cod}"></div>
+        </div>
+    </section>
+</script>
+<!--cirdm-->
+<script type="text/x-jquery-tmpl" id="tmplCirdmDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="circulatorDM">circulatorDM</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Cirdstato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">${langResources['cirDMworkingmode']} </div>
+            </div>
+            <div class="row m-bot20">                
+                <div class="col-md-2 col-xs-2">
+                    <span id="WorkingMode1_${Cod}">
+                        {{if WorkingMode1==0}} ${langResources['cirMworkingmode0']} {{/if}}
+                        {{if WorkingMode1==1}} ${langResources['cirMworkingmode1']} {{/if}}
+                        {{if WorkingMode1==2}} ${langResources['cirMworkingmode2']} {{/if}}
+                    </span>
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="WorkingMode2_${Cod}">
+                        {{if WorkingMode2==0}} ${langResources['cirMworkingmode0']} {{/if}}
+                        {{if WorkingMode2==1}} ${langResources['cirMworkingmode1']} {{/if}}
+                        {{if WorkingMode2==2}} ${langResources['cirMworkingmode2']} {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Voltage</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="Voltage1_${Cod}">${Number(Voltage1).toLocaleString()}</span>&nbsp;V
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Voltage2_${Cod}">${Number(Voltage2).toLocaleString()}</span>&nbsp;V
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Current</div>
+                </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="Curr_${Cod}">${Number(Curr1).toLocaleString()}</span>&nbsp;A
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Curr_${Cod}">${Number(Curr2).toLocaleString()}</span>&nbsp;A
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Power</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="Power1_${Cod}">${Number(Power1).toLocaleString()}</span>&nbsp;W
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Power2_${Cod}">${Number(Power2).toLocaleString()}</span>&nbsp;W
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Round Minute</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="RoundXMinute1_${Cod}">${Number(RoundXMinute1).toLocaleString()}</span>&nbsp;
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RoundXMinute2_${Cod}">${Number(RoundXMinute2).toLocaleString()}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">PumpHead</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="PumpHead1_${Cod}">${Number(PumpHead1).toLocaleString()}</span>&nbsp;m
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="PumpHead2_${Cod}">${Number(PumpHead2).toLocaleString()}</span>&nbsp;m
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Exitmated Flow</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="ExitmatedFlow1_${Cod}">${Number(ExitmatedFlow1).toLocaleString()}</span>&nbsp;mc/h
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="ExitmatedFlow2_${Cod}">${Number(ExitmatedFlow2).toLocaleString()}</span>&nbsp;mc/h
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Liquid Temp.</div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-2 col-xs-2">
+                    <span id="LiquidTemp1_${Cod}">${Number(LiquidTemp1).toLocaleString()}</span>&nbsp;°C
+                </div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="LiquidTemp2_${Cod}">${Number(LiquidTemp2).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-12 col-xs-12">
+                    <div style="position: relative;height:150px; overflow-y:auto;overflow-x:auto;">
+                        <table id="CronoProfilesList" class="table table-striped table-bordered table-hover cf "></table>
+                    </div>
+                </div>
+                <!--<div class="col-md-12 col-xs-12">
+                    <a href="javascript:$.fn.CallChangeCirdmCurrentProfile('${Id}');" class="btn btn-default center-block"><span name="lbl" caption="edit">edit</span></a>
+                </div>-->
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div id="ProbeElem_${Cod}"></div>
+        </div>
+    </section>
+</script>
+<!--hvac-->
+<script type="text/x-jquery-tmpl" id="tmplhvacDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_hvac">hs_hvac</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="stato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">send Temp.</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="sendTemp_${Cod}">${Number(sendTemp).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">return Temp.</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="returnTemp_${Cod}">${Number(returnTemp).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">SetPoint Cold</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="SetPointCold_${Cod}">${Number(SetPointCold).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">SetPoint Heat</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="SetPointHeat_${Cod}">${Number(SetPointHeat).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Diff. Air Pressure</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="DiffAirPressure_${Cod}">${Number(DiffAirPressure).toLocaleString()}</span>&nbsp;Pa
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Fresh Air Valve</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="FreshAirValve_${Cod}">${Number(FreshAirValve).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Gas Valve</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="GasValve_${Cod}">${Number(GasValve).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Elettric Heaters TRIAC</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="ElettricHeatersTRIAC_${Cod}">${Number(ElettricHeatersTRIAC).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Hot Water Coil</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="HotWaterCoil_${Cod}">${Number(HotWaterCoil).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">humidifier</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="humidifier_${Cod}">${Number(humidifier).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Running time count, Fan</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RunTTFan_${Cod}">${Number(RunTTFan).toLocaleString()}</span>&nbsp;hh
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Running time count, Compressor 1</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RunTTCompressor1_${Cod}">${Number(RunTTCompressor1).toLocaleString()}</span>&nbsp;hh
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Running time count, Compressor 2</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RunTTCompressor2_${Cod}">${Number(RunTTCompressor2).toLocaleString()}</span>&nbsp;hh
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Running time count, Compressor 3</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RunTTCompressor3_${Cod}">${Number(RunTTCompressor3).toLocaleString()}</span>&nbsp;hh
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Running time count, Compressor 4</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="RunTTCompressor4_${Cod}">${Number(RunTTCompressor4).toLocaleString()}</span>&nbsp;hh
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Fan Blowing</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="FanBlowing_${Cod}">{{if FanBlowing}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Fan Extracting</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="FanExtracting_${Cod}">{{if FanExtracting}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Compressor 1 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor1Run_${Cod}">{{if Compressor1Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">>Compressor 1 Heat Pump Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor1HeatPumpRun_${Cod}">{{if Compressor1HeatPumpRun}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Compressor 2 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor2Run_${Cod}">{{if Compressor2Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">>Compressor 2 Heat Pump Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor2HeatPumpRun_${Cod}">{{if Compressor2HeatPumpRun}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Compressor 3 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor3Run_${Cod}">{{if Compressor3Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">>Compressor 3 Heat Pump Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor3HeatPumpRun_${Cod}">{{if Compressor3HeatPumpRun}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Compressor 4 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor3Run_${Cod}">{{if Compressor3Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Compressor 3 Heat Pump Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Compressor3HeatPumpRun_${Cod}">{{if Compressor3HeatPumpRun}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Gas Burner 1 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="GasBurner1Run_${Cod}">{{if GasBurner1Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Gas Burner 2 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="GasBurner2Run_${Cod}">{{if GasBurner2Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Gas Burner 1 Max Power</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="GasBurner1MaxPower_${Cod}">{{if GasBurner1MaxPower}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Electric Heaters 1 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="ElectricHeaters1Run_${Cod}">{{if ElectricHeaters1Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Electric Heaters 2 Run</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="ElectricHeaters2Run_${Cod}">{{if ElectricHeaters2Run}}<i class="fa fa-thumbs-o-up"></i>{{else}}<i class="fa fa-thumbs-o-down"></i>{{/if}}</span>&nbsp;
+                </div>
+            </div>
+
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+            <div id="ProbeElem_${Cod}"></div>
+
+        </div>
+    </section>
+</script>
+<!--cymt200-->
+<script type="text/x-jquery-tmpl" id="tmplcymt200Detail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="cymt200">cymt200</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="stato_${Cod}">
+                        {{if moment(lastReceived).year() > 1900}}
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                        {{else}}
+                        <i class="fa fa-thumbs-o-down"></i>
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">LQI</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="LQI_${Cod}">${Number(LQI).toLocaleString()}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Temperature</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Temperature_${Cod}">${Number(Temperature).toLocaleString()}</span>&nbsp;°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Humidity</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Humidity_${Cod}">${Number(Humidity).toLocaleString()}</span>&nbsp;%
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Light</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Light_${Cod}">${Number(Light).toLocaleString()}</span>&nbsp;Lux
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Voltage</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="Voltage_${Cod}">${Number(Voltage).toLocaleString()}</span>&nbsp;V
+                </div>
+            </div>
+
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text13" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text14" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text30" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:$.fn.CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+
+        </div>
+    </section>
+</script>
+<!--Lux-->
+<script type="text/x-jquery-tmpl" id="tmplLuxDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="cymt200">cymt200</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="stato_${Cod}">
+                        {{if moment(lastReceived).year() > 1900}}
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                        {{else}}
+                        <i class="fa fa-thumbs-o-down"></i>
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">ON/OFF</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="LightON_${Cod}">{{if LightON}}ON{{else}}OFF{{/if}}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">${langResources['hsLuxMode']}</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="CurrentMode_${Cod}">
+                        {{if CurrentMode==0}}${langResources['hsLuxManual']} {{/if}}
+                        {{if CurrentMode==1}}${langResources['hsLuxAutomatic']} {{/if}}
+                        {{if CurrentMode==2}}${langResources['hsLuxScheduled']} {{/if}}
+                    </span>&nbsp
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Working Time Counter</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="WorkingTimeCounter_${Cod}">${WorkingTimeCounter}</span>&nbsp;
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-4 col-xs-4">Power On Cycle Counter</div>
+                <div class="col-md-2 col-xs-2">
+                    <span id="PowerOnCycleCounter_${Cod}">${PowerOnCycleCounter}</span>&nbsp;
+                </div>
+            </div>
+        </div>
+    </section>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplProfile">
+    <tr><td>${descr}</td></tr>
+    <tr><td><div id="placeholder_${ProfileNr}" style="height:60px;width:300px;"></div></td></tr>
+</script>
+
+<!--templates Vrd-->
+<script type="text/x-jquery-tmpl" id="tmplVrdDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="servomotor">servomotor</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${VrdCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${VrdDesc}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Vrdstato_${VrdCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">setPoint</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="SetPoint_${VrdCod}">${SetPoint}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">set Position</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="SetPosition_${VrdCod}">${SetPosition}</span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Position</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Position_${VrdCod}">${Position}</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text11" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text12" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text31" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div id="ProbeElem_${VrdCod}"></div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${VrdCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates Ctl-->
+<script type="text/x-jquery-tmpl" id="tmplCtlDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="flowmeters">flowmeters</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${CtlCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${CtlDesc}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Ctlstato_${CtlCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="currentValue_${CtlCod}">${currentValue}</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text15" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text16" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text32" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CtlCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+
+<!--templates ANZ-->
+<script type="text/x-jquery-tmpl" id="tmplAnzDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="flowmeters">flowmeters</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${Descr.trim()}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Anzstato_${Cod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span7">${currentValue}</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text36" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text37" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text38" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:callEditAnz('${Id}');" class="btn btn-primary center-block"><i class="fa fa-bar-chart"></i><span name="lbl" caption="detail">detail</span></a>
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+
+
+<!--templates pb-->
+<script type="text/x-jquery-tmpl" id="tmplpbDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_pbs">hspb</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="pbVal_${Cod}">${currentValue}</span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates pm-->
+<script type="text/x-jquery-tmpl" id="tmplpmDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_pbs">hs_pbs</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="pmVal_${Cod}">${currentValue}</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text17" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text18" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text33" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates tb-->
+<script type="text/x-jquery-tmpl" id="tmpltbDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="hs_tbs">hstb</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="tbVal_${cod}">${currentValue}</span>
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text19" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text20" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text34" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${Cod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates Probe-->
+<script type="text/x-jquery-tmpl" id="tmplProbeDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading   panel-operator">
+            <span name="lbl" caption="temperatureprobe">temperatureprobe</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${ProbeCod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7">${ProbeDesc}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Val.</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Probe_${ProbeCod}">${currentValue}</span>°C
+                </div>
+            </div>
+            <div style="margin-top:2%;" class="form-group">
+                <span name="lbl" caption="marcamodello">marcamodello</span>
+                <input type="text" class="form-control" id="Text21" placeholder="${marcamodello}" readonly="readonly">
+            </div>
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text22" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text35" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${ProbeCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
+</script>
+<!--templates ProbeElem-->
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+
+    <div class="row m-bot20">
+        <div class="col-md-7 col-xs-7">${ProbeDesc}</div>
+        <div class="col-md-5 col-xs-5">
+            <span id="ProbeElem_${ProbeCod}">${currentValue}</span>°C
+        </div>
+    </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplpageOperation">
+    <div class="pull-left">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb breadcrumb_words">
+            <li><span id="hsDescr"></span></li>
+            <li><span id="MapDesc"></span></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+    <div class="pull-right breadcrumb_system">
+        <a href="javascript:;" id="open_system_detail" class="btn btn-round btn-info"> <i class="fa fa-tachometer fa-2x"></i></a><span name="lbl" caption="detail">detail</span>&nbsp;
+    </div>
+    <div class="pull-right breadcrumb_map">
+        <a href="javascript:;" id="back2map" class="btn btn-round btn-info"><i class="fa fa-map-marker fa-2x"></i></a><span name="lbl" caption="map">map</span>&nbsp;
+    </div>
+
+
+    <div class="pull-left breadcrumb_system">
+        <a href="javascript:$.module.load('Impianti/Operators/manageDevice8');" class="btn btn-round btn-info"> <i class="fa fa-cubes fa-2x"></i></a><span name="lbl" caption="heatingsystems">plants</span>&nbsp;
+    </div>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplgoback">
+    <li class="current">
+        <a href="javascript:go2Backoffice();"><i class="fa fa-tasks"></i><span name="lbl" caption="Installations">Installations</span></a>
+    </li>
+</script>
+
+
+<script type="text/javascript" src="js/jq/jquery.flot.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.resize.js"></script>
+
+<script type="text/javascript" src="js/jq/interact-1.2.4.min.js"></script>
+<script type="text/javascript" src="js/jq/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/jq/jquery.zoomPanTouchSVG.js"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/bs3/bootstrap-datepickerV2.js" type="text/javascript"></script>
+<script src="js/app/synoptic/Operators/hs_Synoptic.js" type="text/javascript"></script>
+

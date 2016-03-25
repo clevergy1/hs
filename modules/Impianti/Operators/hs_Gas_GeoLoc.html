@@ -1,0 +1,51 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8ctGas');"><span id="hsDescr"></span></a></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div id="googlemap" style=" width:100%;height:100%; "></div>
+
+
+<div id="Scontainter" class="col-sm-4 draggable" style="display:none;position: absolute;top: 0px;right: -1000px;">
+    <section class="panel" id="SectionList">
+        <header class="panel-heading">
+            <span class="pull-left"><span name="lbl" caption="hs_ctGass">hs_ctGass</span></span>
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+            </span>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <ul id="ulList" class="nav nav-stacked mail-nav" style="height:400px;"></ul>
+        </div>
+    </section>
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmpllList">
+    <li id="li_${Id}">
+        <a href="javascript:sel(${Id},'${Cod}',${Latitude},${Longitude})">
+            <table>
+                <tbody>
+                    <tr>
+                        <td><span class="pull-left">${Cod}</span>:&nbsp</td>
+                        <td>lat:&nbsp;</td>
+                        <td id="lat_${Id}">${Latitude}</td>
+                        <td>long:&nbsp;</td>
+                        <td id="long_${Id}">${Longitude}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </a>
+    </li>
+</script>
+<!--/templates-->
+<script src="js/jq/jquery.slimscroll.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Gas_GeoLoc.js" type="text/javascript"></script>

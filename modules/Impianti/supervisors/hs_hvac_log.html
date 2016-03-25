@@ -1,0 +1,173 @@
+﻿<!--daterangepicker-->
+<link rel="stylesheet" href="css/bs3/datepicker.css" />
+<link rel="stylesheet" href="css/bs3/daterangepicker-bs3.css" />
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8hvac');"><span id="Descr"></span></a></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span id="logDescription"></span>
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form action="#" class="form-horizontal ">
+                    <div class="form-group">
+                        <label class="control-label col-md-3"><span id="daterange">daterange</span></label>
+                        <div class="col-md-4">
+                            <div class="input-group input-large" data-date="13/07/2013" data-date-format="dd/mm/yyyy">
+                                <input type="text" class="form-control dpd1" id="datefrom" name="datefrom">
+                                <span class="input-group-addon">To</span>
+                                <input type="text" class="form-control dpd2" id="dateto" name="dateto">
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" id="btnLoad" class="btn btn-sm btn-default">Load</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="hs_Anz">hs_anz</span></span>
+                <span class="tools pull-right">
+                    <!--<a href="javascript:call_chart();" class="fa fa-beer"></a>&nbsp;-->
+                    <a href="javascript:call_export();" class="fa fa-download"></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div id="tableContent">
+                    <div id="panel-body-ListLog" class="panel-body" style="position: relative;height:400px; overflow-y:auto;overflow-x:auto;">
+                        <table id="tableLog" class="table table-striped table-condensed table-bordered table-hover cf table-fixed-header">
+                            <thead>
+                                <tr>
+                                    <th><span name="lbl" caption="day">day</span> </th>
+                                    <th><span name="lbl" caption="code">code</span> </th>
+                                    <th><span name="lbl" caption="description">description</span></th>
+                                    <th><span name="lbl" caption="status">status</span> </th>
+                                    <th>send Temp.&nbsp;°C</th>
+                                    <th>return Temp.&nbsp;°C</th>
+                                    <th>Diff. Air Pressure&nbsp;Pa</th>
+                                    <th>Fresh Air Valve&nbsp;%</th>
+                                    <th>Gas Valve&nbsp;%</th>
+                                    <th>Elettric Heaters TRIAC&nbsp;%</th>
+                                    <th>Hot Water Coil&nbsp;%</th>
+                                    <th>humidifier&nbsp;%</th>
+                                    <th>Running time count, Fan&nbsp;hh</th>
+                                    <th>Running time count, Compressor 1&nbsp;hh</th>
+                                    <th>Running time count, Compressor 2&nbsp;hh</th>
+                                    <th>Running time count, Compressor 3&nbsp;hh</th>
+                                    <th>Running time count, Compressor 4&nbsp;hh</th>
+                                    <th>Fan Blowing</th>
+                                    <th>Fan Extracting</th>
+                                    <th>Compressor 1 Run</th>
+                                    <th>Compressor 1 Heat Pump Run</th>
+                                    <th>Compressor 2 Run</th>
+                                    <th>Compressor 2 Heat Pump Run</th>
+                                    <th>Compressor 3 Run</th>
+                                    <th>Compressor 3 Heat Pump Run</th>
+                                    <th>Compressor 4 Run</th>
+                                    <th>Compressor 4 Heat Pump Run</th>
+                                    <th>Gas Burner 1 Run</th>
+                                    <th>Gas Burner 2 Run</th>
+                                    <th>Gas Burner 1 Max Power</th>
+                                    <th>Electric Heaters 1 Run</th>
+                                    <th>Electric Heaters 2 Run</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logList"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="graphContent" style="display:none;">
+                    <div>
+                        <canvas id="canvas" style="height:100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmpllogList">
+    <tr>
+        <td style="white-space:nowrap;">${moment(dtLog).format('DD/MM/YYYY HH:mm')}</td>
+        <td>${Cod}</td>
+        <td>${Descr.trim()}</td>
+        <td>${stato}</td>
+        <td>${Number(sendTemp).toLocaleString()}</td>
+        <td>${Number(returnTemp).toLocaleString()}</td>
+        <td>${Number(DiffAirPressure).toLocaleString()}</td>
+        <td>${Number(FreshAirValve).toLocaleString()}</td>
+        <td>${Number(GasValve).toLocaleString()}</td>
+        <td>${Number(ElettricHeatersTRIAC).toLocaleString()}</td>
+        <td>${Number(HotWaterCoil).toLocaleString()}</td>
+        <td>${Number(humidifier).toLocaleString()}</td>
+        <td>${Number(RunTTFan).toLocaleString()}</td>
+        <td>${Number(RunTTCompressor1).toLocaleString()}</td>
+        <td>${Number(RunTTCompressor2).toLocaleString()}</td>
+        <td>${Number(RunTTCompressor3).toLocaleString()}</td>
+        <td>${Number(RunTTCompressor4).toLocaleString()}</td>
+        <td>{{if FanBlowing}}True{{else}}False{{/if}}</td>
+        <td>{{if FanExtracting}}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor1Run}}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor1HeatPumpRun}}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor2Run}}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor2HeatPumpRun}}True{{else}False{{/if}}</td>
+        <td>{{if Compressor3Run}}True{else}}False{{/if}}</td>
+        <td>{{if Compressor3HeatPumpRun}}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor4Run}True{{else}}False{{/if}}</td>
+        <td>{{if Compressor4HeatPumpRun}}True{{else}}False{{/if}}</td>
+        <td>{{if GasBurner1Run}}True{{else}}False{{/if}}</td>
+        <td>{{if GasBurner2Run}}True{{else}}False{{/if}}</td>
+        <td>{{if GasBurner1MaxPower}}True{{else}}False{{/if}}</td>
+        <td>{{if ElectricHeaters1Run}}True{{else}}False{{/if}}</td>
+        <td>{{if ElectricHeaters2Run}}True{{else}}False{{/if}}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+    <tr>
+        <td>${ProbeDesc}</td>
+        <td id="ProbeElem_${ProbeCod}">${currentValue}°&nbsp;C</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListLogLastItem">
+    <tr id="loadMore">
+        <td colspan="4">load more</td>
+    </tr>
+</script>
+<!--/templates-->
+<!--<script type="text/javascript" src="bstable/bootstrap-table.min.js"></script>-->
+<script type="text/javascript" src="js/jq/jquery.table2excel.js"></script>
+<!--chart-->
+<script type="text/javascript" src="js/Chart/Chart.min.js"></script>
+<!--/chart-->
+<!--daterangepicker-->
+<script type="text/javascript" src="js/bs3/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bs3/daterangepicker.js"></script>
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/supervisors/hs_hvac_log.js" type="text/javascript"></script>

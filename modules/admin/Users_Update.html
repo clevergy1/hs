@@ -1,0 +1,56 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div id="rowupdateuser" class="row" >
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-admin">
+                <span class="pull-left"><span name="lbl" caption="updateuser">Update user</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:$.module.load('admin/Users_List');" ><i class="fa fa-times"></i></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="IdImpianto" />
+                    <input type="hidden" id="UserId" />
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">E mail:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="userUpdEmailAdmin" class="form-control" placeholder="E mail"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span name="lbl" caption="usercomment">Comment</span>:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="userUpdCommentAdmin" class="form-control" placeholder="Comment"/>
+                        </div>
+                    </div>
+                    <!--  -->
+                </form>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <button id="btnUpdateUser" class="btn btn-default pull-left">
+                        <i><img src="images/user_save.png" alt="" class="imgbtn" /></i>
+                        <span name="lbl" caption="save">Save</span>
+                    </button>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+
+<script src="js/cryptoJS/rollups/aes.js" type="text/javascript"></script>
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/app/admin/Users_Update.js"></script>

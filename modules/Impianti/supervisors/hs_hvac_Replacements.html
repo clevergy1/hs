@@ -1,0 +1,225 @@
+﻿<link rel="stylesheet" href="css/bs3/datepicker3.css" />
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8hvac');"><span id="hsDescr"></span></a></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row" id="list">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="Descr"></span>&nbsp;<span name="lbl" caption="replacements">replacements</span>
+                <span class="tools pull-right">
+                    <a href="javascript:$.module.load('Impianti/supervisors/Device8hvac');"><i class="fa fa-times"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table id="parentRecord" class="table table-hover cf ">
+                    <tr>
+                        <td style="white-space:nowrap;"><span id="installationDate"></span></td>
+                        <td><span id="marcamodello"></span></td>
+                    </tr>
+                </table>
+                <div class="panel-body" style="position: relative;height:400px; overflow-y:auto;overflow-x:auto;">
+                    <table class="table table-hover cf ">
+                        <tbody id="replacementsList"></tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="javascript:$.fn.callAdd();" class="btn btn-default btn-sm"><span name="lbl" caption="add">add</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+<div class="row" id="add" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="Descr"></span>&nbsp;<span name="lbl" caption="add">Add</span>&nbsp;<span name="lbl" caption="replacement">replacement</span>
+                <span class="tools pull-right">
+                    <a id="btncloseAdd" href="javascript:;"><i class="fa fa-times"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 control-label" for="marcamodello_Add"><span name="lbl" caption="marcamodello">marcamodello</span></label>
+                        <div class="col-md-8">
+                            <input type="text" id="marcamodello_Add" class="form-control" placeholder="Description" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4  control-label" for="installationDate_Add"><span name="lbl" caption="replaceDate">replaceDate</span></label>
+                        <div class="col-md-3  ">
+                            <input type="text" id="installationDate_Add" class="form-control dpd1" placeholder="" />
+                            <span class="input-group-btn add-on">
+                                <button class="btn" type="button" style="height:34px;"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4  control-label" for="note_Add">Note</label>
+                        <div class="col-md-8">
+                            <textarea id="note_Add" rows="2" style="width:100%;" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="#" id="btnAdd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<div class="row" id="update" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="Descr"></span>&nbsp;<span name="lbl" caption="edit">edit</span>&nbsp;<span name="lbl" caption="replacement">replacement</span>
+                <span class="tools pull-right">
+                    <a id="btnCloseUpd" href="javascript:;"><i class="fa fa-times"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="Id_Upd" />
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 control-label" for="marcamodello_Upd"><span name="lbl" caption="marcamodello">marcamodello</span></label>
+                        <div class="col-md-8">
+                            <input type="text" id="marcamodello_Upd" class="form-control" placeholder="Description" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4  control-label" for="installationDate_Upd"><span name="lbl" caption="replaceDate">replaceDate</span></label>
+                        <div class="col-md-3  ">
+                            <input type="text" id="installationDate_Upd" class="form-control dpd1" placeholder="" />
+                            <span class="input-group-btn add-on">
+                                <button class="btn" type="button" style="height:34px;"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4  control-label" for="note_Upd">Note</label>
+                        <div class="col-md-8">
+                            <textarea id="note_Upd" rows="2" style="width:100%;" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <a href="#" id="btnCallDelete" class="btn btn-default" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-times">&nbsp;</i><span name="lbl" caption="delete">Save</span></a>
+                </span>
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<div id="DeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span name="lbl" caption="delete">Delete</span></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span name="lbl" caption="msgconfirmdelete"></span>:&nbsp;<span id="Descr_Delete"></span>?
+                    <br />
+                    <span name="lbl" caption="msgoperationirreversible">This operation cannot be recovered</span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><span name="lbl" caption="close">Close</span></button>
+                <button id="btnDelete" type="button" class="btn btn-danger" data-dismiss="modal"><span name="lbl" caption="confirmdelete">Confirm delete</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="updateParent" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="Descr"></span>&nbsp;<span name="lbl" caption="add">edit</span>&nbsp;<span name="lbl" caption="marcamodello">marcamodello</span>
+                <span class="tools pull-right">
+                    <a href="javascript:$.module.load('Impianti/supervisors/Device8hvac');"><i class="fa fa-times"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form">
+                    <input type="hidden" id="Id_Upd" />
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4 control-label" for="marcamodello_UpdParent"><span name="lbl" caption="marcamodello">marcamodello</span></label>
+                        <div class="col-md-8">
+                            <input type="text" id="marcamodello_UpdParent" class="form-control" placeholder="Description" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 col-sm-4  control-label" for="installationDate_UpdParent"><span name="lbl" caption="installationDate">installationDate</span></label>
+                        <div class="col-md-3  ">
+                            <input type="text" id="installationDate_UpdParent" class="form-control dpd1" placeholder="" />
+                            <span class="input-group-btn add-on">
+                                <button class="btn" type="button" style="height:34px;"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <footer class="panel-footer">
+
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpdParent" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="tmplreplacementsList">
+    <tr>
+        <td style="white-space:nowrap;">${moment(installationDate).format('DD/MM/YYYY')}</td>
+        <td>${marcamodello}</td>
+        <td>
+            <span class="tools pull-right">
+                <a href="javascript:$.fn.CallEdit('${Id}');" class="btn btn-info btn-sm"><span name="lbl" caption="edit">detail</span></a>&nbsp;
+            </span>
+        </td>
+    </tr>
+</script>
+
+<script type="text/javascript" src="js/bs3/bootstrap-datepickerV2.js"></script>
+<script type="text/javascript" src="js/bs3/locales/bootstrap-datepicker.en-GB.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/bs3/locales/bootstrap-datepicker.it.js" charset="UTF-8"></script>
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/supervisors/hs_hvac_Replacements.js" type="text/javascript"></script>

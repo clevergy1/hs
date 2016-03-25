@@ -1,0 +1,84 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<!--List-->
+<div class="row" id="rowList">
+    <div class="col-md-12">
+        <section class="panel ">
+            <header class="panel-heading panel-supervisor">
+                <span name="lbl" caption="Installations">Installations</span> 
+                <span class="tools pull-right">                               
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                    
+                </span>
+            </header>
+            <div class="panel-body">
+		        <table class="table tableImpianti" data-page-size="2">
+			        <thead>
+				        <tr>
+					        <th data-toggle="true"><span name="lbl" caption="Installation">Installation</span> </th>
+                            <th data-hide="phone,tablet"><span name="lbl" caption="installationaddress">Address</span></th>					                    
+					        <th ><span name="lbl" caption="status">status</span></th>
+                            <th></th>
+				        </tr>
+			        </thead>
+			        <tbody id="ListImpianti"></tbody>
+			        <tfoot>
+				        <tr>
+					        <td colspan="4" style="text-align:center;">
+						        <div class="pagination pagination-centered hide-if-no-paging"></div>
+					        </td>
+				        </tr>
+			        </tfoot>
+		        </table>
+            </div>
+        </section>
+    </div>
+</div>
+<!--/List-->
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplpageOperation">
+    <li>
+         <input id="siteSearch" type="text" class="form-control search" placeholder=" Search">
+    </li>
+
+</script>
+<script id="tmlpMenu" type="text/x-jquery-tmpl">
+<li><a href="#">${Menu}</a>
+    <ul class="sub-menu">
+        {{each VociMenu}}
+        <li><a href="javascript:loadModule('${$value.URLAzione}')" class="cymenu" data-module="${$value.URLAzione}">${$value.DescrVoce}</a></li>
+        {{/each}}
+    </ul>
+</li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplImpiantiList">
+<tr>
+    <td><b>${DesImpianto}</b></td>
+    <td>${Indirizzo}</td>
+    <td>
+        {{if !Controllato}}
+            <span class="label label-warning">offline</span>           
+        {{else}}
+            <span class="label label-success">online</span>
+        {{/if}}
+    </td>
+    <td>
+        <span class="pull-right">
+            <a href="javascript:selImpianto('${IdImpianto}');" class="btn btn-info btn-sm"><span name="lbl" caption="select">select</span></a>&nbsp;
+            <a href="javascript:detailImpianto('${IdImpianto}');" class="btn btn-info btn-sm"><span name="lbl" caption="detail">detail</span></a>&nbsp;
+        </span>
+        
+    </td>
+</tr>
+</script>
+
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Supervisors/List.js" type="text/javascript"></script>

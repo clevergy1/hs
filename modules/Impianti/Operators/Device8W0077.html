@@ -1,0 +1,462 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12"  id="divList">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="W0077s">W0077s</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table table-condensed" >
+                    <thead>
+                        <tr>
+                            <th style="width:41%;"><span name="lbl" caption="description">description</span></th>
+                            <th style="width:15%"><span name="lbl" caption="lastupdateshort">lastupdateshort</span> </th>
+                            <th style="width:8%"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>  
+                            <th></th>                           
+                        </tr>
+                    </thead>
+                </table>
+                <div style="height:350px;overflow-y:auto;">
+                    <table class="table table-condensed">
+                        <tbody id="ListW0077"></tbody>
+                    </table>
+                </div>
+                
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="javascript:callAdd();" class="btn btn-default btn-sm"><span name="lbl" caption="add">add</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <div  class="col-md-12"  id="divDetail" style="display:none;"></div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="tmplW0077">
+    <tr data-index="${Id}">
+        <td style="width:41%;">${Descr.trim()}</td>
+        <td style="width:15%">
+            <span id="lastReceived_${Cod}">
+            {{if moment(lastReceived).year() > 1900}}
+                ${ moment(lastReceived).format("DD/MM/YYYY HH:mm")}
+            {{else}}
+                --:--
+            {{/if}}
+            </span>
+            <span class="LastUpdate" id="LastUpdate_${Cod}"></span>
+        </td>
+        <td  style="width:8%">${Cod}</td>
+        <td>           
+            <span id="stato_${Cod}">
+                {{if moment(lastReceived).year() > 1900}}
+                    {{if stato==0}}
+                         <i class="fa fa-thumbs-o-up"></i>
+                    {{else}}
+                        {{if stato==1}}
+                            <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                            <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                    {{/if}}
+                {{else}}
+                    <i class="fa fa-thumbs-o-down"></i>
+                {{/if}}
+            </span>
+        </td>
+        <td>
+            <span class="btn-group pull-right">
+                <a href="javascript:callShowDetail('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>
+                <a href="javascript:callUpd('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">edit</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplDetail">
+<aside class="profile-nav alt">
+    <section class="panel">
+        <header class="panel-heading panel-operator">
+            <span class="pull-left">${Descr.trim()}</span>
+            <span class="tools pull-right"> 
+                <a href="javascript:closeDetail();" class="fa fa-times"></a>                   
+            </span>               
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="position-center" style="height:400px;overflow-y:auto;">
+                <table class="table table-condensed" >
+                    <tbody>
+                        <tr>
+                            <td colspan="3" style="background-color:#CCC">PLC</td>
+                        </tr>
+                        <tr>
+                            <td>System status</td>
+                            <td>${Number(SYSTEM_STATUS).toLocaleString()}</td>
+                            <td>
+                                {{if SYSTEM_STATUS==0}}Boot{{/if}}
+                                {{if SYSTEM_STATUS==1}}WarmUp{{/if}}
+                                {{if SYSTEM_STATUS==2}}Wait{{/if}}
+                                {{if SYSTEM_STATUS==3}}Precharge{{/if}}
+                                {{if SYSTEM_STATUS==4}}AutoMaintenance{{/if}}
+                                {{if SYSTEM_STATUS==5}}HPP_On{{/if}}
+                                {{if SYSTEM_STATUS==6}}Stop{{/if}}
+                                {{if SYSTEM_STATUS==7}}Alarm{{/if}}
+                                {{if SYSTEM_STATUS==8}}Test{{/if}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Battery status</td>
+                            <td>${Number(BATTERY_STATUS).toLocaleString()}</td>
+                            <td>
+                                {{if BATTERY_STATUS==0}}Off{{/if}}
+                                {{if BATTERY_STATUS==1}}Wait{{/if}}
+                                {{if BATTERY_STATUS==2}}Transition{{/if}}
+                                {{if BATTERY_STATUS==3}}WarmUp{{/if}}
+                                {{if BATTERY_STATUS==4}}Controlled Charge{{/if}}
+                                {{if BATTERY_STATUS==5}}Vmode{{/if}}
+                                {{if BATTERY_STATUS==6}}Imode{{/if}}
+                                {{if BATTERY_STATUS==7}}Trip{{/if}}                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Voltage L12</td>
+                            <td>${Number(PM1_Voltage_L12).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Voltage L23</td>
+                            <td>${Number(PM1_Voltage_L23).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Voltage L31</td>
+                            <td>${Number(PM1_Voltage_L31).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PCurrent L12</td>
+                            <td>${Number(PM1_Current_L12).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Current L23</td>
+                            <td>${Number(PM1_Current_L23).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Current L31</td>
+                            <td>${Number(PM1_Current_L31).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Active Power Total</td>
+                            <td>${Number(PM1_Active_Power_Total).toLocaleString()}&nbsp;W</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Reactive Power Total</td>
+                            <td>${Number(PM1_Reactive_Power_Total).toLocaleString()}&nbsp;var</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Apparent Power Total</td>
+                            <td>${Number(PM1_Apparent_Power_Total).toLocaleString()}&nbsp;VA</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PM1_Frequency</td>
+                            <td>${Number(PM1_Frequency).toLocaleString()}&nbsp;Hz</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Power Factor Total</td>
+                            <td>${Number(PM1_Power_Factor_Total).toLocaleString()}&nbsp;Hz</td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="3" style="background-color:#CCC">GATEWAY BATTERY</td>
+                        </tr>
+                        <tr>
+                            <td>Actual DC Voltage</td>
+                            <td>${Number(GW_Actual_DC_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual DC Current</td>
+                            <td>${Number(GW_Actual_DC_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Battery SOC</td>
+                            <td>${Number(GW_Actual_Battery_SOC).toLocaleString()}&nbsp;%</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Heaters Current</td>
+                            <td>${Number(GW_Actual_Heaters_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Vdc Link Request</td>
+                            <td>${Number(GW_Vdc_Link_Request).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr> 
+                        <tr>
+                            <td>Limit Discharge Current</td>
+                            <td>${Number(GW_Limit_Discharge_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Limit Charge Current</td>
+                            <td>${Number(GW_Limit_Charge_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Min DC Voltage</td>
+                            <td>${Number(GW_Min_DC_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Max DC Voltage</td>
+                            <td>${Number(GW_Max_DC_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Actual Battery Capacity</td>
+                            <td>${Number(GW_Actual_Battery_Capacity).toLocaleString()}&nbsp;Ah</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Max Battery Voltage</td>
+                            <td>${Number(GW_Max_Battery_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Min Battery Voltage</td>
+                            <td>${Number(GW_Min_Battery_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Max Battery Temperature</td>
+                            <td>${Number(GW_Max_Battery_Temperature).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Min Battery Temperature</td>
+                            <td>${Number(GW_Min_Battery_Temperature).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Actual DC Power</td>
+                            <td>${Number(GW_Actual_DC_Power).toLocaleString()}&nbsp;W</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Op Time</td>
+                            <td>${Number(GW_HOURS_Op_Time).toLocaleString()}:${Number(GW_MIN_Op_Time).toLocaleString()}</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Status Warning 1</td>
+                            <td>${Number(GW_Status_Warning_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr> 
+                        <tr>
+                            <td>Status Warning 2</td>
+                            <td>${Number(GW_Status_Warning_2).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr> 
+                        <tr>
+                            <td>Status Alarm 1</td>
+                            <td>${Number(GW_Status_Alarm_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr> 
+                        <tr>
+                            <td>Status Alarm 2</td>
+                            <td>${Number(GW_Status_Alarm_2).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>Status Warning A</td>
+                            <td>${Number(GW_Status_Warning_A).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Status Warning B</td>
+                            <td>${Number(GW_Status_Warning_B).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Status Alarm A</td>
+                            <td>${Number(GW_Status_Alarm_A).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>   
+                        <tr>
+                            <td>CONTROL WORD</td>
+                            <td>${Number(GW_CONTROL_WORD).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>STATUS WORD</td>
+                            <td>${Number(GW_STATUS_WORD).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                        
+                        <tr>
+                            <td colspan="3" style="background-color:#CCC">PCS HPP 35</td>
+                        </tr>
+                        <tr>
+                            <td>Actual Current R</td>
+                            <td>${Number(PCS_Actual_Current_R).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>  
+                        <tr>
+                            <td>Actual Current S</td>
+                            <td>${Number(PCS_Actual_Current_S).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Current T</td>
+                            <td>${Number(PCS_Actual_Current_T).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Voltage RS</td>
+                            <td>${Number(PCS_Actual_Voltage_RS).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Voltage ST</td>
+                            <td>${Number(PCS_Actual_Voltage_ST).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Actual Voltage TR</td>
+                            <td>${Number(PCS_Actual_Voltage_TR).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Frequency</td>
+                            <td>${Number(PCS_Frequency).toLocaleString()}&nbsp;Hz</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>P Actual</td>
+                            <td>${Number(PCS_P_Actual).toLocaleString()}&nbsp;W</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Q Actual</td>
+                            <td>${Number(PCS_Q_Actual).toLocaleString()}&nbsp;var</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>A Actual</td>
+                            <td>${Number(PCS_A_Actual).toLocaleString()}&nbsp;VA</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Battery Voltage</td>
+                            <td>${Number(PCS_Battery_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Battery Current</td>
+                            <td>${Number(PCS_Battery_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Battery Power</td>
+                            <td>${Number(PCS_Battery_Power).toLocaleString()}&nbsp;W</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PV Voltage</td>
+                            <td>${Number(PCS_PV_Voltage).toLocaleString()}&nbsp;V</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PV Current</td>
+                            <td>${Number(PCS_PV_Current).toLocaleString()}&nbsp;A</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PV Power</td>
+                            <td>${Number(PCS_PV_Power).toLocaleString()}&nbsp;W</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HPP Status</td>
+                            <td>${Number(PCS_HPP_Status).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Drive Status</td>
+                            <td>${Number(PCS_Drive_Status).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Chopper Status</td>
+                            <td>${Number(PCS_Chopper_Status).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Run Mode</td>
+                            <td>${Number(PCS_Run_Mode).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Drive Warning 1</td>
+                            <td>${Number(PCS_Drive_Warning_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Drive Alarm 1</td>
+                            <td>${Number(PCS_Drive_Alarm_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HPP Warning 1</td>
+                            <td>${Number(PCS_HPP_Warning_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>HPP Alarm 1</td>
+                            <td>${Number(PCS_HPP_Alarm_1).toLocaleString()}&nbsp;</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</aside>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+    <tr>
+        <td>${ProbeDesc}</td>     
+        <td id="ProbeElem_${ProbeCod}">${currentValue}</td>
+    </tr>
+</script>
+
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/Device8W0077.js" type="text/javascript"></script>
+

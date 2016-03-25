@@ -1,0 +1,47 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="devices">Devices</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body" >
+                <ul id="FieldDevicesList" class="nav nav-pills nav-stacked" style="height:350px;"></ul>  
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplNavigationbar">
+<li class="current">
+    <a href="javascript:$.module.load('Impianti/Supervisors/List');"><i class="fa fa-tasks"></i><span name="lbl" caption="Installations">Installations</span></a>
+</li>
+<li>
+    <a href="javascript:$.module.load('Impianti/Supervisors/MasterDevices');"><i class="fa fa-sitemap"></i><span name="lbl" caption="devices">Devices</span></a>
+</li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplFieldDevicesList">
+    <li>
+        <div class="pull-left">
+            <span style="display:inline-block;width:200px">
+                <span name="lbl" caption="${devType}">${devDes}</span>
+            </span>
+            <span style="margin-left:10px;">
+                ver.:&nbsp; ${Version}
+            </span>
+        </div>
+        <div class="pull-right">
+            <a href="javascript:selectDevice('${DevId}');" class="btn btn-info"><span name="lbl" caption="select">Select</span></a>
+        </div>
+        <div class="clearfix"></div>
+    </li>
+</script>
+<!--/templates-->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Supervisors/MasterDevices.js" type="text/javascript"></script>

@@ -1,0 +1,106 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Lux');"><span id="LuxDesc"></span></a></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="availablecronos">availablecronos</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="CronosavailableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="assignedcronos">assignedcronos</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="CronosassignedList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="availableastrs">availableastrs</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="AstrsavailableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="assignedastrs">assignedastrs</span>
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <ul id="AstrsassignedList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- /Template -->
+<script type="text/x-jquery-tmpl" id="tmplCronosavailableList">
+    <li>
+        <a href="javascript:$.fn.selAvailCrono('${CronId}')">
+            <div class="pull-left">${CronCod}&nbsp;${CronDescr}&nbsp;</div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplCronosassignedList">
+    <li>
+        <a href="javascript:$.fn.selassignedCrono('${Id}')">
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">&nbsp;${CronCod}&nbsp;${CronDescr}</div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplAstrsavailableList">
+    <li>
+        <a href="javascript:$.fn.selAvailAstr('${Id}')">
+            <div class="pull-left">${Cod}&nbsp;${Descr}&nbsp;</div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplAstrsassignedList">
+    <li>
+        <a href="javascript:$.fn.selassignedAstr('${Id}')">
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">&nbsp;${AstrCod}&nbsp;${AstrDescr}</div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!-- /Template -->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/Lux_Config.js" type="text/javascript"></script>

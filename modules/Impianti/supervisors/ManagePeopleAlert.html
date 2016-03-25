@@ -1,0 +1,75 @@
+﻿
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span name="lbl" caption="availables">availables</span>   
+                <div class="clearfix"></div> 
+            </header>
+            <div class="panel-body">
+                 <ul id="availableList" class="nav nav-pills nav-stacked" style="height:200px;" />
+            </div>
+        </section>
+    </div>
+
+    <div class="col-md-6">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span name="lbl" caption="assigneds">assigneds</span>   
+                <div class="clearfix"></div> 
+            </header>
+            <div class="panel-body">
+                 <ul id="assignedList" class="nav nav-pills nav-stacked" style="height:200px;"  />
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Template -->
+<script type="text/x-jquery-tmpl" id="tmplavailableList">
+    <li>
+        <a href="javascript:seleAvail('${IdContatto}')" >
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                ${emailaddress}
+                {{else}}
+                ${Descrizione}
+                {{/if}}
+                &nbsp;
+            </div>
+            <div class="pull-right"><i class="fa fa-chevron-right"></i></div>
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplassignedList">
+    <li>
+        <a href="javascript:selassigned('${Id}')" >
+            <div class="pull-right"><i class="fa fa-chevron-left"></i></div>
+            <div class="pull-left">
+                {{if emailaddress !=''}}
+                ${emailaddress}
+                {{else}}
+                ${Descrizione}
+                {{/if}}
+                &nbsp;
+            </div>            
+            <div class="clearfix"></div>
+        </a>
+    </li>
+</script>
+<!-- /Template -->
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/ManagePeopleAlert.js" type="text/javascript"></script>

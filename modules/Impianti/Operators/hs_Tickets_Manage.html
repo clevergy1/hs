@@ -1,0 +1,427 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+<link rel="stylesheet" href="css/csspaolo.css" />
+<link rel="stylesheet" href="css/bs3/datepicker3.css" />
+
+
+
+<!--Search-->
+<div class="row" id="SearchTicket">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="SearchTicket">Ricerca Ticket</span>&nbsp;<span id="Span1"></span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                       <a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');" class="fa fa-times"></a>                        
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+		         <table>
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px !important;">
+                                <label class="sr-only" for="TicketStatusSelected"><span name="lbl" caption="status">status</span>:</label>
+                                <div class="input-group m-bot15"  >
+                                     <select id ='TicketStatusSelected' name="TicketStatusSelected " class="form-control">                                            
+                                                 <option value="1">Aperto</option>
+                                                 <option value="2">Accettato</option>
+                                                 <option value="3">Rifiutato</option>
+                                                 <option value="4">Richiesta impegno di spesa</option>
+                                                 <option value="5">Chiuso ed eseguito</option>
+                                                 <option value="6">Chiuso non eseguito</option>
+                                       </select>  
+                                </div>
+                            </td>
+                           
+                                          
+                          <!--  <td style="padding:5px !important;">
+                                <label class="sr-only" for="searchString"><span name="lbl" caption="search">search</span>:</label>                        
+                                <div class="input-group m-bot15"  >                                    
+                                    <input type="text" id="searchString" class="form-control" placeholder=""/>
+                                    <span id="btnClearsearchString" class="input-group-addon"><i class="fa fa-remove"></i></span>                            
+                                </div>
+                            </td>-->
+                            <td style="padding:5px !important;">
+                                <a href="#" id="btnSearch" class="btn btn-default btn-sm" style="margin-top:-20px;"><span name="lbl" caption="search">search</span></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/search-->
+
+
+<!--List-->
+<div class="row" id="ListTicket">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="TicketList">TicketList</span>&nbsp;<span id="DesImpianto"></span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                       <a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');" class="fa fa-times"></a>
+                                               
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+		        <div id="Listickets"><!--ci butto dentro la lista dei ticket con gli id --></div>
+            </div>
+              <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <a href="#" id="manage_people" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="manage_people">manage_people</span></a>
+                </span>
+                <span class="tools pull-right">
+                    <a href="#" id="btnCallAdd" class="btn btn-default"><i class="fa fa-edit">&nbsp;</i><span name="lbl" caption="add">Add</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/List-->
+
+
+<!--Add-->
+<div class="row" id="AddTicket" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="add">Add</span>&nbsp;
+                <span name="lbl" caption="Ticket">Ticket</span> 
+                <span class="tools pull-right"> 
+                
+                    <a id="btnCloseAdd" href="javascript:;" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="position-center">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="TicketTitle_Add"><span name="lbl" caption="TicketTitle">TicketTitle </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="TicketTitle_Add" class="form-control"  placeholder="TicketTitle"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                           <label class=" col-lg-2 col-sm-2 control-label"><span name="lbl" caption="requester">requester</span>:</label>
+                                           <div class="col-xs-10">
+                                               <select id ='Requester_Add' name="Requester_Add" class="form-control req_sel">
+                                                   
+                                                     
+                                               </select>  
+                                            </div>                                   
+                         </div> 
+                        <!--<div class="form-group">
+                            <label class="col-md-2 control-label" for="Requester_Add"><span name="lbl" caption="requester ">Requester </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Requester_Add" class="form-control" placeholder="Requester"/>                                        
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="emailRequester_Add"><span name="lbl" caption="email">email </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="emailRequester_Add" class="form-control mail_req" placeholder="emailRequester"/>
+                            </div>
+                        </div>  
+                        <!--<div class="form-group">
+                            <label class="col-md-2 control-label" for="DateRequest_Add"><span name="lbl" caption="DateRequest ">DateRequest </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="DateRequest_Add" class="form-control" placeholder="DateRequest "/>
+                            </div>
+                        </div>  -->
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="Description_Add"><span name="lbl" caption="description">Description </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Description_Add" class="form-control" placeholder="Description"/>
+                            </div>
+                        </div>
+                         <div class="form-group  ">
+                                           <label class=" col-lg-2 col-sm-2 control-label"><span name="lbl" caption="executor">executor</span>:</label>
+                                           <div class="col-xs-10">
+                                               <select id ='Executor_Add' name="Executor_Add" class="form-control exe_sel">
+                                                   
+                                                     
+                                               </select>  
+                                            </div>                                   
+                         </div> 
+                      <!--  <div class="form-group">
+                            <label class="col-md-2 control-label" for="Executor_Add"><span name="lbl" caption="executor ">Executor </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="Executor_Add" class="form-control" placeholder="Executor "/>
+                            </div>
+                        </div>  -->                       
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="emailExecutor_Add"><span name="lbl" caption="email">email</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="emailExecutor_Add" class="form-control mail_exe" placeholder="emailExecutor "/>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <span name="lbl" caption="mes1">Click Here to salve and send the ticket </span><a href="#" id="btnAdd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Add-->
+
+
+<!--update-->
+<div class="row" id="UpdTicket" style="display:none;">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span name="lbl" caption="edit">edit</span>&nbsp;ticket                     
+                <span class="tools pull-right">                    
+                    <a id="btnCloseUpd" href="javascript:;" ><i class="fa fa-times"></i></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div>
+                    <form class="form-horizontal" role="form">
+                        <input type="hidden" id="TicketId_Upd" />
+                        <div class="form-group">
+                            <label for="TicketTitle_Upd" class="col-lg-2 col-sm-2 control-label"><span name="lbl" caption="TicketTitle">TicketTitle</span>:</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control required" id="TicketTitle_Upd" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                                           <label class=" col-lg-2 col-sm-2 control-label"><span name="lbl" caption="requester">requester</span>:</label>
+                                           <div class="col-xs-10">
+                                               <select id ='Requester_Upd' name="Requester_Upd" class="form-control req_sel" disabled="disabled">
+                                                   
+                                                     
+                                               </select>  
+                                            </div>                                   
+                         </div> 
+                        <!--<div class="form-group">
+                            <label for="Requester_Upd" class="col-lg-2 col-sm-2 control-label"><span name="lbl" caption="requester">requester</span>:</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control required" id="Requester_Upd" placeholder="">
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label for="emailRequester_Upd" class="col-lg-2 col-sm-2 control-label "><span name="lbl" caption="email">email</span>:</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control required mail_req" id="emailRequester_Upd" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="DateRequest_Upd"><span name="lbl" caption="DateRequest">DateRequest</span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="DateRequest_Upd" class="form-control dpd1" placeholder="DateRequest"/ readonly="readonly">
+                            </div>
+                        </div>  
+                        <div class="form-group">
+                            <label class="col-lg-2 col-sm-2 control-label" for="Description_Upd"><span name="lbl" caption="description">description</span></label>
+                            <div class="col-md-8">
+                               <textarea id="Description_Upd" rows="2" style="width:100%;" class="form-control required"></textarea>
+                            </div>
+                        </div>
+                         <div class="form-group  ">
+                                           <label class=" col-lg-2 col-sm-2 control-label"><span name="lbl" caption="executor">executor</span>:</label>
+                                           <div class="col-xs-10">
+                                               <select id ='Executor_Upd' name="Executor_Upd" class="form-control exe_sel" >
+                                                   
+                                                     
+                                               </select>  
+                                            </div>                                   
+                         </div> 
+                        <!--<div class="form-group">
+                            <label for="Executor_Upd" class="col-lg-2 col-sm-2 control-label"><span name="lbl" caption="executor">executor</span>:</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control required" id="Executor_Upd" placeholder="">
+                            </div>
+                        </div> -->  
+                        <div class="form-group">
+                            <label for="emailExecutor_Upd" class="col-lg-2 col-sm-2 control-label"><span name="lbl" caption="email">email</span>:</label>
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control required mail_exe" id="emailExecutor_Upd" >
+                            </div>
+                        </div> 
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="DateExecution_Upd"><span name="lbl" caption="DateExecution">DateExecution </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="DateExecution_Upd" class="form-control dpd1" placeholder="DateExecution "/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="ExecutorComment_Upd"><span name="lbl" caption="ExecutorComment">ExecutorComment </span></label>
+                            <div class="col-md-8">
+                                <input type="text" id="ExecutorComment_Upd" class="form-control" placeholder="ExecutorComment "/>
+                            </div>
+                        </div>
+                        <div class="form-group  ">
+                                           <label class=" col-lg-2 col-sm-2 control-label"><span name="lbl" caption="TicketStatus">TicketStatus: </span></label>
+                                           <div class="col-xs-10">
+                                               <select id ='TicketStatus_Upd' name="TicketStatus_Upd" class="form-control">
+                                                     <option value="1">Aperto</option>
+                                                     <option value="2">Accettato</option>
+                                                     <option value="3">Rifiutato</option>
+                                                     <option value="4">Richiesta impegno di spesa</option>
+                                                     <option value="5">Chiuso ed eseguito</option>
+                                                     <option value="6">Chiuso non eseguito</option>
+                                               </select>  
+                                            </div>                                   
+                         </div>                                                       
+                    </form>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-left">
+                    <a href="#" id="btnCallDelete" class="btn btn-default" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-times">&nbsp;</i><span name="lbl" caption="delete">Save</span></a>
+                </span>
+                <span class="tools pull-right">
+                    <a href="#" id="btnUpd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<div id="DeleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span name="lbl" caption="delete">Delete</span></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <span name="lbl" caption="msgconfirmdelete"></span>:&nbsp;<span id="Descr_Delete"></span>?
+                    <br />
+                    <span name="lbl" caption="msgoperationirreversible">This operation cannot be recovered</span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><span name="lbl" caption="close">Close</span></button>
+                <button id="btnDelete" type="button" class="btn btn-danger" data-dismiss="modal"><span name="lbl" caption="confirmdelete">Confirm delete</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/update-->
+
+<!--templates-->
+<!--<script type="text/x-jquery-tmpl" id="tmplListickets">
+<tr>
+    <td>
+        {{if TicketType}}
+            <i class="fa fa-desktop fa-2x"></i>
+        {{else}}
+            <i class="fa fa-users fa-2x"></i>
+        {{/if}}    
+
+    </td>
+    <td><b>${TicketTitle}</b></td>
+    <td>${Description}</td>
+    <td>${Requester}</td>
+    <td>
+        {{if DateExecution}}
+            ${DateExecution}
+        {{else}}
+            <i class="fa fa-times fa-2x"></i>
+        {{/if}} 
+
+    </td>
+    <td>${DateRequest}</td>
+    <td>
+        <span class="pull-right">
+           <a href="javascript:callUpdate('${TicketId}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>         
+        </span>
+    </td>
+</tr>
+</script>-->
+
+<script type="text/x-jquery-tmpl" id="tmplListickets">
+<div class="row">
+    <div class="col-lg-12">
+             <div class="col-lg-3 sx">
+                 
+                  <div class="tipo">
+                        <div class="titolo"><b>${TicketTitle}</b></div>
+                        {{if TicketType}}
+                            <i class="fa fa-desktop fa-3x verde"></i>
+                        {{else}}
+                            <i class="fa fa-users fa-3x verde"></i>
+                        {{/if}} 
+                       <div class="mittente">${Requester}</div>
+                  </div>
+             </div>
+             <div class="col-lg-9">
+                 <div class="destinatario">To: ${Executor}</div>    
+                 <div class="descrizione centro">${Description}</div>
+                        <div class="row info_riga">
+                            <div class="col-lg-4 ">
+                                    <i class="fa fa-pencil-square-o fa-2x"></i>${DateRequest}
+                             </div>
+                            <div class="col-lg-4 ">
+
+                                {{if TicketStatus != 1}}
+
+                                     {{if DateExecution != "01/01/1900 00:00"}}
+                                        <i class="fa fa-calendar fa-2x"></i> ${DateExecution}
+                                    {{else}}
+                                        <i class="fa fa-calendar-o fa-2x"></i>&nbsp&nbsp<i class="fa fa-bars fa-2x"></i>
+                                    {{/if}} 
+                                {{else}}
+
+                                        <i class="fa fa-bars fa-2x"></i>
+
+                                {{/if}} 
+                                  
+                             </div>
+                             <div class="col-lg-4 destra">
+                                    <a href="javascript:callUpdate('${TicketId}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>         
+                             </div>
+
+                        </div>
+
+             </div>
+    </div>
+   <div class="col-lg-12 box_ticket"></div>
+</div>    
+</script>
+
+<script type="text/x-jquery-tmpl" class="tmplreq_sel">
+   <option data-id="${Id}" value="${Nome}">${Nome}</option>
+</script>
+
+<script type="text/x-jquery-tmpl" class="tmplexe_sel">
+     <option data-id="${Id}" value="${Nome}">${Nome}</option>
+</script>
+
+
+<script type="text/x-jquery-tmpl" id="tmplgoback">
+<li class="current">
+     <a  href="javascript:go2Backoffice();"><i class="fa fa-tasks"></i><span name="lbl" caption="Installations">Installations</span></a>  
+</li>
+</script>
+
+<!--/templates-->
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/bs3/bootstrap-datepickerV2.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Tickets_Manage.js" type="text/javascript"></script>

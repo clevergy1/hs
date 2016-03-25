@@ -1,0 +1,196 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12"  id="divListcymt100">
+        <section class="panel">
+            <header class="panel-heading panel-operator">
+                <span class="pull-left"><span name="lbl" caption="sdin_Anzs">sdin_Anzs</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <table class="table table-condensed" >
+                    <thead>
+                        <tr>
+                            <th style="width:41%;"><span name="lbl" caption="description">description</span></th>
+                            <th style="width:15%"><span name="lbl" caption="lastupdateshort">lastupdateshort</span> </th>
+                            <th style="width:8%"><span name="lbl" caption="code">code</span> </th>
+                            <th><span name="lbl" caption="status">status</span> </th>  
+                            <th></th>                           
+                        </tr>
+                    </thead>
+                </table>
+                <div style="height:350px;overflow-y:auto;">
+                    <table class="table table-condensed">
+                        <tbody id="AnzListcymt100"></tbody>
+                    </table>
+                </div>
+                
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    <a href="javascript:callAddcymt100();" class="btn btn-default btn-sm"><span name="lbl" caption="add">add</span></a>
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+    <div  class="col-md-12"  id="divDetailcymt100" style="display:none;"></div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="tmplAnzcymt100">
+    <tr data-index="${Id}">
+        <td style="width:41%;">${Descr.trim()}</td>
+        <td style="width:15%">
+            <span id="lastReceived_${Cod}">
+            {{if moment(lastReceived).year() > 1900}}
+                ${ moment(lastReceived).format("DD/MM/YYYY HH:mm")}
+            {{else}}
+                --:--
+            {{/if}}
+            </span>
+            <span class="LastUpdate" id="LastUpdate_${Cod}"></span>
+        </td>
+        <td  style="width:8%">${Cod}</td>
+        <td>           
+            <span id="stato_${Cod}">
+                {{if moment(lastReceived).year() > 1900}}
+                    {{if stato==0}}
+                         <i class="fa fa-thumbs-o-up"></i>
+                    {{else}}
+                        {{if stato==1}}
+                            <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                            <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                    {{/if}}
+                {{else}}
+                    <i class="fa fa-thumbs-o-down"></i>
+                {{/if}}
+            </span>
+        </td>
+        <td>
+            <span class="btn-group pull-right">
+                <a href="javascript:callShowDetailcymt100('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>
+                <a href="javascript:callUpdcymt100('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">edit</span></a>
+                <a href="javascript:$.fn.callReplacementscymt100('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="replacements">replacements</span></a>
+            </span>
+        </td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplAnzDetailcymt100">
+<aside class="profile-nav alt">
+    <section class="panel">
+        <header class="panel-heading panel-operator">
+            <span class="pull-left">${Descr.trim()}</span>
+            <span class="tools pull-right"> 
+                <a href="javascript:closeAnzDetailcymt100();" class="fa fa-times"></a>                   
+            </span>               
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="position-center" style="height:400px;overflow-y:auto;">
+                <table class="table table-condensed" >
+                    <tbody>
+                        <tr>
+                            <td>Total Current</td>
+                            <td>${Number(TotalCurrent).toLocaleString()}&nbsp;A</td>
+                        </tr>
+                        <tr>
+                            <td>Active Power 1</td>
+                            <td>${Number(ActivePower1).toLocaleString()}&nbsp;W</td>
+                        </tr>
+                        <tr>
+                            <td>Active Power 2</td>
+                            <td>${Number(ActivePower2).toLocaleString()}&nbsp;W</td>
+                        </tr>
+                        <tr>
+                            <td>Active Power 3</td>
+                            <td>${Number(ActivePower3).toLocaleString()}&nbsp;W</td>
+                        </tr>
+                        <tr>
+                            <td>Total Active Power</td>
+                            <td>${Number(TotalActivePower).toLocaleString()}&nbsp;W</td>
+                        </tr>
+                        <tr>
+                            <td>Total Reactive Power</td>
+                            <td>${Number(TotalReactivePower).toLocaleString()}&nbsp;var</td>
+                        </tr>
+                        <tr>
+                            <td>Total Apparent Power</td>
+                            <td>${Number(TotalApparentPower).toLocaleString()}&nbsp;VA</td>
+                        </tr>
+                        <tr>
+                            <td>Total Power Factor</td>
+                            <td>${Number(TotalPowerFactor).toLocaleString()}&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>Active Energy 1 Consumed</td>
+                            <td>${Number(ActiveEnergy1Consumed).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Active Energy 1 Produced</td>
+                            <td>${Number(ActiveEnergy1Produced).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Active Energy 2 Consumed</td>
+                            <td>${Number(ActiveEnergy2Consumed).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>ActiveEnergy 2 Produced</td>
+                            <td>${Number(ActiveEnergy2Produced).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Active Energy 3 Consumed</td>
+                            <td>${Number(ActiveEnergy3Consumed).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Active Energy 3 Produced</td>
+                            <td>${Number(ActiveEnergy3Produced).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Total ActiveEnergy Consumed</td>
+                            <td>${Number(TotalActiveEnergyConsumed).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Total Active Energy Produced</td>
+                            <td>${Number(TotalActiveEnergyProduced).toLocaleString()}&nbsp;kWh</td>
+                        </tr>
+                        <tr>
+                            <td>Total Reactive Energy Produced</td>
+                            <td>${Number(TotalReactiveEnergyProduced).toLocaleString()}&nbsp;kvarh</td>
+                        </tr>
+                        <tr>
+                            <td>Total Reactive Energy Consumed</td>
+                            <td>${Number(TotalReactiveEnergyConsumed).toLocaleString()}&nbsp;kvarh</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</aside>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplProbeElem">
+    <tr>
+        <td>${ProbeDesc}</td>     
+        <td id="ProbeElem_${ProbeCod}">${currentValue}</td>
+    </tr>
+</script>
+
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/Device8sdinAnz.js" type="text/javascript"></script>
+

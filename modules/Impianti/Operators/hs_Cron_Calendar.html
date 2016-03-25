@@ -1,0 +1,92 @@
+﻿
+<!--calendar css-->
+<link href="js/fullcalendar/fullcalendar.css" rel="stylesheet" />
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Operators/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Operators/Device8Detail');"><span id="hsDescr"></span></a></li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row ">
+    <section class="panel">
+        <header class="panel-heading  panel-operator">
+            <span id="Descr"></span>
+            <span class="tools pull-right">
+                <a href="javascript:;" id="btnClose" class="fa fa-times"></a> 
+            </span>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="row">
+                <aside class="col-xs-4" style="padding:0px !important;">
+                    <div id='external-events' style="width:99%;height:400px;overflow-x:auto; ">
+                        <ul id="CronoProfilesList" style="padding:0px !important;"></ul>
+                    </div>
+                </aside> 
+                <aside class="col-xs-8">
+                    <div id="calendar" class="has-toolbar"></div>
+                </aside>
+            </div>
+        </div>
+        <footer class="panel-footer">
+            <span class="tools pull-left">
+                <a href="#" id="btnCallSchedule" class="btn btn-default"><span name="lbl" caption="schedule">schedule</span></a>
+            </span>
+            <span class="tools pull-right">
+                <a href="javascript:;" class="btn btn-default" data-toggle="modal" data-target="#SendModal"><i class="fa fa-send">&nbsp;</i><span name="lbl" caption="send">send</span></a>
+            </span>
+            <div class="clearfix"></div>
+        </footer>
+    </section>
+</div>
+<div id="SendModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><span name="lbl" caption="send">send</span></h4>
+            </div>
+            <div class="modal-body">
+                <p>
+
+                    <span name="lbl" caption="msgconfirmsend"></span>:&nbsp;<span id="Descr_Send"></span>?
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><span name="lbl" caption="close">Close</span></button>
+                <button id="bntSend" type="button" class="btn btn-danger" data-dismiss="modal"><span name="lbl" caption="confirm">Confirm</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplProfile">
+    <li id="Profile_${ProfileNr}" class='external-event'>
+        <div class="float-left" id="descr">${descr}</div>
+        <div class="float-right">
+            <div id="placeholder_${ProfileNr}" style="height:60px;width:300px;"></div>
+        </div>
+     </li>
+</script>
+<!--/templates-->
+
+<script src="js/moment/moment-range.min.js"></script>
+
+<script src="js/fullcalendar/fullcalendar.js"></script>
+<script src='js/fullcalendar/lang-all.js'></script>
+
+<script type="text/javascript" src="js/jq/stupidtable.js?dev"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.time.js"></script>
+<script type="text/javascript" src="js/jq/jquery.flot.resize.js"></script>
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Operators/hs_Cron_Calendar.js" type="text/javascript"></script>

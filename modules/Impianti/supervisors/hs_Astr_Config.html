@@ -1,0 +1,74 @@
+﻿<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>   
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Astr');"><span id="Desc"></span></a></li>             
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <header class="panel-heading panel-supervisor">
+            <span class="pull-left"><span name="lbl" caption="config">config</span></span>
+            <span class="tools pull-right">
+                <a href="javascript:$.module.load('Impianti/supervisors/Device8Astr');"><i class="fa fa-times"></i></a>
+            </span>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="WorkingMode"><span name="lbl" caption="Astrworkingmode">Astrworkingmode</span></label>
+                    <div class="col-md-2">
+                        <input type="text" id="WorkingMode" class="form-control isNumeric" placeholder="" data-v-min="0" data-v-max="100" data-a-sep="" data-m-dec="0" data-w-empty="empty"/>
+                    </div>
+                    <div class="col-md-2">%</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="preSunrise"><span name="lbl" caption="AstrpreSunrise">preSunrise</span></label>
+                    <div class="col-md-2">
+                        <input type="text" id="preSunrise" class="form-control isNumeric" placeholder="" data-v-min="0" data-v-max="30" data-a-sep="" data-m-dec="0" data-w-empty="empty"/>
+                    </div>
+                    <div class="col-md-2">min. (0/30)</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="postSunrise"><span name="lbl" caption="AstrpostSunrise">postSunrise</span></label>
+                    <div class="col-md-2">
+                        <input type="text" id="postSunrise" class="form-control isNumeric" placeholder="" data-v-min="0" data-v-max="30" data-a-sep="" data-m-dec="0" data-w-empty="empty" />
+                    </div>
+                    <div class="col-md-2">min. (0/30)</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="preSunset"><span name="lbl" caption="AstrpreSunset">postSunrise</span></label>
+                    <div class="col-md-2">
+                        <input type="text" id="preSunset" class="form-control isNumeric" placeholder="" data-v-min="0" data-v-max="30" data-a-sep="" data-m-dec="0" data-w-empty="empty" />
+                    </div>
+                    <div class="col-md-2">min. (0/30)</div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="postSunset"><span name="lbl" caption="AstrpostSunset">postSunset</span></label>
+                    <div class="col-md-2">
+                        <input type="text" id="postSunset" class="form-control isNumeric" placeholder="" data-v-min="0" data-v-max="30" data-a-sep="" data-m-dec="0" data-w-empty="empty" />
+                    </div>
+                    <div class="col-md-2">min. (0/30)</div>
+                </div>
+            </form>
+        </div>
+        <footer class="panel-footer">
+            <span class="tools pull-right">
+                <a href="#" id="btnUpd" class="btn btn-default"><i class="fa fa-save">&nbsp;</i><span name="lbl" caption="save">Save</span></a>
+            </span>
+            <div class="clearfix"></div>
+        </footer>
+    </div>
+</div>
+
+
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/supervisors/hs_Astr_Config.js" type="text/javascript"></script>

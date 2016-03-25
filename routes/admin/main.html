@@ -1,0 +1,122 @@
+﻿<section id="container">
+    <!--header start-->
+    <header class="header fixed-top clearfix">
+    <!--logo start-->
+    <div class="brand brand-admin">
+        <div class="sidebar-toggle-box">
+            <div class="fa fa-bars"></div>
+        </div>
+    </div>
+    <!--logo end-->
+
+    <div class="nav notify-row" id="top_menu">
+        <div class="pull-left">
+            <h4 id="ApplicationTitle" style="margin-left:20px;"></h4>
+        </div>
+        
+    </div>
+
+    <div class="top-nav clearfix">
+        <!--search & user info start-->
+        <ul class="nav pull-right top-menu"> 
+            <li>
+                <div class="toggle-right-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </li>
+        </ul>
+         <ul class="nav pull-right  top-menu" id="pageOperation"></ul>         
+    </div>
+    </header>
+    <!--header end-->
+
+    <!--sidebar start-->
+    <aside>
+        <div id="sidebar" class="nav-collapse">
+            <!-- sidebar menu start-->
+            <div class="leftside-navigation">                
+                <ul id="usermenu" class="sidebar-menu"></ul>
+            </div>
+            <!-- sidebar menu end-->
+
+        </div>
+    </aside>
+    <!--sidebar end-->
+
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="module"></div>
+        </section>
+    </section>
+    <!--main content end-->
+
+
+    <!--right side bar-->
+    <div class="right-sidebar">
+        <div class="right-stat-bar">
+            <ul class="right-side-accordion">
+                <li class="widget-collapsible">
+                    <a href="#" class="head widget-head red-bg active clearfix">
+                        <span class="pull-left">
+                            <i class="fa fa-user"></i>&nbsp;<span class="username">John Doe</span>
+                        </span>
+                        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+                    </a>
+                    <ul class="widget-container">
+                        <li>
+                            <div class="prog-row ">
+                                 <div class="user-thumb">
+                                    <i class="fa fa-key"></i>&nbsp;
+                                </div>
+                                <div class="user-details">
+                                    <a href="javascript:userLogOut()"> Log Out</a>
+                                </div>                                
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="widget-collapsible">
+                    <a href="#" class="head widget-head terques-bg active clearfix">
+                        <span class="pull-left">
+                            <i class="fa fa-globe"></i>&nbsp;<span name="lbl" caption="language">Language</span>
+                        </span>
+                        <span class="pull-right widget-collapse"><i class="ico-minus"></i></span>
+                    </a>
+                    <ul class="widget-container">
+                        <li>
+                            <div class="prog-row">
+                                <div class="user-thumb">
+                                    <i class="fa fa-globe"></i>&nbsp;
+                                </div>
+                                <div class="user-details">
+                                    <a href="#" class="langEn">English</a>
+                                </div>
+                            </div>
+                            <div class="prog-row">
+                                <div class="user-thumb">
+                                    <i class="fa fa-globe"></i>&nbsp;
+                                </div>
+                                <div class="user-details">
+                                    <a href="#" class="langIt">Italiano</a>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!--/right side bar-->
+</section>
+<script src="js/common.js?v=2-0-1" type="text/javascript"></script>
+<script  type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            $.module.load('admin/home');
+        });
+    });
+</script>

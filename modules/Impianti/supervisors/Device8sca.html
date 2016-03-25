@@ -1,0 +1,162 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row" id="divList">
+    <div class="col-md-12" >
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="hs_sca">hs_sca</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            
+            <div class="panel-body">
+                <table class="table table-condensed" >
+                    <thead id="head"></thead>
+                    <tbody id="List"></tbody>
+                </table>
+            </div>
+            
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                   
+                </span>
+                <div class="clearfix"></div>
+             </footer>
+        </section>
+    </div>
+
+</div>
+
+<div class="row"  id="divDetail" style="display:none;">
+    <div  class="col-md-12" >
+      
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="hs_sca">hs_sca</span></span>
+                <span class="tools pull-right"> 
+                    <a href="javascript:closeDetail();" class="fa fa-times"></a>                   
+                </span>               
+                <div class="clearfix"></div>
+            </header>
+            <div class="panel-body">
+                <div class="position-center" style="height:400px;overflow-y:auto;">
+                    <table class="table table-condensed" >
+                        <tbody id="detailList"></tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <span class="tools pull-right">
+                    
+                </span>
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+        
+    </div>
+</div>
+
+<!--Errors-->
+<div id="Errors" class="row" style="display:none;">
+    <div class="col-md-12">
+        <section class="panel">
+            <header class="panel-heading panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="errorcodes">errorcodes</span>&nbsp;<span id="Cod"></span></span>
+                <span class="tools pull-right">
+                    <a id="closeErrors" href="javascript:;" class="fa fa-times"></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div id="panel-body-ListErrorLog" class="panel-body" style="height: 400px;overflow-y:auto;overflow-x:hidden;">
+                <table class="table tableProbes" data-page-size="5">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="day">day</span> </th>
+                            <th><span name="lbl" caption="element">element</span></th>
+                            <th><span name="lbl" caption="description">description</span></th>
+                            <th>Val.</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListErrorLog"></tbody>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <div class="clearfix"></div>
+            </footer>
+        </section>
+    </div>
+</div>
+<!--/Errors-->
+
+<script type="text/x-jquery-tmpl" id="tmplHead">
+    <th style="width:20%;"><span name="lbl" caption="description">description</span></th>
+    <th><span name="lbl" caption="code">code</span></th>
+    <th></th>
+</script>
+<script type="text/x-jquery-tmpl" id="tmpl">
+    <tr>        
+        <td style="width:20%;">${Descr}</td>
+        <td>${Cod}</td>
+        <td>
+            <span class="btn-group  pull-right">
+                <a href="javascript:callShowDetail('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="detail">detail</span></a>
+                <!--<a href="javascript:callEditHeader('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">detail</span></a>-->
+                <!--<a href="javascript:callErrorLog('${Cod}');" class="btn btn-default btn-sm"><span name="lbl" caption="errorcodes">Errors</span></a>-->
+                <a href="javascript:$.fn.callReplacements('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="replacements">replacements</span></a>
+            </span>
+        </td>        
+    </tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplDetail">
+<tr>
+    <td>${Id}</td>
+    <td>${descr}</td>
+    <td id="currentValue_${scaId}_${Id}">
+        {{if currentValue}}ON{{else}}OFF{{/if}}        
+    </td>
+</tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplListErrorLog">
+    <tr>
+        <td>${moment(LogDate).format('DD/MM/YYYY HH:mm')}</td>
+        <td>${hselement}</td>
+        <td>
+            {{if localStorage.getItem("CurrentLanguage")=='it' }}
+            ${DescIT}
+            {{else}}
+            ${DescEN}
+            {{/if}}
+        </td>
+        <td>${errorValue}</td>
+    </tr>
+</script>
+<script type="text/x-jquery-tmpl" id="tmplListErrorLogLastItem">
+    <tr id="loadMore">
+        <td colspan="4">load more</td>
+    </tr>
+</script>
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/supervisors/Device8sca.js" type="text/javascript"></script>
