@@ -123,26 +123,36 @@
                             <td>Voltage L1N</td>
                             <td>${Number(VoltageL1N).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{if AnzType==0}}
                         <tr>
                             <td>Voltage L2N</td>
                             <td>${Number(VoltageL2N).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Voltage L3N</td>
                             <td>${Number(VoltageL3N).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Voltage L1L2</td>
                             <td>${Number(VoltageL1L2).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Voltage L2L3</td>
                             <td>${Number(VoltageL2L3).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Voltage L3L1</td>
                             <td>${Number(VoltageL3L1).toLocaleString()}&nbsp;V.</td>
                         </tr>
+                        {{/if}}
                         <tr>
                             <td>Frequency</td>
                             <td>${Number(Frequency).toLocaleString()}&nbsp;hz</td>
@@ -151,38 +161,50 @@
                             <td>Current L1</td>
                             <td>${Number(CurrentL1).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{if AnzType==0}}
                         <tr>
                             <td>Current L2</td>
                             <td>${Number(CurrentL2).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Current L3</td>
                             <td>${Number(CurrentL3).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{/if}}
                         <tr>
                             <td>Current L1 Max</td>
                             <td>${Number(CurrentL1Max).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{if AnzType==0}}
                         <tr>
                             <td>Current L2 Max</td>
                             <td>${Number(CurrentL2Max).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Current L3 Max</td>
                             <td>${Number(CurrentL3Max).toLocaleString()}&nbsp;A</td>
                         </tr>
+                        {{/if}}
                         <tr>
                             <td>Power Factor L1</td>
                             <td>${Number(PwerFactorL1).toLocaleString()}&nbsp;W</td>
                         </tr>
+                        {{if AnzType==0}}
                         <tr>
                             <td>Power Factor L2</td>
                             <td>${Number(PwerFactorL2).toLocaleString()}&nbsp;W</td>
                         </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
                         <tr>
                             <td>Power Factor L3</td>
                             <td>${Number(PwerFactorL3).toLocaleString()}&nbsp;W</td>
                         </tr>
+                        {{/if}}
                         <tr>
                             <td>Active Power</td>
                             <td>${Number(ActivePower).toLocaleString()}&nbsp;W</td>
@@ -211,6 +233,22 @@
                             <td>Reactive Energy</td>
                             <td>${Number(ReactiveEnergy).toLocaleString()}&nbsp;kVArh</td>
                         </tr>
+                        <tr>
+                            <td>Cosphi L1</td>
+                            <td>${Number(cosphiL1).toLocaleString()}&nbsp;</td>
+                        </tr>
+                        {{if AnzType==0}}
+                        <tr>
+                            <td>Cosphi L2</td>
+                            <td>${Number(cosphiL2).toLocaleString()}&nbsp;</td>
+                        </tr>
+                        {{/if}}
+                        {{if AnzType==0}}
+                        <tr>
+                            <td>Cosphi L3</td>
+                            <td>${Number(cosphiL3).toLocaleString()}&nbsp;</td>
+                        </tr>
+                        {{/if}}
                     </tbody>
                 </table>
             </div>
