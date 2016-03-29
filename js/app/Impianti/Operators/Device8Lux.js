@@ -166,7 +166,16 @@ $(function () {
 
         $.fn.callog = function (Cod) {
             localStorage.setItem("Cod", Cod);
-            $.module.load('Impianti/supervisors/Lux_log');
+            $.module.load('Impianti/operators/Lux_log');
+        }
+
+        $('#btnCallAddLux').on('click', function (e) {
+            $.module.load('Impianti/Operators/Lux_Add');
+        });
+
+        $.fn.callUpdate = function (Id) {
+            localStorage.setItem("Id", Id);
+            $.module.load('Impianti/Operators/Lux_Update');
         }
 
         $.fn.execCmd = function (Id, LightON) {
@@ -233,11 +242,11 @@ $(function () {
         /*----------------------------------------------------------------------*/
 
         /* Replacements
-        ------------------------------------------------------------------------*/
-        $.fn.callReplacements = function (Id) {
-            localStorage.setItem("ParentId", Id);
-            $.module.load('Impianti/supervisors/Lux_Replacements');
-        }
+        //------------------------------------------------------------------------*/
+        //$.fn.callReplacements = function (Id) {
+        //    localStorage.setItem("ParentId", Id);
+        //    $.module.load('Impianti/operators/Lux_Replacements');
+        //}
         /*----------------------------------------------------------------------*/
 
         /*
