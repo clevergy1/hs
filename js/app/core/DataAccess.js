@@ -13566,7 +13566,7 @@
                 }
             }); //ajax
         };
-        my.hs_Astr_setParam = function (Id, preSunrise, postSunrise, preSunset, postSunset, workingMode) {
+        my.hs_Astr_setParam = function (Id, preSunrise, postSunrise, preSunset, postSunset, eveningTwilight, morningTwilight) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({
                 datatype: 'json',
@@ -13577,7 +13577,8 @@
                     postSunrise: postSunrise,
                     preSunset: preSunset,
                     postSunset: postSunset,
-                    workingMode: workingMode,
+                    eveningTwilight: eveningTwilight,
+                    morningTwilight: morningTwilight,
                     DateCtrl: new Date().getTime()
                 },
                 type: 'GET',

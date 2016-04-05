@@ -28,7 +28,8 @@
                 if (data) {
                     $elementCode = data.Cod;
                     $("#Desc").text(data.Descr);
-                    $('#WorkingMode').autoNumeric('set', data.WorkingMode);
+                    $('#morningTwilight').autoNumeric('set', data.morningTwilight);
+                    $('#eveningTwilight').autoNumeric('set', data.eveningTwilight);
                     $('#preSunrise').autoNumeric('set', data.preSunrise);
                     $('#postSunrise').autoNumeric('set', data.postSunrise);
                     $('#preSunset').autoNumeric('set', data.preSunset);
@@ -42,7 +43,8 @@
         backup working mode
         -----------------------------------------------------------------*/
         function requestParam() {
-            $('#WorkingMode').autoNumeric('set', 0);
+            $('#morningTwilight').autoNumeric('set', 0);
+            $('#eveningTwilight').autoNumeric('set', 0);
             $('#preSunrise').autoNumeric('set', 0);
             $('#postSunrise').autoNumeric('set', 0);
             $('#preSunset').autoNumeric('set', 0);
@@ -54,13 +56,14 @@
         }
 
         $('#btnUpd').on('click', function () {
-            var workingMode = $('#WorkingMode').autoNumeric('get'),
+            var morningTwilight = $('#morningTwilight').autoNumeric('get'),
+                eveningTwilight = $('#eveningTwilight').autoNumeric('get'),
                 preSunrise = $('#preSunrise').autoNumeric('get'),
                 postSunrise = $('#postSunrise').autoNumeric('get'),
                 preSunset = $('#preSunset').autoNumeric('get'),
                 postSunset = $('#postSunset').autoNumeric('get');
 
-            var req1 = $.DataAccess.hs_Astr_setParam(localStorage.getItem("AstrId"), preSunrise, postSunrise, preSunset, postSunset, workingMode)
+            var req1 = $.DataAccess.hs_Astr_setParam(localStorage.getItem("AstrId"), preSunrise, postSunrise, preSunset, postSunset, eveningTwilight, morningTwilight)
             req1.success(function (json) {
                 var data = json.d;
                 if (data == true) {

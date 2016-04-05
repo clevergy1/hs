@@ -178,6 +178,11 @@ $(function () {
             $.module.load('Impianti/Operators/Lux_Update');
         }
 
+        $.fn.callconfig = function (Id) {
+            localStorage.setItem("Id", Id);
+            $.module.load('Impianti/Operators/Lux_Config');
+        }
+
         $.fn.execCmd = function (Id, LightON) {
             var req = $.DataAccess.Lux_Read(Id);
             req.success(function (json) {

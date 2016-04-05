@@ -1,12 +1,13 @@
 (function ($) {
 
     $.appParms = (function (my) {
-        var _urlRoot = 'http://clevergylab.clevergy.it/cyrcs/';
-        var _urlserver = 'http://clevergylab.clevergy.it/';
-        var _urlGlobal = 'http://clevergylab.clevergy.it/cyassrv/';
-        var _urlBase = "http://clevergylab.clevergy.it/cyassrv/s1.svc/";
-        var _urlHub = 'http://clevergylab.clevergy.it/cyassrv/signalr/hubs/';
-        var _rdp = "http://clevergylab.clevergy.it/cyassrv/rdp.ashx";
+        
+        var _urlRoot = 'http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/cyrcs/';
+        var _urlserver = 'http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/';
+        var _urlGlobal = 'http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/cyassrv/';
+        var _urlBase = "http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/cyassrv/s1.svc/";
+        var _urlHub = 'http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/cyassrv/signalr/hubs/';
+        var _rdp = "http://ec2-52-31-158-162.eu-west-1.compute.amazonaws.com/cyassrv/rdp.ashx";
 
         //var _urlRoot = 'http://clevergylab2.clevergy.it/cyrcs/';
         //var _urlserver = 'http://clevergylab2.clevergy.it/';

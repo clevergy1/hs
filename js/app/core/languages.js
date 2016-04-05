@@ -419,9 +419,12 @@
         it['Evs'] = 'Elettrovalvole';
         it['Astr'] = 'Orologio astronomico';
         it['Astrs'] = 'Orologi astronomici';
-        it['Astrworkingmode'] = 'Modo';
+        it['AstreveningTwilight'] = '% crepuscolo serale';
+        it['AstrmorningTwilight'] = '% crepuscolo mattuttino';
         it['AstrSunRise'] = 'Alba';
         it['AstrSunSet'] = 'Tramonto';
+        it['AstrCivilSunRise'] = 'Alba civile';
+        it['AstrCivilSunSet'] = 'Tramonto civile';
         it['AstrpreSunrise'] = 'Correzione alba (anticipo)';
         it['AstrpostSunrise'] = 'Correzione alba (posticipo)';
         it['AstrpreSunset'] = 'Correzione tramonto (anticipo)';
@@ -877,9 +880,12 @@
         en['Evs'] = 'Electrovalves';
         en['Astr'] = 'Astronomical clock';
         en['Astrs'] = 'Astronomical clocks';
-        en['Astrworkingmode'] = 'Mode';
+        en['AstreveningTwilight'] = '% evening twilight';
+        en['AstrmorningTwilight'] = '% morning twilight';
         en['AstrSunRise'] = 'Sunrise';
         en['AstrSunSet'] = 'Sunset';
+        en['AstrCivilSunRise'] = 'Civil sunrise';
+        en['AstrCivilSunSet'] = 'Civil sunset';
         en['AstrpreSunrise'] = 'Sunrise correction (advance)';
         en['AstrpostSunrise'] = 'Sunrise correction (postponed)';
         en['AstrpreSunset'] = 'Sunset correction (advance)';

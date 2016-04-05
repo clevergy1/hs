@@ -108,14 +108,11 @@ function init() {
     $('.popovers').popover();
 
 
-    if (localStorage.getItem("OperatorName")) {
-        $('.username').text(localStorage.getItem("OperatorName"));
+    if (localStorage.getItem("clv-OperatorName")) {
+        $('.username').text(localStorage.getItem("clv-OperatorName"));
     }
-    if (localStorage.getItem("AdminName")) {
-        $('.username').text(localStorage.getItem("AdminName"));
-    }
-    if (localStorage.getItem("SupervisorName")) {
-        $('.username').text(localStorage.getItem("SupervisorName"));
+    if (localStorage.getItem("clv-SupervisorName")) {
+        $('.username').text(localStorage.getItem("clv-SupervisorName"));
     }
   
     /*==Sidebar Toggle==*/

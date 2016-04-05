@@ -26,10 +26,17 @@
                             <th><span name="lbl" caption="description">description</span></th>
                             <th><span name="lbl" caption="status">status</span> </th>
                             <th>Set point</th>
-                            <th><span name="lbl" caption="Astrworkingmode">Astrworkingmode</span></th>
                             <th style="width:150px;"><span name="lbl" caption="lastupdateshort">lastupdateshort</span></th>
+
+                            <th><span name="lbl" caption="AstrmorningTwilight">AstrmorningTwilight</span></th> 
+                            <th><span name="lbl" caption="AstreveningTwilight">AstreveningTwilight</span></th>  
+                                                      
                             <th><span name="lbl" caption="AstrSunRise">AstrSunRise</span></th>
-                            <th><span name="lbl" caption="AstrSunSet">AstrSunSet</span></th>                            
+                            <th><span name="lbl" caption="AstrSunSet">AstrSunSet</span></th>   
+                            
+                            <th><span name="lbl" caption="AstrCivilSunRise">AstrCivilSunRise</span></th>
+                            <th><span name="lbl" caption="AstrCivilSunSet">AstrCivilSunSet</span></th>                 
+                                      
                             <th><span name="lbl" caption="code">code</span> </th>
                             <th style="width:400px;"></th>
                         </tr>
@@ -98,10 +105,17 @@
             </span>
         </td>
         <td><span id="SetPoint_${Cod}">${SetPoint}</span>%</td>
-        <td><span id="WorkingMode_${Cod}">${WorkingMode}</span>%</td>
         <td><span id="LastReceived_${Cod}">${moment(LastReceived).format('DD/MM/YYYY HH:mm')}</span></td>
+
+        <td><span id="eveningTwilight_${Cod}">${eveningTwilight}</span>%</td> 
+        <td><span id="morningTwilight_${Cod}">${morningTwilight}</span>%</td>  
+              
         <td><span id="AstrSunRise_${Cod}">${moment(lrSunRise).format('HH:mm')}</span></td>
         <td><span id="AstrSunSet_${Cod}">${moment(lrSunSet).format('HH:mm')}</span></td>
+
+        <td><span id="AstrCivilSunRise_${Cod}">${moment(civillrSunRise).format('HH:mm')}</span></td>
+        <td><span id="AstrCivilSunSet_${Cod}">${moment(civillrSunSet).format('HH:mm')}</span></td>
+
         <td>${Cod}</td>
         <td  style="width:450px;">
             <span class="btn-group pull-right">
