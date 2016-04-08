@@ -327,11 +327,11 @@
         }
 
         $('#btnGetProfile').on('click', function () {
-            var r = $.DataAccess.hs_Astr_Profile_get(localStorage.getItem("hsId"), Cod, ProfileY, ProfileNr);
+            var r = $.DataAccess.hs_Astr_Profile_get(localStorage.getItem("hsId"), $Cod, $ProfileY, $ProfileNr);
             r.success(function (json) {
                 var data = json.d;
                 if (data) {
-                    readProfile(data.AstrId, ProfileY, ProfileNr);
+                    readProfile(data.AstrId, $ProfileY, $ProfileNr);
                     populateTable(data);
                 }
                 else {

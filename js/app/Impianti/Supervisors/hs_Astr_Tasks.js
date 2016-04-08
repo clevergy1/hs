@@ -2,14 +2,14 @@
 
     $(document).ready(function () {
         var $hsIdOnLine = false;
-        var $selectedDate = moment().format('DD/MM/YYYY'),
+        var $selectedDate = moment().format('YYYY/MM/DD'),
         $currMonth,
         $currYear,
         $Cod;
         var $gotFocus;
 
         var d = new Date();
-        $selectedDate = moment(d.valueOf()).format('DD/MM/YYYY');
+        $selectedDate = moment(d.valueOf()).format('YYYY/MM/DD');
         //alert($selectedDate);
 
         Readhs();
@@ -23,7 +23,7 @@
             todayHighlight: true
         }).on('changeDate', function (ev) {
             //$selectedDate = ev.date.valueOf();
-            $selectedDate = moment(ev.date.valueOf()).format('DD/MM/YYYY');
+            $selectedDate = moment(ev.date.valueOf()).format('YYYY/MM/DD');
             $currMonth = moment(ev.date.valueOf()).month() + 1;
             $currYear = moment(ev.date.valueOf()).year();
             ListCurrent();
@@ -137,8 +137,8 @@
             var AstrId = localStorage.getItem("AstrId"),
                 ProfileNr = $('#ProfileNr_Add').val(),
                 Subject = $('#Subject_Add').val(),
-                StartDate = $('#StartDate_Add').val(),
-                EndDate = $('#EndDate_Add').val(),
+                StartDate = moment($('#StartDate_Add').val()).format('YYYY/MM/DD'), // $('#StartDate_Add').val(),
+                EndDate = moment($('#EndDate_Add').val()).format('YYYY/MM/DD'), // $('#EndDate_Add').val(),
                 yearsRepeatable = $('#yearsRepeatable_add').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_add').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_add').bootstrapSwitch('state'),
@@ -334,8 +334,8 @@
             var TaskId = $('#TaskId_Upd').val(),
                 ProfileNr = $('#ProfileNr_Upd').val(),
                 Subject = $('#Subject_Upd').val(),
-                StartDate = $('#StartDate_Upd').val(),
-                EndDate = $('#EndDate_Upd').val(),
+                StartDate = moment($('#StartDate_Upd').val()).format('YYYY/MM/DD'), // $('#StartDate_Upd').val(),
+                EndDate = moment($('#EndDate_Upd').val()).format('YYYY/MM/DD'), //$('#EndDate_Upd').val(),
                 yearsRepeatable = $('#yearsRepeatable_Upd').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_Upd').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_Upd').bootstrapSwitch('state'),
