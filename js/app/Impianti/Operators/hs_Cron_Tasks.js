@@ -136,8 +136,10 @@
             var CronId = localStorage.getItem("CronId"),
                 ProfileNr = $('#ProfileNr_Add').val(), 
                 Subject = $('#Subject_Add').val(),
-                StartDate = moment($('#StartDate_Add').val()).format('YYYY/MM/DD'), // $('#StartDate_Add').val(),
-                EndDate = moment($('#EndDate_Add').val()).format('YYYY/MM/DD'), // $('#EndDate_Add').val(),
+                //StartDate = moment($('#StartDate_Add').val()).format('YYYY/MM/DD'), // $('#StartDate_Add').val(),
+                //EndDate = moment($('#EndDate_Add').val()).format('YYYY/MM/DD'), // $('#EndDate_Add').val(),
+                fromS = $('#StartDate_Add').val().split("/"), // $('#StartDate_Add').val(),
+                from = $('#EndDate_Add').val().split("/"),
                 yearsRepeatable = $('#yearsRepeatable_add').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_add').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_add').bootstrapSwitch('state'),
@@ -146,6 +148,16 @@
                 chkFriday = $('#chkFriday_add').bootstrapSwitch('state'),
                 chkSaturday = $('#chkSaturday_add').bootstrapSwitch('state'),
                 chkSunday = $('#chkSunday_add').bootstrapSwitch('state');
+
+            var EndDate = new Date(from[2], from[1] - 1, from[0]);
+            EndDate = moment(EndDate);
+            EndDate = EndDate.format('YYYY/MM/DD');
+
+            var StartDate = new Date(fromS[2], fromS[1] - 1, fromS[0]);
+            StartDate = moment(StartDate);
+            StartDate = StartDate.format('YYYY/MM/DD');
+
+            console.log("StartDate", StartDate);
             if (checkAdd(ProfileNr, Subject, StartDate) == false) {
                 var reqAdd = $.DataAccess.hs_Cron_Profile_Tasks_Add(CronId, ProfileNr, Subject, StartDate, EndDate, chkMonday, chkTuesday, chkWednesday, chkThursday, chkFriday, chkSaturday, chkSunday, yearsRepeatable);
                 reqAdd.success(function (json) {
@@ -334,8 +346,10 @@
             var TaskId = $('#TaskId_Upd').val(),
                 ProfileNr = $('#ProfileNr_Upd').val(),
                 Subject = $('#Subject_Upd').val(),
-                StartDate = moment($('#StartDate_Upd').val()).format('YYYY/MM/DD'), // $('#StartDate_Upd').val(),
-                EndDate = moment($('#EndDate_Upd').val()).format('YYYY/MM/DD'), //$('#EndDate_Upd').val(),
+               //StartDate = moment($('#StartDate_Upd').val()).format('YYYY/MM/DD'), // $('#StartDate_Upd').val(),
+                //EndDate = moment($('#EndDate_Upd').val()).format('YYYY/MM/DD'), //$('#EndDate_Upd').val(),             
+                fromS = $('#StartDate_Upd').val().substring(0, 10).split("/"), // $('#StartDate_Add').val(),
+                from = $('#EndDate_Upd').val().substring(0, 10).split("/"),
                 yearsRepeatable = $('#yearsRepeatable_Upd').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_Upd').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_Upd').bootstrapSwitch('state'),
@@ -344,8 +358,19 @@
                 chkFriday = $('#chkFriday_Upd').bootstrapSwitch('state'),
                 chkSaturday = $('#chkSaturday_Upd').bootstrapSwitch('state'),
                 chkSunday = $('#chkSunday_Upd').bootstrapSwitch('state');
-            
 
+            console.log("fromS>>>", fromS, "from>>>>>", from);
+
+
+            var EndDate = new Date(from[2], from[1] - 1, from[0]);
+            EndDate = moment(EndDate);
+            EndDate = EndDate.format('YYYY/MM/DD');
+
+            var StartDate = new Date(fromS[2], fromS[1] - 1, fromS[0]);
+            StartDate = moment(StartDate);
+            StartDate = StartDate.format('YYYY/MM/DD');
+
+            console.log("StartDate>>>", StartDate, "EndDate>>>>>", EndDate);
             if (checkUpd(ProfileNr, Subject, StartDate) == false) {
                 var req = $.DataAccess.hs_Cron_Profile_Tasks_Update(TaskId, ProfileNr, Subject, StartDate, EndDate, chkMonday, chkTuesday, chkWednesday, chkThursday, chkFriday, chkSaturday, chkSunday, yearsRepeatable);
                 req.success(function (json) {

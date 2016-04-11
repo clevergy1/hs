@@ -2,14 +2,14 @@
 
     $(document).ready(function () {
         var $hsIdOnLine = false;
-        var $selectedDate = moment().format('DD/MM/YYYY'),
+        var $selectedDate = moment().format('YYYY/MM/DD'),
         $currMonth,
         $currYear,
         $Cod;
         var $gotFocus;
 
         var d = new Date();
-        $selectedDate = moment(d.valueOf()).format('DD/MM/YYYY');
+        $selectedDate = moment(d.valueOf()).format('YYYY/MM/DD');
         //alert($selectedDate);
 
         Readhs();
@@ -23,7 +23,7 @@
             todayHighlight: true
         }).on('changeDate', function (ev) {
             //$selectedDate = ev.date.valueOf();
-            $selectedDate = moment(ev.date.valueOf()).format('DD/MM/YYYY');
+            $selectedDate = moment(ev.date.valueOf()).format('YYYY/MM/DD');
             $currMonth = moment(ev.date.valueOf()).month() + 1;
             $currYear = moment(ev.date.valueOf()).year();
             ListCurrent();
@@ -134,11 +134,14 @@
         });
 
         $('#btnAdd').on('click', function () {
+            console.log("StartDate", $('#StartDate_Add').val());
             var AstrId = localStorage.getItem("AstrId"),
                 ProfileNr = $('#ProfileNr_Add').val(),
                 Subject = $('#Subject_Add').val(),
-                StartDate = $('#StartDate_Add').val(),
-                EndDate = $('#EndDate_Add').val(),
+                //StartDate = moment($('#StartDate_Add').val()).format('YYYY/MM/DD'), // $('#StartDate_Add').val(),
+                //EndDate = moment($('#EndDate_Add').val()).format('YYYY/MM/DD'), // $('#EndDate_Add').val(),
+                fromS = $('#StartDate_Add').val().split("/"), // $('#StartDate_Add').val(),
+                from = $('#EndDate_Add').val().split("/"),
                 yearsRepeatable = $('#yearsRepeatable_add').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_add').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_add').bootstrapSwitch('state'),
@@ -147,6 +150,16 @@
                 chkFriday = $('#chkFriday_add').bootstrapSwitch('state'),
                 chkSaturday = $('#chkSaturday_add').bootstrapSwitch('state'),
                 chkSunday = $('#chkSunday_add').bootstrapSwitch('state');
+
+            var EndDate = new Date(from[2], from[1] - 1, from[0]);
+            EndDate = moment(EndDate);
+            EndDate = EndDate.format('YYYY/MM/DD');
+
+            var StartDate = new Date(fromS[2], fromS[1] - 1, fromS[0]);
+            StartDate = moment(StartDate);
+            StartDate = StartDate.format('YYYY/MM/DD');
+
+            console.log("StartDate", StartDate);
             if (checkAdd(ProfileNr, Subject, StartDate) == false) {
                 var reqAdd = $.DataAccess.hs_Astr_Profile_Tasks_Add(AstrId, ProfileNr, Subject, StartDate, EndDate, chkMonday, chkTuesday, chkWednesday, chkThursday, chkFriday, chkSaturday, chkSunday, yearsRepeatable);
                 reqAdd.success(function (json) {
@@ -334,8 +347,10 @@
             var TaskId = $('#TaskId_Upd').val(),
                 ProfileNr = $('#ProfileNr_Upd').val(),
                 Subject = $('#Subject_Upd').val(),
-                StartDate = $('#StartDate_Upd').val(),
-                EndDate = $('#EndDate_Upd').val(),
+                //StartDate = moment($('#StartDate_Upd').val()).format('YYYY/MM/DD'), // $('#StartDate_Upd').val(),
+                //EndDate = moment($('#EndDate_Upd').val()).format('YYYY/MM/DD'), //$('#EndDate_Upd').val(),             
+                fromS = $('#StartDate_Upd').val().substring(0, 10).split("/"), // $('#StartDate_Add').val(),
+                from = $('#EndDate_Upd').val().substring(0, 10).split("/"),
                 yearsRepeatable = $('#yearsRepeatable_Upd').bootstrapSwitch('state'),
                 chkMonday = $('#chkMonday_Upd').bootstrapSwitch('state'),
                 chkTuesday = $('#chkTuesday_Upd').bootstrapSwitch('state'),
@@ -345,6 +360,18 @@
                 chkSaturday = $('#chkSaturday_Upd').bootstrapSwitch('state'),
                 chkSunday = $('#chkSunday_Upd').bootstrapSwitch('state');
 
+            console.log("fromS>>>", fromS, "from>>>>>", from);
+
+
+            var EndDate = new Date(from[2], from[1] - 1, from[0]);
+            EndDate = moment(EndDate);
+            EndDate = EndDate.format('YYYY/MM/DD');
+
+            var StartDate = new Date(fromS[2], fromS[1] - 1, fromS[0]);
+            StartDate = moment(StartDate);
+            StartDate = StartDate.format('YYYY/MM/DD');
+
+            console.log("StartDate>>>", StartDate, "EndDate>>>>>", EndDate);
 
             if (checkUpd(ProfileNr, Subject, StartDate) == false) {
                 var req = $.DataAccess.hs_Astr_Profile_Tasks_Update(TaskId, ProfileNr, Subject, StartDate, EndDate, chkMonday, chkTuesday, chkWednesday, chkThursday, chkFriday, chkSaturday, chkSunday, yearsRepeatable);
