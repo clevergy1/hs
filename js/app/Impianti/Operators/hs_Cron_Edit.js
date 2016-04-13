@@ -453,7 +453,9 @@
             //console.log('CronCod=' + $CronCod + ' ProfileY=' + $ProfileY + ' ProfileNr=' + $ProfileNr);
             var strProfiledata = '';
             for (var i = 0; i < 96; i++) {
-                strProfiledata += ProfileData[i] + ";"
+                // strProfiledata += ProfileData[i] + ";"
+                // strProfiledata += Number(ProfileData[i]).toLocaleString() + ";";
+                strProfiledata += Number(ProfileData[i]) + ";";
             }
             var r = $.DataAccess.hs_cron_Profile_set(localStorage.getItem("hsId"), $CronCod, $ProfileY, $ProfileNr, strProfiledata);
             r.success(function (json) {

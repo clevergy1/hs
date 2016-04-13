@@ -342,7 +342,9 @@
         $('#btnUpd').on('click', function () {
                         var strProfiledata = '';
             for (var i = 0; i < 96; i++) {
-                strProfiledata += ProfileData[i] + ";"
+                // strProfiledata += ProfileData[i] + ";"
+                // strProfiledata += Number(ProfileData[i]).toLocaleString() + ";";
+                strProfiledata += Number(ProfileData[i]) + ";";
             }
             var r = $.DataAccess.hs_Astr_Profile_set(localStorage.getItem("hsId"), $Cod, $ProfileY, $ProfileNr, strProfiledata);
             r.success(function (json) {
