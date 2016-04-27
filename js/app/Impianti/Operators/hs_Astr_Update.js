@@ -107,11 +107,11 @@
             $("#DeleteModal").modal('hide');
 
             setTimeout(function () {
-                var req = $.DataAccess.hs_Cron_Del(localStorage.getItem("AstrId"));
+                var req = $.DataAccess.hs_Astr_Del(localStorage.getItem("AstrId"));
                 req.success(function (json) {
                     var data = json.d;
                     if (data == true) {
-                        localStorage.removeItem("CronId");
+                        localStorage.removeItem("AstrId");
                         $.module.load('Impianti/Operators/Device8Astr');
                         loadhs_Elem(); //posta in common.js
                     }
