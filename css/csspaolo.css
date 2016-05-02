@@ -1,4 +1,4 @@
-﻿.tipo               { text-align: center;}
+﻿/*.tipo               { text-align: center;}
 .titolo             { text-align: center; margin-bottom: 8%; font-size:18px;}
 .mittente           { text-align: center; margin-bottom: 3%; margin-top: 11%; font-size:12px;}
 .destinatario       { margin-top: 8px; font-size:12px; text-transform:uppercase; color:#2e8b57;}
@@ -9,4 +9,124 @@
 .info_riga.row      { margin-top:7%; color:#2e8b57;}
 .pull-right         { margin-right:13px;}
 .box_ticket         { border-bottom: 1px solid #ddd;  margin-bottom:2%; margin-top: 1%;  }
-.verde              { color:#2e8b57;}
+.verde              { color:#2e8b57;}*/
+/*CLASSI PER LA SEZIONE TICKET DEGLI IMPIANTI NON SO SE SONO STATE AGGIUNTE INANTO LE COMMMENTO, CHIEDERE A MARCO*/
+
+
+/*PANNELLI COLORI PAOLO*/
+header.panel-heading.blue    {
+       background-color:#337ab7;
+    border-color:#337ab7;
+    color: #FFFFFF;
+}
+
+header.panel-heading.verde    {
+      color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+header.panel-heading.rosso    {
+     color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+/*TASTO TABELLA VERDE*/
+ .table-striped>tbody>tr>td.info_table_verde   {
+     padding:0px;
+           background-color: #1fb5ad;
+    
+    color: #FFFFFF;
+        border-bottom: 1px solid #ddd;
+       
+}
+.table-striped>tbody>tr>td.info_table_verde:hover   {
+      padding:0px;
+           background-color: #1ca59e;
+    border-color: #1ca59e;
+    color: #FFFFFF;
+   border-bottom: 1px solid #ddd;
+}
+
+
+/*TASTO TABELLA online */
+ .table-striped>tbody>tr>td.info_table   {
+    padding:0px;
+    background-color: #6B97FD;
+    border-bottom: 1px solid #ddd;
+    color: #FFFFFF;
+    text-align:center;
+    font-size:20px;
+
+}
+
+  .table-striped>tbody>tr>td.info_table2   {
+    padding:0px;
+    background-color: #F58A5C;
+    border-bottom: 1px solid #ddd;
+    color: #FFFFFF;
+    text-align:center;
+    font-size:20px;
+
+}
+
+#ListImpianti span.label.label-success {  display: inline-block;  margin-top: 3%; }
+
+/*TASTO TABELLA GRIGIO*/
+ .table-striped>tbody>tr>td.info_table_grigio  {
+     padding:0px;
+           background-color: #c7cbd6;
+    
+    color: #FFFFFF;
+        border-bottom: 1px solid #ddd;
+}
+.table-striped>tbody>tr>td.info_table_grigio:hover   {
+      padding:0px;
+           background-color: #b0b5b9;
+    border-color: #1ca59e;
+    color: #FFFFFF;
+   border-bottom: 1px solid #ddd;
+}
+
+
+.btn_tabella {
+    width:100%;
+   
+    display: inline-block;
+    text-align:center;
+    font-size: 14px;
+    text-transform:uppercase;
+    color:white;
+   
+
+}
+
+.btn_tabella span {
+  
+    display: inline-block;
+    
+    padding-top: 12px;
+
+
+}
+
+.btn_tabella:hover {
+   color: #FFFFFF;
+}
+
+.label-success2 {
+    background-color: #6B97FD;
+}
+
+
+/*FINE PANNELLI COLORI PAOLO*/
+
+/*PAGINA LUX*/
+.opacita {opacity:1;}
+.opacita_mezza {opacity:0.5;}
+.backgLux {background-color:#898989;}
+
+.rigalux {padding-bottom:25px;}
+.mode {display:inline-block; margin-top:25px;}
+/*FINE PAGINA LUX*/

@@ -1,0 +1,68 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<!--col-->
+<div class="col-lg-12">
+    <section class="panel ">
+        <header class="panel-heading blue">
+            <span name="lbl" caption="Installations">Installations</span>
+            <span class="tools pull-right">
+                <a href="javascript:;" id="btnClose" class="fa fa-times"></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="adv-table">
+                <table class="display table table-bordered table-striped" id="dynamic-table">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="Id">IdAmbiente</span> </th>
+                            <th><span name="lbl" caption="Installazioni">Descrizione</span> </th>
+                            <th>Dettagli</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ListImpianti"></tbody>
+                    <!--<tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:center;">
+                                <div class="pagination pagination-centered hide-if-no-paging"></div>
+                            </td>
+                        </tr>
+                    </tfoot>-->
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+<!--/col-->
+<!--templates-->
+<script type="text/x-jquery-tmpl" id="tmplImpiantiList">
+    <tr>
+        <td><b>${Cod}</b></td>
+        <td><b>${DescrizioneAmbiente}</b></td>
+        <td class="info_table2">
+            <a href="javascript:selHs('${Id}');" class="btn_tabella"><span name="lbl" caption=""><i class="fa fa-bars fa-1.3x"></i></span></a>&nbsp;
+        </td>
+    </tr>
+</script>
+<!--/templates-->
+
+
+<!--foo-table-->
+<script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+<script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+<!--/foo-table-->
+<script src="js/app/core/managelang.js" type="text/javascript"></script>
+<script src="js/app/Impianti/Supervisors/Device8Amb.js" type="text/javascript"></script>

@@ -100,6 +100,10 @@ $(function () {
                 if (data.totAstr > 0) {
                     voicesMenu.push({ Name: "Astrs", page: "Device8Astr", tot: data.totAstr, stato: data.statoAstr });
                 }
+                if (data.totAmb > 0) {
+                    voicesMenu.push({ Name: "Amb", page: "Device8Amb", tot: data.totAmb, stato: data.statoAmb });
+                }
+
 
                
                 $("#tmplMenuDetail").tmpl(voicesMenu).appendTo("#usermenu");

@@ -1164,23 +1164,152 @@
 
         //Ambienti
         //========================================================================================
-        my.Ambienti_List = function (IdImpianto, OwnerId) {
+        my.Ambienti_List = function (hsId) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({
                 datatype: 'json',
                 url: urlBase + 'Ambienti_List',
-                data: { IdImpianto: IdImpianto,OwnerId:OwnerId, DateCtrl: new Date().getTime() },
+                data: {
+                    hsId: hsId,
+                    DateCtrl: new Date().getTime()
+                },
                 type: 'GET',
                 beforeSend: function () { },
                 complete: function () { },
-                success: function (json) {
-                    data = json.d;
-                },
                 error: function (xhr, status) {
                     noConnection();
                 }
-            }); //ajax   
+            }); //ajax
         };
+        my.Ambienti_Read = function (Id) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'Ambienti_Read',
+                data: {
+                    Id: Id,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.Ambienti_SetCron = function (hsId, IdAmbiente, CronCod) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'Ambienti_SetCron',
+                data: {
+                    hsId: hsId,
+                    IdAmbiente: IdAmbiente,
+                    CronCod: CronCod,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        //========================================================================================
+
+        //AmbLux
+        //========================================================================================
+  
+        my.AmbLux_Add = function (LuxId, AmbId, UserName) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'AmbLux_Add',
+                data: {
+                    LuxId: LuxId,
+                    AmbId: AmbId,
+                    UserName: UserName,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.AmbLux_Del = function (Id) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'AmbLux_Del',
+                data: {
+                    Id: Id,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.AmbLux_List = function (LuxId) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'AmbLux_List',
+                data: {
+                    LuxId: LuxId,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.AmbLux_ReadByamb = function (AmbId) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'AmbLux_ReadByamb',
+                data: {
+                    AmbId: AmbId,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.AmbLux_Read = function (Id) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'AmbLux_Read',
+                data: {
+                    Id: Id,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+ 
         //========================================================================================
 
         //BodiesLamps
@@ -11983,6 +12112,23 @@
                 }
             }); //ajax
         };
+        my.Lux_ReadByamb = function (IdAmbiente) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'Lux_ReadByamb',
+                data: {
+                    IdAmbiente: IdAmbiente,             
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
         //========================================================================================
         //Lux_replacement_history
         //========================================================================================
@@ -12127,6 +12273,7 @@
                 }
             }); //ajax
         };
+    
         //========================================================================================
         //LuxCron
         //========================================================================================

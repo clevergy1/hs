@@ -16,19 +16,19 @@
         //var _urlHub = 'http://clevergylab2.clevergy.it/cyassrv/signalr/hubs/';
         //var _rdp = "http://clevergylab2.clevergy.it/cyassrv/rdp.ashx";
 
-        var _urlRoot = 'http://pc-maf.clevergy.it/cyrcs/';
-        var _urlserver = 'http://pc-maf.clevergy.it/';
-        var _urlGlobal = 'http://pc-maf.clevergy.it/cyassrv/';
-        var _urlBase = "http://pc-maf.clevergy.it/cyassrv/s1.svc/";
-        var _urlHub = 'http://pc-maf.clevergy.it/cyassrv/signalr/hubs/';
-        var _rdp = "http://pc-maf.clevergy.it/cyassrv/rdp.ashx";
+        //var _urlRoot = 'http://pc-maf.clevergy.it/cyrcs/';
+        //var _urlserver = 'http://pc-maf.clevergy.it/';
+        //var _urlGlobal = 'http://pc-maf.clevergy.it/cyassrv/';
+        //var _urlBase = "http://pc-maf.clevergy.it/cyassrv/s1.svc/";
+        //var _urlHub = 'http://pc-maf.clevergy.it/cyassrv/signalr/hubs/';
+        //var _rdp = "http://pc-maf.clevergy.it/cyassrv/rdp.ashx";
 
-        //var _urlRoot = 'http://localhost/cyrcs/';
-        //var _urlserver = 'http://localhost:56708/';
-        //var _urlGlobal = 'http://localhost:56708/';
-        //var _urlBase = "http://localhost:56708/s1.svc/";
-        //var _urlHub = 'http://localhost:56708/signalr/hubs/';
-        //var _rdp = "http://localhost:56708/rdp.ashx";
+        var _urlRoot = 'http://localhost/cyrcs/';
+        var _urlserver = 'http://localhost:51680/';
+        var _urlGlobal = 'http://localhost:51680/';
+        var _urlBase = "http://localhost:51680/s1.svc/";
+        var _urlHub = 'http://localhost:51680/signalr/hubs/';
+        var _rdp = "http://localhost:51680/rdp.ashx";
         
      
                

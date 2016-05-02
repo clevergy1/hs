@@ -17,6 +17,13 @@ $(function () {
         $('.tableErrorLog').data('limit-navigation', 4);
         $('.tableErrorLog').trigger('footable_initialized');
 
+        //se sono in illuminazione desenzano faccio vedere il tasto per andare agli ambienti
+        if (localStorage.IdImpianto == "973443E2-375D-4EA7-9694-67CF63D612DA") {
+            $('').footable();
+        } else {
+
+        }
+
         Readhs();
         setlanguage();
 

@@ -1,0 +1,151 @@
+﻿<!--foo-table-->
+<link rel="stylesheet" href="css/footable/footable.core.css?v=2-0-1" />
+<link rel="stylesheet" href="css/bootstrap-pagination.css" />
+<!--/foo-table-->
+
+<div class="row ">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="javascript:$.module.load('Impianti/Supervisors/ManageDevice8');"><i class="fa fa-bookmark-o"></i> <span name="lbl" caption="heatingsystem">heatingsystem</span></a></li>
+            <li><a href="javascript:$.module.load('Impianti/Supervisors/Device8Detail');"><span id="hsDescr"></span></a></li>            
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+
+<div class="row">
+    <!--col-AMBIENTE E CRON-->
+    <div id="ambienti" class="col-lg-12">
+        <section class="panel ">
+            <header class="panel-heading blue">
+                <span name="lbl" caption="Ambienti">Ambienti</span>
+                <span class="tools pull-right">
+                    <a href="javascript:;" id="btnClose" class="fa fa-times"></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <table class="display table table-bordered table-striped" id="tableamb">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="Id">Id</span> </th>
+                            <th><span name="lbl" caption="Installazioni">Descrizione</span> </th>
+                            <th><span name="lbl" caption="Descrizione">Aggiungi</span> </th>
+                            <th><span name="lbl" caption="Profili">Profili</span> </th>
+                        </tr>
+                    </thead>
+                    <tbody id="ambiente_list"></tbody>
+                    <!--<tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:center;">
+                                <div class="pagination pagination-centered hide-if-no-paging"></div>
+                            </td>
+                        </tr>
+                    </tfoot>-->
+                </table>
+            </div>
+        </section>
+    </div>
+    <!--col-AMBIENTE E CRON-->
+</div>
+<div class="row">
+    <!--col-LUX -->
+    <div id="lux" class="col-md-12">
+        <section class="panel ">
+            <header class="panel-heading blue">
+                <span name="lbl" caption="Luci">Luci</span>
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <table class="display table table-bordered table-striped" id="lux_list_table">
+                    <thead>
+                        <tr>
+                            <th><span name="lbl" caption="Id">Cod</span> </th>
+                            <th><span name="lbl" caption="Descrizione">Descrizione</span> </th>
+                            <th class="lightON"><span name="lbl" caption="Accesa">Accesa</span> </th>
+                            <th class="Stato_Lux"><span name="lbl" caption="Funzionamento">Funzionamento</span> </th>
+                            <th class="Modo_Lux"><span name="lbl" caption="Modo">Modo</span> </th>
+                            <th><span name="lbl" caption="Modifica">Modifica</span> </th>
+                        </tr>
+                    </thead>
+                    <tbody id="lux_list"></tbody>
+                    <!--<tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:center;">
+                                <div class="pagination pagination-centered hide-if-no-paging"></div>
+                            </td>
+                        </tr>
+                    </tfoot>-->
+                </table>
+            </div>
+        </section>
+    </div>
+    <!--col-LUX--->
+</div>
+
+<script type="text/x-jquery-tmpl" id="tmplImpiantiList">
+    <tr>
+        <td><b>${Id} - ${Cod} </b></td>
+        <td><b>${DescrizioneAmbiente}</b></td>
+        <td>
+            <a style="border:none;" href="javascript:$.fn.callEditAmb('${IdAmbiente}');"> <i style="color:black;" class="fa fa-plus fa-2x"></i></a>
+        </td>
+        <td>
+            <a style="border:none;" href="javascript:$.fn.callAmbTask('${IdAmbiente}');"> <i style="color:black;" class="fa fa-calendar fa-2x"></i></a>
+        </td>
+    </tr>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tmplLuxList">
+    <tr>
+        <td>
+            <div class=" btn-gap">
+                <button style="min-width:77px;" id="pop${Id}" data-placement="bottom" data-trigger="hover" data-html="true" class="btn btn-info btn-sm pop"><b>${Cod}</b></button>
+
+                <div id="pop${Id}_content" class="hide">
+                    <div class="popTitle">
+                        <b>Marca e Modello:</b>
+                    </div>
+                    <div class="popContent">
+                        <p>${marca}</p>
+                        <p>${nodo}</p>
+                        <p>${asi}</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </td>
+        <td><b>${Descr}</b></td>
+        <td>
+            <span id="cmdLightStatus_${Id}">
+                <!--{{if LightON}}<i style="color:yellow;" class="fa fa-lightbulb-o"></i>{{else}}<i class="fa fa-lightbulb-o"></i>{{/if}}-->
+                {{if LightON}}      <img style="width:30px; height:25px;" src="../../css/images/light.gif" />         {{else}}<img style="width:30px; height:25px;" src="../../css/images/lightoff.jpg" />  {{/if}}
+            </span>
+        </td>
+        <td>
+            <span id="stato_${Id}">
+                {{if stato == 0}}<i class="fa fa-thumbs-o-up"></i>{{else  stato == 1}}<i style="color:sandybrown;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{else stato == 2}}<i style="color:red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{/if}}
+            </span>
+        </td>
+        <td>
+            <span>
+                {{if CurrentMode == 0}}<span name="lbl" caption="MANUALE">Manuale</span>{{else CurrentMode == 1}}<span name="lbl" caption="MANUALE">Manuale</span>{{else CurrentMode == 2}}<span name="lbl" caption="Schedulato">Schedulato</span>{{else CurrentMode == 3}}<span name="lbl" caption="Automatico">Automatico</span> {{/if}}
+            </span>
+        </td>
+        <td>
+            <a href="javascript:$.fn.LuxDetail(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="LuxDetail">LuxDetail</span></a>
+        </td>
+
+    </tr>
+</script>
+
+
+    <!--foo-table-->
+    <script src="js/footable/footable.js?v=2-0-1" type="text/javascript"></script>
+    <script src="js/footable/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
+    <!--/foo-table-->
+    <script src="js/app/core/managelang.js" type="text/javascript"></script>
+    <script src="js/app/Impianti/Supervisors/Device8AmbDetail.js" type="text/javascript"></script>
