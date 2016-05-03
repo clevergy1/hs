@@ -12230,6 +12230,26 @@
             }); //ajax
         };
         //========================================================================================
+        //LuxDimmer_List
+        //========================================================================================
+        my.LuxDimmer_List = function () {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'LuxDimmer_List',
+                data: {
+                  
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        //========================================================================================
         //log_Lux
         //========================================================================================
         my.log_Lux_List = function (hsId, Cod, fromDate, toDate) {

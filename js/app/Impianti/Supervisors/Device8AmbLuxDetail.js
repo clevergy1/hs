@@ -192,10 +192,10 @@ $(function () {
         /*
      seleziono il dimming del lux
      -------------------------------------------------------*/
-        $('.btnCallDimming').on('click', function () {
+        $('#lux_list').on('click', ".btnCallDimming", function () {
             $('#ModalLuxDimming').modal('show');
             $("#tableLux").empty();
-            var r = $.DataAccess.hs_Cron_List(localStorage.getItem("hsId"));
+            var r = $.DataAccess.LuxDimmer_List();
             r.success(function (json) {
                 var data = json.d;
                 if (data) {
@@ -205,10 +205,14 @@ $(function () {
             });
         });
 
-        $.fn.selectDim = function (Value) {
-         
+        $.fn.select4Copy = function (value) {
+            console.log('select4Copy', value);
+            $('#PercDim').html(value + " %");
 
-            
+
+
+
+            $('#ModalLuxDimming').modal('hide');
         }
 
         /*-------------------------------------------------------*/
