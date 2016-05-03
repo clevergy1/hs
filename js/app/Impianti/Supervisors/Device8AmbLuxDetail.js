@@ -189,6 +189,30 @@ $(function () {
         }
         /**---------------------------------------------------------------*/
 
+        /*
+     seleziono il dimming del lux
+     -------------------------------------------------------*/
+        $('.btnCallDimming').on('click', function () {
+            $('#ModalLuxDimming').modal('show');
+            $("#tableLux").empty();
+            var r = $.DataAccess.hs_Cron_List(localStorage.getItem("hsId"));
+            r.success(function (json) {
+                var data = json.d;
+                if (data) {
+                    $("#tmpldimmer").tmpl(data).appendTo("#tableLux");
+                    setlanguage();
+                }
+            });
+        });
+
+        $.fn.selectDim = function (Value) {
+         
+
+            
+        }
+
+        /*-------------------------------------------------------*/
+
         $.fn.callAmbTask = function () {
 
             $.module.load('Impianti/AmbTask');
