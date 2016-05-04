@@ -5,7 +5,7 @@ $(function () {
 
     $(document).ready(function () {
         $.rt.stop();
-
+        var $setDim = 0;
         //$('#usermenu').empty();
         //$('#ApplicationTitle').html('<span name="lbl" caption="currentInstallations">Current installations</span>');
         //$("#pageOperation").empty();
@@ -14,7 +14,7 @@ $(function () {
         //is online è la vpn o meglio se il plc comunica ogni 5 minuti.
         //in enable è manutenzione si o no
 
-
+     
 
 
 
@@ -150,9 +150,9 @@ $(function () {
                         console.log('la luce risulta accesa. Spengo');
                         LightOff(Id);
                     }
-                    else {
+                    else {                       
                         console.log('la luce risulta spenta. Accendo');
-                        LightOn(Id);
+                        LightOn(Id);  
                     }
                 }
             });
@@ -160,6 +160,20 @@ $(function () {
 
         function LightOn(Id) {
             var req = $.DataAccess.Lux_cmd_LightOn(Id);
+            req.success(function (json) {
+                var data = json.d;
+                loadlux();
+                if (data == true) {
+                    $('#cmdLightStatus_' + Id).text('SPEGNI LUCE');
+                    ReadLux(Id);
+                    //loadLuxs();
+                    toastr["success"](langResources['msg4operationok'], "success");
+                }
+            });
+        }
+
+        function LightOnDimmer(Id, value) {
+            var req = $.DataAccess.Lux_cmd_LightOnDimmer(Id, value);
             req.success(function (json) {
                 var data = json.d;
                 loadlux();
@@ -205,14 +219,15 @@ $(function () {
             });
         });
 
-        $.fn.select4Copy = function (value) {
-            console.log('select4Copy', value);
+        $.fn.selectDimLevel = function (value) {
+            //modale dimmeraggio e chiamata dell'accensione della luce
+            $setDim = value;
+            console.log('selectDimLevel', value);
             $('#PercDim').html(value + " %");
-
-
-
-
             $('#ModalLuxDimming').modal('hide');
+          
+            LightOnDimmer(localStorage.LuxId, value);
+
         }
 
         /*-------------------------------------------------------*/

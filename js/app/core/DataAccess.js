@@ -12076,6 +12076,25 @@
                 }
             }); //ajax
         };
+        my.Lux_cmd_LightOnDimmer = function (Id, value) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'Lux_cmd_LightOnDimmer',
+                data: {
+                    Id: Id,
+                    value: value,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                async: false,
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
         my.Lux_cmd_LightOff = function (Id) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({

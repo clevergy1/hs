@@ -68,7 +68,7 @@
         <td>${DimValue}</td>
         <td>
             <span class="btn-group pull-right">
-                <a href="javascript:$.fn.select4Copy(${DimValue} );" class="btn btn-default btn-sm"><span name="lbl" caption="select">select</span></a>
+                <a href="javascript:$.fn.selectDimLevel(${DimValue} );" class="btn btn-default btn-sm"><span name="lbl" caption="select">select</span></a>
             </span>
         </td>
     </tr>
@@ -126,7 +126,7 @@
                 </span>
             </div>
             <div class="col-md-4 col-xs-4">
-                <a href="javascript:$.fn.execCmd(${Id},${LightON});" class="btn btn-default btn-sm mode" style="display:inline-block; margin-top:25px; color:white; height:40px; min-width:184px;">
+                <a href="javascript:;" class="btn btn-default btn-sm mode" style="display:inline-block; margin-top:25px; color:white; height:40px; min-width:184px;">
                     <span id="cmdLightStatus_${Id}">
                         {{if LightON}}<span name="lbl" caption="" style="font-size:16px;">SPEGNI LUCE </span>{{else}}<span class="btnCallDimming" style="font-size:16px;" name="lbl" caption="hsLuxOn">ACCENDI LUCE  </span>{{/if}}
                     </span>
