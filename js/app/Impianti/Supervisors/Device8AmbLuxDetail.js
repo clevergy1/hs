@@ -158,6 +158,35 @@ $(function () {
             });
         }
 
+        $.fn.execCmdDimmer = function (Id, LightON) {
+            var req = $.DataAccess.Lux_Read(Id);
+            req.success(function (json) {
+                var data = json.d;
+                if (data) {
+                    if (data.LightON) {
+                        console.log('la luce risulta accesa. Spengo');
+                        LightOff(Id);
+                    }
+                    else {
+
+                        $('#ModalLuxDimming').modal('show');
+                        $("#tableLux").empty();
+                        var r = $.DataAccess.LuxDimmer_List();
+                        r.success(function (json) {
+                            var data = json.d;
+                            if (data) {
+                                $("#tmpldimmer").tmpl(data).appendTo("#tableLux");
+                                setlanguage();
+                            }
+                        });
+
+                        console.log('la luce risulta spenta. Accendo');
+                        //LightOn(Id);
+                    }
+                }
+            });
+        }
+
         function LightOn(Id) {
             var req = $.DataAccess.Lux_cmd_LightOn(Id);
             req.success(function (json) {
@@ -206,7 +235,7 @@ $(function () {
         /*
      seleziono il dimming del lux
      -------------------------------------------------------*/
-        $('#lux_list').on('click', ".btnCallDimming", function () {
+   /*     $('#lux_list').on('click', ".btnCallDimming", function () {
             $('#ModalLuxDimming').modal('show');
             $("#tableLux").empty();
             var r = $.DataAccess.LuxDimmer_List();
@@ -217,7 +246,13 @@ $(function () {
                     setlanguage();
                 }
             });
-        });
+        });*/
+
+
+
+
+
+
 
         $.fn.selectDimLevel = function (value) {
             //modale dimmeraggio e chiamata dell'accensione della luce
