@@ -194,7 +194,7 @@ $(function () {
                 loadlux();
                 if (data == true) {
                     $('#cmdLightStatus_' + Id).text('SPEGNI LUCE');
-                    ReadLux(Id);
+                    //ReadLux(Id);
                     //loadLuxs();
                     toastr["success"](langResources['msg4operationok'], "success");
                 }
@@ -205,11 +205,18 @@ $(function () {
             var req = $.DataAccess.Lux_cmd_LightOnDimmer(Id, value);
             req.success(function (json) {
                 var data = json.d;
-                loadlux();
                 if (data == true) {
-                    $('#cmdLightStatus_' + Id).text('SPEGNI LUCE');
-                    ReadLux(Id);
-                    //loadLuxs();
+                    $('#cmdLightStatus_' + Id).text('SPEGNI LUCE');               
+                    //loadLuxs(); SETTO IL DIM LV IN DB PER IL TEMPLATE
+                    var req2 = $.DataAccess.Lux_setcurrentLux(Id, value);
+                    req2.success(function (json) {
+                        var data2 = json.d;                
+                        if (data2 == true) {
+                            //alert("qui");
+                            loadlux();
+                        }
+                    });
+                   
                     toastr["success"](langResources['msg4operationok'], "success");
                 }
             });
@@ -224,7 +231,7 @@ $(function () {
                 if (data == true) {
                     // $('#cmdLightStatus_' + Id).text(langResources['hsLuxOff']);
                     $('#cmdLightStatus_' + Id).text('ACCENDI LUCE');
-                    ReadLux(Id);
+                    //ReadLux(Id);
                     //loadLuxs();
                     toastr["success"](langResources['msg4operationok'], "success");
                 }
@@ -258,18 +265,18 @@ $(function () {
             //modale dimmeraggio e chiamata dell'accensione della luce
             $setDim = value;
             console.log('selectDimLevel', value);
-            $('#PercDim').html(value + " %");
+        
             $('#ModalLuxDimming').modal('hide');
           
             LightOnDimmer(localStorage.LuxId, value);
-
+         
         }
 
         /*-------------------------------------------------------*/
 
         $.fn.callAmbTask = function () {
 
-            $.module.load('Impianti/AmbTask');
+            $.module.load('impianti/supervisors/Device8AmbTask');
 
         }
 

@@ -6,7 +6,7 @@
     <!--col-LUX -->
     <div id="lux" class="col-md-12">
         <section class="panel ">
-            <header class="panel-heading blue">
+            <header class="panel-heading panel-supervisor">
                 <span name="lbl" caption="Luci">Luci</span>
                 <span class="tools pull-right">
                     <a href="javascript:;" id="btnClose" class="fa fa-times"></a>
@@ -102,11 +102,12 @@
         </div>
     </div>
     <div id="manuale" style="border-bottom: 1px solid #f2f2f2;" class="col-md-12 col-xs-12 rigalux">
+        {{if isDimmerable == false}}
         <div class="col-md-4 col-xs-4">
             <h2>Manuale</h2>
-            <span>Indica se la luce è in modalità manuale</span>
+            <span>Non Dimmerabile</span>
         </div>
-        {{if isDimmerable == false}}
+       
             <div style="text-align:center; font-size:20px;" class="col-md-4 col-xs-4 ">
                 <span class="mode">
                     {{if CurrentMode == 0}}{{if LightON}}      <img style="width:70px; height:60px;" src="../../css/images/light.gif" /> <span name="lbl" caption="hsLuxOff">ON</span>        {{else}}<img style="width:70px; height:60px;" src="../../css/images/lightoff.jpg" /><span name="lbl" caption="hsLuxOff">OFF</span>  {{/if}}{{else}}<span></span> {{/if}}
@@ -120,9 +121,13 @@
                 </a>
             </div>
         {{else}}
+            <div class="col-md-4 col-xs-4">
+                <h2>Manuale - <span name="lbl">${currentLux}%</span> </h2>
+                <span>Dimmerabile</span>
+            </div>
             <div style="text-align:center; font-size:20px;" class="col-md-4 col-xs-4 ">
                 <span class="mode">
-                    {{if CurrentMode == 0}}{{if LightON}}      <img style="width:70px; height:60px;" src="../../css/images/light.gif" /> <span id="PercDim" name="lbl">ON</span>        {{else}}<img style="width:70px; height:60px;" src="../../css/images/lightoff.jpg" /><span name="lbl" caption="hsLuxOff">OFF</span>  {{/if}}{{else}}<span></span> {{/if}}
+                    {{if CurrentMode == 0}}{{if LightON}}      <img style="width:70px; height:60px;" src="../../css/images/light.gif" />        {{else}}<img style="width:70px; height:60px;" src="../../css/images/lightoff.jpg" /><span name="lbl" caption="hsLuxOff">OFF</span>  {{/if}}{{else}}<span></span> {{/if}}
                 </span>
             </div>
             <div class="col-md-4 col-xs-4">

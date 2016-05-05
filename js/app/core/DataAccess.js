@@ -9831,6 +9831,29 @@
                 }
             }); //ajax
         };
+
+        my.hs_Gas_setGasValue = function (Id, Value) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'hs_Gas_setGasValue',
+                data: {
+                    Id: Id,
+                    Value: Value,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+
+
+
+        
         //========================================================================================
 
         //hs_ctp (contatori di portata)
@@ -12148,6 +12171,25 @@
                 }
             }); //ajax
         };
+        my.Lux_setcurrentLux = function (Id, currentLux) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'Lux_setcurrentLux',
+                data: {
+                    Id: Id,
+                    currentLux: currentLux,
+                  
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
         //========================================================================================
         //Lux_replacement_history
         //========================================================================================
@@ -12442,11 +12484,29 @@
                 }
             }); //ajax
         };
-        my.LuxCron_Read = function (Id) {
+        my.LuxAstr_Read = function (Id) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({
                 datatype: 'json',
-                url: urlBase + 'LuxCron_Read',
+                url: urlBase + 'LuxAstr_Read',
+                data: {
+                    Id: Id,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+
+        my.LuxAstr_ReadByLux = function (Id) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'LuxAstr_ReadByLux',
                 data: {
                     Id: Id,
                     DateCtrl: new Date().getTime()
@@ -13898,6 +13958,27 @@
                 }
             }); //ajax
         };
+        my.hs_Astr_Profile_get_multiple = function (hsId, AstrCod, ProfileYear, ProfileNr, IdAmbiente) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'hs_Astr_Profile_get_multiple',
+                data: {
+                    hsId: hsId,
+                    AstrCod: AstrCod,
+                    ProfileYear: ProfileYear,
+                    ProfileNr: ProfileNr,
+                    IdAmbiente: IdAmbiente,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
         my.hs_Astr_Profile_List = function (AstrId, ProfileY) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({
@@ -13976,6 +14057,31 @@
                 }
             }); //ajax
         };
+
+        my.hs_Astr_Profile_setMultiple = function (hsId, Cod, ProfileYear, ProfileNr, strProfiledata, IdAmbiente) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'hs_Astr_Profile_setMultiple',
+                data: {
+                    hsId: hsId,
+                    Cod: Cod,
+                    ProfileYear: ProfileYear,
+                    ProfileNr: ProfileNr,
+                    strProfiledata: strProfiledata,
+                    IdAmbiente: IdAmbiente,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+
+
         my.hs_Astr_Profile_setProfileNow = function (AstrId, ProfileNr) {
             var urlBase = $.appParms.urlBase();
             return $.ajax({
@@ -14217,6 +14323,39 @@
                 }
             }); //ajax
         };
+        my.hs_Astr_Profile_Tasks_Update_Repeat = function (IdAmbiente, AstrId, ProfileNr, Subject, StartDate, EndDate, chkMonday, chkTuesday, chkWednesday, chkThursday, chkFriday, chkSaturday, chkSunday, yearsRepeatable) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'hs_Astr_Profile_Tasks_Update_Repeat',
+                data: {
+
+                    IdAmbiente: IdAmbiente,
+                    AstrId: AstrId,
+                    ProfileNr: ProfileNr,
+                    Subject: Subject,
+                    StartDate: StartDate,
+                    EndDate: EndDate,
+                    chkMonday: chkMonday,
+                    chkTuesday: chkTuesday,
+                    chkWednesday: chkWednesday,
+                    chkThursday: chkThursday,
+                    chkFriday: chkFriday,
+                    chkSaturday: chkSaturday,
+                    chkSunday: chkSunday,
+                    yearsRepeatable: yearsRepeatable,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+
+
         //========================================================================================
         //hs_Cron_Calendar
         my.hs_Astr_Calendar_Add = function (AstrId, Calyear, Calmonth, strmonthData) {
@@ -14345,6 +14484,26 @@
                     AstrId: AstrId,
                     Calyear: Calyear,
                     Calmonth: Calmonth,
+                    DateCtrl: new Date().getTime()
+                },
+                type: 'GET',
+                beforeSend: function () { },
+                complete: function () { },
+                error: function (xhr, status) {
+                    noConnection();
+                }
+            }); //ajax
+        };
+        my.CalendarSetMultiple = function (AstrId, Calyear, Calmonth, IdAmbiente) {
+            var urlBase = $.appParms.urlBase();
+            return $.ajax({
+                datatype: 'json',
+                url: urlBase + 'CalendarSetMultiple',
+                data: {
+                    AstrId: AstrId,
+                    Calyear: Calyear,
+                    Calmonth: Calmonth,
+                    IdAmbiente: IdAmbiente,
                     DateCtrl: new Date().getTime()
                 },
                 type: 'GET',
@@ -15132,6 +15291,7 @@
                 }
             }); //ajax
         };
+
         //========================================================================================
 
         //log_hs_pb

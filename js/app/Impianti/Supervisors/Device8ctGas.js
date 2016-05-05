@@ -210,7 +210,13 @@
             localStorage.setItem("ParentId", Id);
             $.module.load('Impianti/supervisors/hs_Gas_Replacements');
         }
+        /* Chiamo la pagina di configurazione delle elemento
         /*----------------------------------------------------------------------*/
+            
+        $.fn.callconfigGas = function (IdGas) {
+            localStorage.setItem("IdGas", IdGas);
+            $.module.load('Impianti/Supervisors/hs_Gas_Config');
+        }
 
 
 
@@ -219,3 +225,8 @@
 function callShowDetail(Id) { $.fn.callShowDetail(Id); }
 function closeDetail() { $.fn.closeDetail(); }
 //function callErrorLog(Cod) {$.fn.callErrorLog(Cod);}
+
+function callconfigGas(IdGas) {
+    $.fn.callconfigGas(IdGas);
+}
+

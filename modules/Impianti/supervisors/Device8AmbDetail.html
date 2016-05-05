@@ -18,7 +18,7 @@
     <!--col-AMBIENTE E CRON-->
     <div id="ambienti" class="col-lg-12">
         <section class="panel ">
-            <header class="panel-heading blue">
+            <header class="panel-heading panel-supervisor">
                 <span name="lbl" caption="Ambienti">Ambienti</span>
                 <span class="tools pull-right">
                     <a href="javascript:;" id="btnClose" class="fa fa-times"></a>
@@ -52,7 +52,7 @@
     <!--col-LUX -->
     <div id="lux" class="col-md-12">
         <section class="panel ">
-            <header class="panel-heading blue">
+            <header class="panel-heading panel-supervisor">
                 <span name="lbl" caption="Luci">Luci</span>
                 <span class="tools pull-right">
                     <a href="javascript:;" class="fa fa-chevron-down"></a>
@@ -90,10 +90,10 @@
         <td><b>${Id} - ${Cod} </b></td>
         <td><b>${DescrizioneAmbiente}</b></td>
         <td>
-            <a style="border:none;" href="javascript:$.fn.callEditAmb('${IdAmbiente}');"> <i style="color:black;" class="fa fa-plus fa-2x"></i></a>
+            <a style="border:none;" href="javascript:$.fn.callEditAmb('${Id}');"> <i style="color:black;" class="fa fa-plus fa-2x"></i></a>
         </td>
         <td>
-            <a style="border:none;" href="javascript:$.fn.callAmbTask('${IdAmbiente}');"> <i style="color:black;" class="fa fa-calendar fa-2x"></i></a>
+            <a style="border:none;" href="javascript:$.fn.callAmbTask('${Id}');"> <i style="color:black;" class="fa fa-calendar fa-2x"></i></a>
         </td>
     </tr>
 </script>

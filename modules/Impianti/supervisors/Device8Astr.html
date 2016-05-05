@@ -116,9 +116,11 @@
         <td  style="width:450px;">
             <span class="btn-group pull-right">
                 <a href="javascript:$.fn.callconfig(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="config">config</span></a>
-                <a href="javascript:$.fn.callEdit(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="profiles">profiles</span></a>
-                <a href="javascript:$.fn.callschedule(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="schedule">schedule</span></a>
-                <a href="javascript:$.fn.callUpdate('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
+                {{if !isOnAmb }}
+                 <a href="javascript:$.fn.callEdit(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="profiles">profiles</span></a>
+                 <a href="javascript:$.fn.callschedule(${Id});" class="btn btn-default btn-sm"><span name="lbl" caption="schedule">schedule</span></a>
+                {{/if}}
+                 <a href="javascript:$.fn.callUpdate('${Id}');" class="btn btn-default btn-sm"><span name="lbl" caption="edit">Edit</span></a>
             </span>
         </td>
     </tr>
