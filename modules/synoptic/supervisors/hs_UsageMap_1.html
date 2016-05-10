@@ -60,6 +60,24 @@
         <!--/list-->
     </div>
 
+
+    <div id="ImpiantiContainter" class="col-sm-4 draggable" style="display:none;position: absolute;top: 0px;right: -1000px;">
+        <!--list-->
+        <section class="panel" id="SectionImpianti">
+            <header class="panel-heading  panel-supervisor">
+                <span class="pull-left"><span name="lbl" caption="Impianti">Impianti</span></span>
+                <span class="tools pull-right">
+                    <a href="javascript:;"><i class="fa fa-chevron-down fa-2x"></i></a>
+                </span>
+                <div class="clearfix"></div>
+            </header>
+            <div id="panel-body-ListImpianti" class="panel-body">
+                <ul id="ImpiantiList" class="nav nav-stacked mail-nav" style="height:400px; overflow:auto;"></ul>
+            </div>
+        </section>
+        <!--/list-->
+    </div>
+
    
 
      <!--ErrorLog-->
@@ -115,6 +133,35 @@
     </li>
 </script>
 
+<script type="text/x-jquery-tmpl" id="tmplListaImpianti">
+    <li id="li_${hsId}">
+        <a href="javascript:selPlant('${hsId}')">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="height:18px; color:#337ab7;">${DesImpianto}  -  ${Descr}</td>
+                    </tr>
+                    <tr>
+                        <td style="height:18px;">${Indirizzo}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{if MaintenanceMode==1}}<i class="fa fa-wrench"></i>&nbsp;{{else}}<i class="fa fa-thumbs-o-up"></i>&nbsp;{{/if}}
+                            <span name="lbl" caption="maintenance">Maintenance</span>&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{if isOnline==1}}<i class="fa fa-thumbs-o-up"></i>&nbsp;{{else}}<i class="fa fa-times-circle-o"></i>&nbsp;{{/if}}
+                            <span name="lbl" caption="connected">connected</span>&nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </a>
+    </li>
+</script>
+
 <!--templates contabilizzatori-->
 <script type="text/x-jquery-tmpl" id="tmplCtb">
     <li id="li_${CtbId}">
@@ -146,13 +193,54 @@
                         <td id="Td1">${Power}&nbsp;W</td>
                     </tr>
                     <tr>
-                        <td style="width:80%;><span name="lbl" caption="pol">Energia</span></td>
+                        <td style="width:80%;"><span name="lbl" caption="pol">Energia</span></td>
                         <td id="Td2">${EnergyCounter}&nbsp;MWh</td>
                     </tr>
 
                 </tbody>
             </table>
 </a>
+    </li>
+</script>
+
+<!--templates Lux-->
+<script type="text/x-jquery-tmpl" id="tmplLux">
+    <li id="li_${Id}">
+        <a href="javascript:selPlant( '${Id}' , 'Lux') ;">
+            <table style=" width:100%">
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="color:#337ab7;">${Cod} -  ${Desc}&nbsp;&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr>
+
+                        <td style="width:80%;"><span name="lbl" caption="pol">Stato</span></td>
+                        <td>
+                            <span id="stato_${CtbCod}">
+                                {{if stato==0}}
+                                <i class="fa fa-thumbs-o-up"></i>
+                                {{else}}
+                                {{if stato==1}}
+                                <i style="color:yellow;" class="fa fa-times-circle-o"></i>
+                                {{else}}
+                                <i style="color:red;" class="fa fa-times-circle-o"></i>
+                                {{/if}}
+                                {{/if}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80%;"><span name="lbl" caption="pol">Accesa</span></td>
+                        <td id="Td1">${LightON}&nbsp; - ${currentLux}&nbsp; </td>
+                    </tr>
+                    <tr>
+                        <td style="width:80%;"><span name=" lbl" caption="pol">Energia</span></td>
+                        <td id="Td2">${CurrentMode}&nbsp;MWh</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </a>
     </li>
 </script>
 
@@ -461,6 +549,77 @@
         </div>
     </div>
 </section>
+</script>
+
+<!--templates Lux-->
+<script type="text/x-jquery-tmpl" id="tmplLuxDetail">
+    <section class="panel allineamento">
+        <header class="panel-heading  panel-supervisor">
+            <span name="lbl" caption="meter">meter</span>
+            <span class=" pull-right">
+                <a href="javascript:Close_det();" class=" close_detail"><i class="fa fa-times fa-2x"></i></a>
+            </span>
+        </header>
+        <div class="panel-body">
+            <hr>
+            <div class="row m-bot20"><div class="col-md-7 col-xs-7"><b>${Cod}</b></div></div>
+            <div class="row m-bot20"><div class="col-md-12 col-xs-12">${Descr}</div></div>
+            <hr>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7"><span name="lbl" caption="status">status</span></div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Ctbstato_${CtbCod}">
+                        {{if stato==0}}
+                        <i class="fa fa-thumbs-o-up"></i>
+                        {{else}}
+                        {{if stato==1}}
+                        <img src="images/status1.png" style="height:24px;width:24px" />
+                        {{else}}
+                        <img src="images/status2.png" style="height:24px;width:24px" />
+                        {{/if}}
+                        {{/if}}
+                    </span>
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Accesa</div>
+                <div class="col-md-5 col-xs-5">
+                    <span id="Span1">${LightON} - ${currentLux}</span>°C
+                </div>
+            </div>
+            <div class="row m-bot20">
+                <div class="col-md-7 col-xs-7">Modo</div>
+                <div class="col-md-5 col-xs-5">
+                    {{if CurrentMode = 0}}
+                    <span>Manuale On</span>
+                    {{/if}}
+                    {{if CurrentMode = 1}}
+                    <span>Manuale Off</span>                  
+                    {{/if}}
+                    {{if CurrentMode = 2}}
+                    <span>Schedulato</span>
+                    {{/if}}
+                    {{if CurrentMode = 3}}
+                    <span>Automatico</span>
+                    {{/if}}
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <span name="lbl" caption="installationDate">installationDate</span>
+                {{if installationDate != "01/01/1900"}}
+                <input type="text" class="form-control dpd1" id="Text27" placeholder="${installationDate}" readonly="readonly">
+                {{else}}
+                <input type="text" class="form-control dpd1" id="Text28" placeholder="" readonly="readonly">
+                {{/if}}
+            </div>
+            <hr>
+            <div id="ProbeElem_${CtbCod}"></div>
+            <div class="row m-bot20">
+                <a href="javascript:CallShowErrorLog('${CtbCod}');" class="btn btn-warning center-block ShowErrorLog"><i class="fa fa-bar-chart"></i><span name="lbl" caption="error_log">Error Log</span></a>
+            </div>
+        </div>
+    </section>
 </script>
 <!--templates GAS-->  
 <script type="text/x-jquery-tmpl" id="tmplGasDetail">

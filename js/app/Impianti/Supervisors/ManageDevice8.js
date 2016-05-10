@@ -238,11 +238,13 @@ $(function () {
             req.success(function (json) {
                 var data = json.d;
                 if (data == 0) {
+                    console.log('synoptic/supervisors/hs_UsageMap_1');
                     url2Call += '&Type=1';
                     localStorage.setItem("Tipo_Mappa", 1);
                     $.module.load('synoptic/supervisors/hs_UsageMap_1');
                 }
                 else {
+                    console.log('synoptic/supervisors/hs_UsageMap');
                     url2Call += '&Type=0';
                     localStorage.setItem("Tipo_Mappa", 0);
                     $.module.load('synoptic/supervisors/hs_UsageMap');

@@ -422,29 +422,41 @@ $(function () {
 
         //Readhs();
         setlanguage();
-        ReadImpianto_hs()
+        ReadImpianto_hs();
 
         function ReadImpianto_hs() {
             var req = $.DataAccess.HeatingSystem_List(localStorage.getItem("IdImpianto"));
             req.success(function (json) {
                 var data = json.d;
                 if (data) {
-                    localStorage.setItem("hsId", data[0].hsId);
-                    $("#hsDescr").text(data[0].DesImpianto);
-                    $("#MapDesc").text(data[0].Descr);
-                    impLat = data[0].Latitude;
-                    impLong = data[0].Longitude;
-                    Latitude = data[0].Latitude;
-                    Longitude = data[0].Longitude;
+                    //alert("QUI");
+                    if (data.length == 1) {
+                        console.log("IMPIANTO>>>", data);
+                        localStorage.setItem("hsId", data[0].hsId);
+                        $("#hsDescr").text(data[0].DesImpianto);
+                        $("#MapDesc").text(data[0].Descr);
+                        impLat = data[0].Latitude;
+                        impLong = data[0].Longitude;
+                        Latitude = data[0].Latitude;
+                        Longitude = data[0].Longitude;
 
-                    if (data[0].isOnline == false) {
-                        $("#errorOffline").css("display", "block");
+                        if (data[0].isOnline == false) {
+                            $("#errorOffline").css("display", "block");
+                        }
+                        if (data[0].MaintenanceMode == true) {
+                            $("#MaintenanceMode").css("display", "block");
+                        }
+                        setTimeout(function () { loadmap(Latitude, Longitude); }, 1000);
+                        setlanguage();
+
+
+                    } else {
+                        console.log("IMPIANTI>>>", data);
+                     
+                        CallImpiantiMap();
+
                     }
-                    if (data[0].MaintenanceMode == true) {
-                        $("#MaintenanceMode").css("display", "block");
-                    }
-                    setTimeout(function () { loadmap(Latitude, Longitude); }, 1000);
-                    setlanguage();
+                  
                 }
             });
         }
@@ -762,6 +774,9 @@ $(function () {
                 case "sca":
                     $("#tmplScaDetail").tmpl(data).appendTo("#usermenu");
                     break;
+                case "Lux":
+                    $("#tmplLuxDetail").tmpl(data).appendTo("#usermenu");
+                    break;
 
             }
 
@@ -863,6 +878,9 @@ $(function () {
                 case "Ev":
                     initCal(Id);
                     break;
+                case "Lux":
+                    initLux(Id);
+                    break;
                 case "sca":
                     initSca(Id);
                     break;
@@ -944,6 +962,9 @@ $(function () {
                     }
                     if (data.totEv > 0) {
                         voicesMenu.push({ Name: "hs_Ev", page: "$.fn.Ev()", tot: data.totEv, stato: data.statoEv });
+                    }
+                    if (data.totLux > 0) {
+                        voicesMenu.push({ Name: "Lux", page: "$.fn.Lux()", tot: data.totLux, stato: data.statoLux });
                     }
                     if (data.totcymt100 > 0) {
                         voicesMenu.push({ Name: "sdin_Anzs", page: "Device8sdinAnz", tot: data.totcymt100, stato: data.statocymt100 });
@@ -1475,6 +1496,79 @@ $(function () {
         /* ----------------------------------------------------------------*/
 
         /*
+        LUX
+        ----------------------------------------------------------------*/
+        $.fn.Lux = function (hsId) {
+            $("#PlantList").empty();
+            localStorage.setItem("Cod", "Lux");//setto il codice nel local storage per sapere che tipo di device è per il marker
+            var r = $.DataAccess.Lux_List(localStorage.getItem("hsId"));
+            r.success(function (json) {
+                var data = json.d;
+                if (data) {
+                    $("#tmplLux").tmpl(data).appendTo("#PlantList");
+
+                    for (var i = 0; i < data.length; i++) {
+                        Latitude = data[i].Latitude;
+                        Longitude = data[i].Longitude;
+                        if (Longitude == 0 && Latitude == 0) {
+
+
+                            Latitude = impLat;
+                            Longitude = impLong;
+                            var latlng = new google.maps.LatLng(parseFloat(Latitude), parseFloat(Longitude));
+                        } else {
+                            var latlng = new google.maps.LatLng(parseFloat(data[i].Latitude), parseFloat(data[i].Longitude));
+                        }
+                        var Desc = data[i].CtbDesc;
+                        var Flowrate = data[i].Flowrate;
+                        var Cod = data[i].CtbCod;
+                        var stato = data[i].stato;
+                        var marcamodello = data[i].marcamodello;
+                        var Id = data[i].CtbId;
+                        //var latlng = new google.maps.LatLng(parseFloat(data[i].Latitude), parseFloat(data[i].Longitude));
+                        geocodefromLatLong(Latitude, Longitude, latlng, Cod, Id, Desc, data[i], stato);
+                    }//end for            
+                    setlanguage();
+                }
+            });
+        }
+
+        function initLux(Id) {
+            $("#usermenu").empty();
+            var r = $.DataAccess.Lux_Read(Id);
+            r.success(function (json) {
+                var data = json.d;
+                if (data) {
+                    $("#usermenu").empty();
+                    data.installationDate = moment(data.installationDate).format('DD/MM/YYYY');
+                    $("#tmplLuxDetail").tmpl(data).appendTo("#usermenu");
+                    if (data.stato == 0) { $('.ShowErrorLog').hide(); } else { $('.ShowErrorLog').show(); }
+
+                    Latitude = data.Latitude;
+                    Longitude = data.Longitude;
+                    if (Longitude == 0 && Latitude == 0) {
+                        Latitude = impLat;
+                        Longitude = impLong;
+                        var latlng = new google.maps.LatLng(parseFloat(Latitude), parseFloat(Longitude));
+                    } else {
+                        var latlng = new google.maps.LatLng(parseFloat(data.Latitude), parseFloat(data.Longitude));
+                    }
+                    var Desc = data.CtbDesc;
+                    var Flowrate = data.Flowrate;
+                    var Cod = data.CtbCod;
+                    var stato = data.stato;
+                    var marcamodello = data.marcamodello;
+                    var Id = data.CtbId;
+                    geocodefromLatLong(Latitude, Longitude, latlng, Cod, Id, Desc, data, stato);
+                    infowindow.setContent(setInfowindowContent(Latitude, Longitude, latlng, Cod, Id, Desc));
+                    infowindow.open(map, marker);
+                    setlanguage();
+                }
+            });
+        }
+        /* ----------------------------------------------------------------*/
+
+        /*
       //Error log
       //------------------------------------------------------------------------*/
         var $logRowNumber = 0;
@@ -1562,10 +1656,318 @@ $(function () {
         });
 
         /*----------------------------------------------------------------------*/
+        /*-------------------------CHIAMO LISTA IMPIANTI SE C'e PIU DI UNA INSTALLAZIONE E LA COMPILO---------------------------------------------*/
+        function CallImpiantiMap() {
 
-      
+            $("#ImpiantiContainter").draggable();
+
+            elevator = new google.maps.ElevationService();
+            geocoder = new google.maps.Geocoder();
+            infowindow = new google.maps.InfoWindow();
+
+            var markersCollection = [];
+
+            var clevergygmarkerimage_verde = {
+                url: 'images/markers_verde.png',
+                // This marker is 20 pixels wide by 32 pixels tall.
+                size: new google.maps.Size(32, 37),
+                // The origin for this image is 0,0.
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at 0,32.
+                anchor: new google.maps.Point(0, 37)
+            };
+
+            var clevergygmarkerimage_giallo = {
+                url: 'images/markers_giallo.png',
+                // This marker is 20 pixels wide by 32 pixels tall.
+                size: new google.maps.Size(32, 37),
+                // The origin for this image is 0,0.
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at 0,32.
+                anchor: new google.maps.Point(0, 37)
+            };
+
+            var clevergygmarkerimage_rosso = {
+                url: 'images/markers_rosso.png',
+                // This marker is 20 pixels wide by 32 pixels tall.
+                size: new google.maps.Size(32, 37),
+                // The origin for this image is 0,0.
+                origin: new google.maps.Point(0, 0),
+                // The anchor for this image is the base of the flagpole at 0,32.
+                anchor: new google.maps.Point(0, 37)
+            };
+
+            ReadImpianto();
+
+            function ReadImpianto() {
+                var req = $.DataAccess.Impianti_Read(localStorage.getItem("IdImpianto"));
+                req.success(function (json) {
+                    var data = json.d;
+                    if (data) {
+                        $("#open_system_detail").css("display", "none");
+                        $("#hsDescr").text(data.DesImpianto);
+
+                        Latitude = data.Latitude;
+                        Longitude = data.Longitude;
+                        setTimeout(function () { loadmap2(Latitude, Longitude); }, 1000);
+                    }
+                });
+
+            }
+
+            function loadmap2() {
+                var h = $(window).height() - $('.header').height();
+                //google maps
+
+                $('#googlemap').height(h);
+                map = new google.maps.Map(document.getElementById('googlemap'), {
+                    zoom: 18,
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    overviewMapControl: true,
+                    center: new google.maps.LatLng(Latitude, Longitude),
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                });
+                bounds = new google.maps.LatLngBounds();
+                //Readhs();
 
 
+                $('#ImpiantiContainter').show({
+                    left: "100px",
+                    top: "100px",
+                    opacity: 1
+                });
+                $("#ImpiantiContainter").animate({
+                    left: "100px",
+                    top: "100px",
+                    opacity: 1
+                }, {
+                    duration: 500,
+                    queue: false
+                });
+
+                setTimeout(function () { Readhs(); }, 1000);
+            }
+
+            /*elenco delle installazioni*/
+            function Readhs() {
+                markersCollection = [];
+                var req = $.DataAccess.HeatingSystem_ListEnabled(localStorage.getItem("IdImpianto"));
+                req.success(function (json) {
+                    var data = json.d;
+                    if (data) {
+                        $("#ImpiantiList").empty();
+                        $("#tmplListaImpianti").tmpl(data).appendTo("#ImpiantiList");
+                        $('#ImpiantiList').slimscroll({
+                            height: '315px',
+                            wheelStep: 15
+                        });
+
+
+                        for (var i = 0; i < data.length; i++) {
+                            //Latitude = data[i].Latitude;
+                            //Longitude = data[i].Longitude;
+                            var DesImpianto = data[i].DesImpianto;
+                            var Descr = data[i].Descr;
+                            var Indirizzo = data[i].Indirizzo;
+                            var isOnline = data[i].isOnline;
+                            var MaintenanceMode = data[i].MaintenanceMode;
+                            var hsId = data[i].hsId;
+                            var latlng = new google.maps.LatLng(parseFloat(data[i].Latitude), parseFloat(data[i].Longitude));
+                            geocodefromLatLong2(data[i].Latitude, data[i].Longitude, latlng, DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId);
+                        }//end for
+
+                        setlanguage();
+                    }
+                });
+            }
+
+            $("#panel-body-ListImpianti").mousedown(function (event) {
+                event.stopPropagation();
+            });
+
+            $(window).resize(function () {
+                var h = $(window).height() - $('.header').height();
+                $('#googlemap').height(h);
+            });
+
+            function geocodefromLatLong2(Latitude, Longitude, latlng, DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId) {
+                if (isOnline) {
+
+
+                    DeleteMarker(hsId);
+                    marker = new google.maps.Marker({
+                        position: latlng,
+                        icon: clevergygmarkerimage_verde,
+                        map: map,
+                        draggable: false,
+                        id: hsId
+                    });
+                    markersCollection.push(marker);
+
+                } else {
+                    DeleteMarker(hsId);
+                    marker = new google.maps.Marker({
+                        position: latlng,
+                        icon: clevergygmarkerimage_rosso,
+                        map: map,
+                        draggable: false,
+                        id: hsId
+                    });
+                    markersCollection.push(marker);
+
+
+                }
+
+
+
+
+                //var content = setInfowindowContent(DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId);
+                //se c'e un infowindow la chiudo se no vadoavanti ela creo 
+                if (infowindow) infowindow.close();
+                infowindow = new google.maps.InfoWindow()
+
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    //if (infowindow) infowindow.close();
+                    removeActiveClass();
+                    $('#li_' + this.Id).addClass("active");
+                    infowindow.setContent(setInfowindowContent2(DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId));
+                    //infowindow.open(map, marker);
+
+                    infowindow.open(map, this);
+                    setlanguage();
+                });
+
+                bounds.extend(latlng);
+                map.fitBounds(bounds);
+
+                map.setCenter(latlng);
+                infowindow.setContent(setInfowindowContent2(DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId));
+                infowindow.open(map, marker);
+
+            }
+
+            function setInfowindowContent2(DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId) {
+                var html = "";
+                html = '<div id="content" style="display:block;white-space: nowrap;width:400px;">';
+                html += '<div id="edifico">' + DesImpianto + '</div>';
+                html += '<a style="color:#337ab7;" href="javascript:selImpianto(' + hsId + ');" id="impianto">' + Descr + '</a>';
+                html += '<div id="info_window">';
+                html += '<strong>Indirizzo:</strong> ' + Indirizzo + '<br />';
+                if (isOnline == true) {
+                    html += '<strong>' + langResources['connected'] + '</strong>&nbsp &nbsp<i class="fa fa-thumbs-o-up"></i><br/>';
+
+                } else {
+                    html += '<strong>' + langResources['connected'] + '</strong>&nbsp &nbsp<i class="fa fa-times-circle-o"></i><br/>';
+                }
+                if (MaintenanceMode == true) {
+                    html += '<strong>' + langResources['maintenance'] + '</strong>&nbsp &nbsp<i class="fa fa-wrench"></i></i><br/>';
+                } else {
+                    html += '<strong>' + langResources['maintenance'] + '</strong>&nbsp &nbsp<i class="fa fa-thumbs-o-up"><br/>';
+                }
+                html += '</div>';
+                html += '</div>';
+
+                return html;
+
+            }
+            /*---------------------------------------------*/
+
+
+            function DeleteMarker(id) {
+
+
+                //Find and remove the marker from the Array
+                for (var i = 0; i < markersCollection.length; i++) {
+
+
+                    if (markersCollection[i].id == id) {
+                        //Remove the marker from Map                  
+                        markersCollection[i].setMap(null);
+                        //Remove the marker from array.
+                        markersCollection.splice(i, 1);
+                        return;
+                    }
+                }
+            };
+
+            function removeActiveClass() {
+                $('#PlantList li').each(function (n) {
+                    $(this).removeClass("active");
+                });
+            }
+
+            /*
+            Scelgo l'installazione
+            ----------------------------------------------------------------*/
+            $.fn.selImpianto = function (hsId) {
+                var req = $.DataAccess.HeatingSystem_Read(hsId);
+                req.success(function (json) {
+                    var data = json.d;
+                    if (data) {
+                        if (data.isOnline == false) {
+                            $("#errorOffline").css("display", "block");
+                        }
+                        if (data.MaintenanceMode == true) {
+                            $("#MaintenanceMode").css("display", "block");
+                        }
+                        localStorage.setItem("hsId", data.hsId);
+                        localStorage.setItem("MapId", data.MapId);
+                        $("#hsDescr").text(data.DesImpianto);
+                        $("#MapDesc").text(data.Descr);
+                        impLat = data.Latitude;
+                        impLong = data.Longitude;
+                        Latitude = data.Latitude;
+                        Longitude = data.Longitude;
+                        setTimeout(function () { loadmap(Latitude, Longitude); }, 1000);
+                        setlanguage();
+                    }
+                });
+            }
+            /*--------------------------------------------------------------*/
+
+            $.fn.selPlant = function (hsId) {
+
+                initPlaceId(hsId);
+            }
+
+            function initPlaceId(hsId) {
+                //$('#currentStall').text('');
+                //$('#StallPlaceId').val(0);
+                //$('#Latitude_Upd').val('');
+                //$('#Longitude_Upd').val('');
+                //$('#AltSLM_Upd').val('');
+
+                var req = $.DataAccess.HeatingSystem_Read(hsId);
+                req.success(function (json) {
+                    var data = json.d;
+                    if (data) {
+
+                        Latitude = data.Latitude;
+                        Longitude = data.Longitude;
+                        var DesImpianto = data.DesImpianto;
+                        var Descr = data.Descr;
+                        var Indirizzo = data.Indirizzo;
+                        var isOnline = data.isOnline;
+                        var MaintenanceMode = data.MaintenanceMode;
+                        var hsId = data.hsId;
+                        var latlng = new google.maps.LatLng(parseFloat(data.Latitude), parseFloat(data.Longitude));
+                        geocodefromLatLong2(Latitude, Longitude, latlng, DesImpianto, Descr, Indirizzo, isOnline, MaintenanceMode, hsId);
+
+                    }
+                });
+            }
+
+
+
+
+
+        } // fine call impianti map
+        /*----------------------------------------------------------------------*/
+        /*----------------------------------------------------------------------*/
     }); // document ready
 
 });
@@ -1585,3 +1987,12 @@ function sidebar() {
 function Close_det() { $.fn.Close_det(); }
 
 function CallShowErrorLog(CirCod) { $.fn.CallShowErrorLog(CirCod); }
+
+
+
+
+
+
+function selImpianto(hsId) {
+    $.fn.selImpianto(hsId);
+}

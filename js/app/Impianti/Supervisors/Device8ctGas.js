@@ -65,6 +65,14 @@
         /**/
         /*--------------------------------------------*/
 
+        //se sono in san felice desenzano faccio vedere il tasto per andare al config del gas meter
+        if (localStorage.IdImpianto == "6ab1b182-133e-40a6-bf4c-3b72453c9f60") {
+            $('.ConfGasValue').show();
+        } else {
+            $('.ConfGasValue').hide();
+        }
+
+
         var $table_data;
 
         $('.table').footable();
@@ -107,7 +115,8 @@
             //setTimeout(function () { $.rt.start(); }, 1000);
             console.log('btnrequestLog');
             $.DataAccess.HeatingSystem_requestLog(localStorage.getItem("hsId"));
-            $('#btnrequestLog').hide();
+            loadCtGas();
+            //$('#btnrequestLog').hide();
         });
 
         function loadCtGas() {
